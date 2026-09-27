@@ -9,13 +9,13 @@ on:
 
 jobs:
   android:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # Parse version from the tag (strips the leading "v") and derive a
       # versionCode: major*10000 + minor*100 + patch.
@@ -28,7 +28,7 @@ jobs:
           echo "code=$(( major * 10000 + minor * 100 + ${patch:-0} ))" >> "$GITHUB_OUTPUT"
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -73,7 +73,7 @@ jobs:
           done
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: "Talkpuppy ${{ steps.v.outputs.name }}"
           tag_name: ${{ github.ref_name }}
