@@ -51,9 +51,6 @@ class TalkpuppyApp extends StatelessWidget {
         elevation: 0,
         centerTitle: false,
       ),
-      textTheme: Typography.material2021(
-        colorScheme: scheme,
-      ).englishLike.apply(fontSizeFactor: 1.0),
       cardTheme: CardThemeData(
         elevation: 0,
         color: scheme.surfaceContainerLow,
