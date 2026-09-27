@@ -127,6 +127,20 @@ class SettingsSheet extends StatelessWidget {
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.gavel_outlined),
+                title: const Text('Lizenzen'),
+                subtitle: const Text('Verwendete Software und Modelle'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => showLicensePage(
+                  context: context,
+                  applicationName: 'Talkpuppy',
+                  applicationLegalese:
+                      'Spracherkennung mit sherpa-onnx, Parakeet (NVIDIA, '
+                      'CC BY 4.0) und Whisper (OpenAI, MIT).',
+                ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
                 enabled: !scope.controller.isBusy,
                 leading: Icon(
                   Icons.delete_forever_outlined,

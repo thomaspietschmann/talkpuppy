@@ -6,6 +6,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'app.dart';
+import 'licenses.dart';
 import 'services/history_store.dart';
 import 'services/model_manager.dart';
 import 'services/recorder_service.dart';
@@ -19,6 +20,7 @@ const Duration kHistoryRetention = Duration(days: 3);
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  registerModelLicenses();
   runApp(const _BootstrapApp());
 }
 
