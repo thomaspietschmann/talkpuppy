@@ -11,6 +11,7 @@ import 'onboarding_screen.dart';
 import 'retranscribe_sheet.dart';
 import 'settings_sheet.dart';
 import 'widgets/history_list.dart';
+import 'widgets/brand_mark.dart';
 import 'widgets/record_button.dart';
 import 'widgets/transcript_card.dart';
 
@@ -81,7 +82,30 @@ class _HomeContentState extends State<_HomeContent> {
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Talkpuppy'),
+            toolbarHeight: 72,
+            title: const Row(
+              children: [
+                BrandMark(size: 48),
+                SizedBox(width: 10),
+                Flexible(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Talkpuppy'),
+                      Text(
+                        'Offline Transkription',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             actions: [
               _ModelChip(),
               Semantics(
@@ -175,9 +199,8 @@ class _ModelChip extends StatelessWidget {
       initialValue: settings.selectedModelId,
       onSelected: (value) {
         if (value == '__manage__') {
-          Navigator.of(
-            context,
-          ).push(MaterialPageRoute(builder: (_) => const ModelsScreen()));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const ModelsScreen()));
         } else {
           settings.selectedModelId = value;
           scope.controller.ensureCurrentModelLoaded();
@@ -225,7 +248,10 @@ class _ErrorBanner extends StatelessWidget {
             Icon(Icons.error_outline, color: scheme.onErrorContainer),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(message, style: TextStyle(color: scheme.onErrorContainer)),
+              child: Text(
+                message,
+                style: TextStyle(color: scheme.onErrorContainer),
+              ),
             ),
             TextButton(onPressed: onDismiss, child: const Text('OK')),
           ],
@@ -339,8 +365,7 @@ class _BottomControls extends StatelessWidget {
                   ),
                 ],
               ),
-              RecordingPhase.idle ||
-              RecordingPhase.error => Semantics(
+              RecordingPhase.idle || RecordingPhase.error => Semantics(
                 identifier: 'record_button',
                 child: RecordButton(
                   isActive: false,

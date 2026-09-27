@@ -1,42 +1,77 @@
-import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
 import 'ui/home_screen.dart';
 
-/// Root widget. Uses Material 3 with dynamic color on Android when
-/// available, falling back to a calm, single-accent seed theme everywhere
-/// else (including iOS).
+/// Root widget. Uses a fixed Talkpuppy brand system so the experience is
+/// recognisable on every platform instead of changing with device wallpaper.
 class TalkpuppyApp extends StatelessWidget {
   const TalkpuppyApp({super.key});
 
-  static const _seedColor = Color(0xFF3A6EA5);
+  static const _ink = Color(0xFF15131F);
+  static const _magenta = Color(0xFFEC2D78);
+  static const _cyan = Color(0xFF00C7D9);
+  static const _gold = Color(0xFFFFC857);
 
   @override
   Widget build(BuildContext context) {
-    return DynamicColorBuilder(
-      builder: (lightDynamic, darkDynamic) {
-        final lightScheme =
-            lightDynamic?.harmonized() ??
-            ColorScheme.fromSeed(
-              seedColor: _seedColor,
-              brightness: Brightness.light,
-            );
-        final darkScheme =
-            darkDynamic?.harmonized() ??
-            ColorScheme.fromSeed(
-              seedColor: _seedColor,
-              brightness: Brightness.dark,
-            );
+    final lightScheme = _buildScheme(Brightness.light);
+    final darkScheme = _buildScheme(Brightness.dark);
 
-        return MaterialApp(
-          title: 'Talkpuppy',
-          debugShowCheckedModeBanner: false,
-          themeMode: ThemeMode.system,
-          theme: _buildTheme(lightScheme),
-          darkTheme: _buildTheme(darkScheme),
-          home: const HomeScreen(),
-        );
-      },
+    return MaterialApp(
+      title: 'Talkpuppy',
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.system,
+      theme: _buildTheme(lightScheme),
+      darkTheme: _buildTheme(darkScheme),
+      home: const HomeScreen(),
+    );
+  }
+
+  ColorScheme _buildScheme(Brightness brightness) {
+    final isDark = brightness == Brightness.dark;
+    final base = ColorScheme.fromSeed(
+      seedColor: _magenta,
+      brightness: brightness,
+    );
+
+    return base.copyWith(
+      primary: _magenta,
+      onPrimary: Colors.white,
+      primaryContainer: isDark
+          ? const Color(0xFF64163D)
+          : const Color(0xFFFFD8E7),
+      onPrimaryContainer: isDark
+          ? const Color(0xFFFFB0CF)
+          : const Color(0xFF4C0929),
+      secondary: _cyan,
+      onSecondary: _ink,
+      secondaryContainer: isDark
+          ? const Color(0xFF004D59)
+          : const Color(0xFFB4F4F7),
+      onSecondaryContainer: isDark
+          ? const Color(0xFF8EF5F7)
+          : const Color(0xFF00363D),
+      tertiary: _gold,
+      onTertiary: _ink,
+      surface: isDark ? const Color(0xFF110F19) : const Color(0xFFFFF8FC),
+      onSurface: isDark ? const Color(0xFFF5ECF4) : const Color(0xFF211923),
+      surfaceContainerLowest: isDark ? const Color(0xFF0C0A11) : Colors.white,
+      surfaceContainerLow: isDark
+          ? const Color(0xFF191520)
+          : const Color(0xFFFFF0F7),
+      surfaceContainer: isDark
+          ? const Color(0xFF201B29)
+          : const Color(0xFFFCE7F1),
+      surfaceContainerHigh: isDark
+          ? const Color(0xFF2A2434)
+          : const Color(0xFFF8DDEB),
+      surfaceContainerHighest: isDark
+          ? const Color(0xFF352E40)
+          : const Color(0xFFF2D1E1),
+      outline: isDark ? const Color(0xFF9C8997) : const Color(0xFF806875),
+      outlineVariant: isDark
+          ? const Color(0xFF51434E)
+          : const Color(0xFFDCC3CF),
     );
   }
 
@@ -47,15 +82,29 @@ class TalkpuppyApp extends StatelessWidget {
       scaffoldBackgroundColor: scheme.surface,
       appBarTheme: AppBarTheme(
         backgroundColor: scheme.surface,
-        surfaceTintColor: scheme.surfaceTint,
+        foregroundColor: scheme.onSurface,
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,
+        titleTextStyle: TextStyle(
+          color: scheme.onSurface,
+          fontSize: 20,
+          fontWeight: FontWeight.w800,
+          letterSpacing: -0.2,
+        ),
       ),
       cardTheme: CardThemeData(
         elevation: 0,
         color: scheme.surfaceContainerLow,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      chipTheme: ChipThemeData(
+        backgroundColor: scheme.secondaryContainer,
+        side: BorderSide.none,
+        labelStyle: TextStyle(
+          color: scheme.onSecondaryContainer,
+          fontWeight: FontWeight.w700,
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(
@@ -66,11 +115,23 @@ class TalkpuppyApp extends StatelessWidget {
           ),
         ),
       ),
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: scheme.secondary,
+        circularTrackColor: scheme.secondaryContainer,
+        linearTrackColor: scheme.surfaceContainerHighest,
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: scheme.surface,
+        surfaceTintColor: Colors.transparent,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+      ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        backgroundColor: scheme.inverseSurface,
+        contentTextStyle: TextStyle(color: scheme.onInverseSurface),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
   }

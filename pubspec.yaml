@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 0.0.1+1
+version: 0.0.2+2
 
 environment:
   sdk: ^3.13.4
@@ -39,7 +39,6 @@ dependencies:
   dio: ^5.11.1
   path_provider: ^2.1.6
   shared_preferences: ^2.5.5
-  dynamic_color: ^1.9.0
   wakelock_plus: ^1.8.0
   path: ^1.9.1
   crypto: ^3.0.7
@@ -68,6 +67,7 @@ flutter:
 
   assets:
     - assets/models/silero_vad.onnx
+    - assets/branding/talkpuppy_logo.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

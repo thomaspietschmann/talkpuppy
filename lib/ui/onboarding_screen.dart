@@ -5,6 +5,7 @@ import '../models/model_spec.dart';
 import '../services/device_ram_service.dart';
 import '../services/model_manager.dart';
 import '../state/controller_scope.dart';
+import 'widgets/brand_mark.dart';
 
 /// First-launch screen: pick and download a model, grant the microphone
 /// permission, done. No further setup is ever required after this.
@@ -78,9 +79,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 32, 20, 20),
           children: [
-            Text(
-              'Willkommen bei Talkpuppy',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).colorScheme.primaryContainer,
+                    Theme.of(context).colorScheme.secondaryContainer,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(28),
+              ),
+              child: Row(
+                children: [
+                  const BrandMark(size: 104, showBackdrop: true),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Text(
+                      'Willkommen bei Talkpuppy',
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(fontWeight: FontWeight.w800),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 8),
             Text(
