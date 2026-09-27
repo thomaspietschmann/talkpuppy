@@ -1,4 +1,4 @@
-package de.pietschie.whisperino
+package de.pietschie.talkpuppy
 
 import io.flutter.embedding.android.FlutterActivity
 
