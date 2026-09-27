@@ -27,13 +27,27 @@ class TranscriberException implements Exception {
   String toString() => 'TranscriberException: $message';
 }
 
+/// What [AppController] needs from a transcriber. Pulled out as an
+/// interface so tests can swap in a fake instead of spawning a real
+/// sherpa-onnx isolate.
+abstract class Transcriber {
+  Future<void> ensureModel({
+    required ModelSpec model,
+    required String modelDir,
+    required String vadModelPath,
+    String forcedLanguage = 'auto',
+  });
+
+  Future<TranscriptionResult> transcribeFile(String wavPath);
+}
+
 /// Owns a persistent background isolate that keeps a loaded sherpa-onnx
 /// recognizer (and VAD) alive across calls, since constructing one from a
 /// large ONNX model takes real time.
 ///
 /// All FFI objects (recognizer, VAD, streams) live and die inside that one
 /// isolate; only plain data crosses the isolate boundary.
-class TranscriberService {
+class TranscriberService implements Transcriber {
   Isolate? _isolate;
   SendPort? _commandPort;
   String? _loadedModelKey;
@@ -50,6 +64,7 @@ class TranscriberService {
 
   /// Loads [model]'s files from [modelDir] into the worker isolate unless
   /// that exact (model, forced language) combination is already loaded.
+  @override
   Future<void> ensureModel({
     required ModelSpec model,
     required String modelDir,
@@ -83,6 +98,7 @@ class TranscriberService {
   /// Transcribes a 16 kHz mono WAV file with the currently loaded model.
   /// The audio is segmented with VAD internally so clips longer than
   /// Whisper's ~30s window still work.
+  @override
   Future<TranscriptionResult> transcribeFile(String wavPath) async {
     final reply = await _send({'type': 'transcribe', 'wavPath': wavPath});
     if (reply['ok'] != true) {

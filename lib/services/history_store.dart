@@ -71,10 +71,24 @@ class HistoryStore extends ChangeNotifier {
   /// Absolute path a WAV file with [fileName] should live at.
   String wavPathFor(String fileName) => p.join(_dir.path, fileName);
 
-  /// A fresh, collision-free WAV file name for a new clip.
+  /// Makes sure the history directory exists. Recording writes its WAV
+  /// file straight into it, before there's any [Recording] to persist, so
+  /// this must run before the recorder is asked to start.
+  Future<void> ensureDirExists() async {
+    if (!await _dir.exists()) {
+      await _dir.create(recursive: true);
+    }
+  }
+
+  int _wavNameCounter = 0;
+
+  /// A fresh, collision-free WAV file name for a new clip. Combines a
+  /// timestamp with a counter since two calls in immediate succession could
+  /// otherwise land in the same microsecond.
   String newWavFileName() {
     final ts = DateTime.now().microsecondsSinceEpoch;
-    return '$ts.wav';
+    _wavNameCounter++;
+    return '$ts-$_wavNameCounter.wav';
   }
 
   Future<void> addRecording(Recording recording) async {

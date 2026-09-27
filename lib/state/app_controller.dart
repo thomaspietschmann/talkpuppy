@@ -33,7 +33,7 @@ class AppController extends ChangeNotifier {
   });
 
   final RecorderService recorder;
-  final TranscriberService transcriber;
+  final Transcriber transcriber;
   final HistoryStore historyStore;
   final SettingsService settings;
   final ModelManager modelManager;
@@ -109,6 +109,7 @@ class AppController extends ChangeNotifier {
   Future<void> _startRecording({required bool appendMode}) async {
     if (!canRecord) return;
     _appendMode = appendMode && activeRecording != null;
+    await historyStore.ensureDirExists();
     final fileName = historyStore.newWavFileName();
     _pendingWavPath = historyStore.wavPathFor(fileName);
 
