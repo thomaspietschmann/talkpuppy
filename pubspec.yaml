@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 0.0.2+2
+version: 0.0.3+3
 
 environment:
   sdk: ^3.13.4
@@ -42,10 +42,14 @@ dependencies:
   wakelock_plus: ^1.8.0
   path: ^1.9.1
   crypto: ^3.0.7
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -59,6 +63,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -68,6 +73,19 @@ flutter:
   assets:
     - assets/models/silero_vad.onnx
     - assets/branding/talkpuppy_logo.png
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/branding/talkpuppy_launcher.png
+  remove_alpha_ios: true
+  min_sdk_android: 21
+  # Adaptive icon (Android 8+): the artwork's background is exactly the brand
+  # ink, so the layers blend seamlessly. The 16 % inset keeps ears and
+  # shoulders inside the launcher's mask.
+  adaptive_icon_background: "#15131F"
+  adaptive_icon_foreground: assets/branding/talkpuppy_launcher.png
+  adaptive_icon_foreground_inset: 16
 
   # To add assets to your application, add an assets section, like this:
   # assets:

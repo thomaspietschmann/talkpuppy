@@ -1,0 +1,195 @@
+{
+  "@@locale": "en",
+  "logoSemantics": "Talkpuppy logo",
+  "startupFailed": "Talkpuppy couldn't start:\n{error}",
+  "@startupFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsTooltip": "Settings",
+  "switchModelTooltip": "Switch model",
+  "manageModelsEllipsis": "Manage models…",
+  "manageModels": "Manage models",
+  "installModel": "Install model",
+  "noModel": "No model",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "copy": "Copy",
+  "record": "Record",
+  "@record": {
+    "description": "Label under the big microphone button when idle."
+  },
+  "stopRecording": "Stop",
+  "@stopRecording": {
+    "description": "Label under the button while recording; tapping it stops the recording."
+  },
+  "transcribing": "Transcribing…",
+  "newRecording": "New recording",
+  "@newRecording": {
+    "description": "Starts a fresh recording as a new entry."
+  },
+  "continueRecording": "Keep recording",
+  "@continueRecording": {
+    "description": "Starts another recording whose text is appended to the current transcript."
+  },
+  "transcriptLabel": "Transcript",
+  "emptyTranscript": "No recording yet.\nTap the microphone below.",
+  "noTextRecognized": "(no text recognized)",
+  "retranscribe": "Re-transcribe",
+  "@retranscribe": {
+    "description": "Run speech recognition again on an existing recording, e.g. with another language."
+  },
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "welcomeTitle": "Welcome to Talkpuppy",
+  "welcomeBody": "Choose a speech model for transcription. It runs entirely on your device, no internet needed.",
+  "recommended": "Recommended",
+  "preparing": "Preparing…",
+  "sizeMb": "{size} MB",
+  "@sizeMb": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "downloadProgress": "{received} MB / {total} MB",
+  "@downloadProgress": {
+    "placeholders": {
+      "received": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "downloadAndStart": "Download and get started",
+  "download": "Download",
+  "downloadFailed": "Download failed: {error}",
+  "@downloadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "modelsTitle": "Models",
+  "deleteModelTitle": "Delete model?",
+  "deleteModelBody": "{model} will be deleted from this device ({size} MB).",
+  "@deleteModelBody": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      },
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "modelDescParakeet": "Very fast and very accurate, 25 European languages, detects the language automatically. Recommended for phones with at least 6 GB of RAM.",
+  "modelDescWhisperSmall": "Balanced between speed and accuracy, 99 languages, language can be fixed. For phones with at least 4 GB of RAM.",
+  "modelDescWhisperBase": "Lightweight for older phones, 99 languages, language can be fixed. For phones with at least 3 GB of RAM.",
+  "modelDescWhisperTiny": "Minimal and fastest to download. 99 languages, language can be fixed. Runs on practically any phone.",
+  "languageLabel": "Language",
+  "auto": "Auto",
+  "@auto": {
+    "description": "Automatic language detection option."
+  },
+  "modelLabel": "Model",
+  "whisperRequired": "A fixed language needs a Whisper model.",
+  "downloadWhisperSmall": "Download Whisper Small",
+  "settingsTitle": "Settings",
+  "appLanguageTitle": "App language",
+  "appLanguageSystem": "System default",
+  "autoCopyTitle": "Copy automatically",
+  "autoCopySubtitle": "Put the text on the clipboard right after transcription",
+  "hapticsTitle": "Haptic feedback",
+  "defaultLanguageTitle": "Default language for new recordings",
+  "defaultLanguageHint": "Only Whisper models use this; Parakeet always detects the language automatically.",
+  "licensesTitle": "Licenses",
+  "licensesSubtitle": "Software and models used",
+  "licensesLegalese": "Speech recognition with sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) and Whisper (OpenAI, MIT).",
+  "deleteAllTitle": "Delete all recordings",
+  "deleteAllConfirmTitle": "Delete all recordings?",
+  "deleteAllConfirmBody": "All transcripts and recordings will be permanently deleted.",
+  "errorMicPermission": "No microphone access. Please allow it in your phone's settings.",
+  "errorRecorderStart": "Couldn't start recording ({detail}).",
+  "@errorRecorderStart": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorRecorderStop": "Couldn't stop recording ({detail}).",
+  "@errorRecorderStop": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorTranscription": "Transcription failed ({detail}). The recording is saved and can be re-transcribed.",
+  "@errorTranscription": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorRetranscribe": "Re-transcription failed ({detail}).",
+  "@errorRetranscribe": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorModelLoad": "{model} couldn't be loaded. If this keeps happening, delete the model and download it again. ({detail})",
+  "@errorModelLoad": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      },
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorNoModel": "No model loaded.",
+  "downloadAlreadyRunning": "{model} is already downloading.",
+  "@downloadAlreadyRunning": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      }
+    }
+  },
+  "downloadCancelled": "Download cancelled.",
+  "downloadNetworkError": "Download failed. Please check your internet connection and try again.",
+  "downloadNotModelFile": "The server didn't return a model file (maybe a Wi-Fi login page). Please check your network and try again.",
+  "downloadCorrupt": "The downloaded file {file} is corrupted. Please try again.",
+  "@downloadCorrupt": {
+    "placeholders": {
+      "file": {
+        "type": "String"
+      }
+    }
+  },
+  "downloadNoSpace": "Not enough storage for {model}.",
+  "@downloadNoSpace": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      }
+    }
+  },
+  "@modelDescParakeet": {
+    "description": "Parakeet supports bg, hr, cs, da, nl, en, et, fi, fr, de, el, hu, it, lv, lt, mt, pl, pt, ro, sk, sl, es, sv, ru, uk. Don't claim support for other languages."
+  }
+}

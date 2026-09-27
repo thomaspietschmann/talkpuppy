@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/l10n_text.dart';
 import '../../models/recording.dart';
 
-class TranscriptCard extends StatelessWidget {
+class TranscriptCard extends StatefulWidget {
   const TranscriptCard({
     super.key,
     required this.recording,
@@ -17,16 +18,32 @@ class TranscriptCard extends StatelessWidget {
   final VoidCallback? onRetranscribe;
 
   @override
+  State<TranscriptCard> createState() => _TranscriptCardState();
+}
+
+class _TranscriptCardState extends State<TranscriptCard> {
+  // Shared by the Scrollbar and the scroll view so the thumb is always
+  // visible when the transcript is longer than the box.
+  final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final recording = this.recording;
+    final l10n = context.l10n;
+    final recording = widget.recording;
 
     if (recording == null) {
       return Card(
         child: Padding(
           padding: const EdgeInsets.all(28),
           child: Text(
-            'Noch keine Aufnahme.\nTippe unten auf das Mikrofon.',
+            l10n.emptyTranscript,
             textAlign: TextAlign.center,
             style: theme.textTheme.bodyLarge?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
@@ -48,7 +65,7 @@ class TranscriptCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Transkript',
+                    l10n.transcriptLabel,
                     style: theme.textTheme.labelLarge?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -65,14 +82,21 @@ class TranscriptCard extends StatelessWidget {
             const SizedBox(height: 8),
             ConstrainedBox(
               constraints: const BoxConstraints(maxHeight: 260),
-              child: SingleChildScrollView(
-                child: Semantics(
-                  identifier: 'transcript_text',
-                  child: SelectableText(
-                    recording.text.isEmpty
-                        ? '(kein Text erkannt)'
-                        : recording.text,
-                    style: theme.textTheme.headlineSmall,
+              child: Scrollbar(
+                controller: _scrollController,
+                thumbVisibility: true,
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  // Keep text clear of the scrollbar thumb.
+                  padding: const EdgeInsets.only(right: 12),
+                  child: Semantics(
+                    identifier: 'transcript_text',
+                    child: SelectableText(
+                      recording.text.isEmpty
+                          ? l10n.noTextRecognized
+                          : recording.text,
+                      style: theme.textTheme.headlineSmall,
+                    ),
                   ),
                 ),
               ),
@@ -84,9 +108,9 @@ class TranscriptCard extends StatelessWidget {
                   child: Semantics(
                     identifier: 'copy_button',
                     child: FilledButton.icon(
-                      onPressed: onCopy,
+                      onPressed: widget.onCopy,
                       icon: const Icon(Icons.copy_rounded),
-                      label: const Text('Kopieren'),
+                      label: Text(l10n.copy),
                     ),
                   ),
                 ),
@@ -94,9 +118,9 @@ class TranscriptCard extends StatelessWidget {
                 Semantics(
                   identifier: 'retranscribe_button',
                   child: IconButton.filledTonal(
-                    onPressed: onRetranscribe,
+                    onPressed: widget.onRetranscribe,
                     icon: const Icon(Icons.translate_rounded),
-                    tooltip: 'Neu transkribieren',
+                    tooltip: l10n.retranscribe,
                   ),
                 ),
               ],

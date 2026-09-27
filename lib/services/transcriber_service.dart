@@ -56,8 +56,8 @@ class TranscriberService implements Transcriber {
 
   static final _diedReply = <String, dynamic>{
     'ok': false,
-    'error': 'Der Transkriptions-Prozess wurde unerwartet beendet. '
-        'Bitte App neu starten.',
+    // Technical detail; the UI wraps it in a localized sentence.
+    'error': 'transcriber process stopped unexpectedly, restart the app',
   };
 
   Future<void> start() async {
@@ -306,7 +306,7 @@ TranscriptionResult _transcribeWithVad(
   if (wave.samples.isEmpty) {
     // readWave returns empty samples for missing/unreadable files. Fail
     // loudly so a retranscribe can't silently wipe a good transcript.
-    throw StateError('Die Aufnahme konnte nicht gelesen werden.');
+    throw StateError('recording could not be read');
   }
 
   vad.reset();

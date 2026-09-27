@@ -21,13 +21,19 @@ class DownloadProgress {
   double get fraction => totalBytes == 0 ? 0 : receivedBytes / totalBytes;
 }
 
-/// A download failed in a way worth showing to the user as-is.
+enum DownloadErrorKind { alreadyRunning, cancelled, network, notModelFile, corrupt, noSpace }
+
+/// A download failed in a way worth showing to the user; the UI turns
+/// [kind] into a localized message.
 class ModelDownloadException implements Exception {
-  ModelDownloadException(this.message);
-  final String message;
+  ModelDownloadException(this.kind, {this.modelName = '', this.fileName = ''});
+
+  final DownloadErrorKind kind;
+  final String modelName;
+  final String fileName;
 
   @override
-  String toString() => message;
+  String toString() => 'ModelDownloadException($kind, $modelName$fileName)';
 }
 
 /// Downloads, verifies and deletes on-device model files.
@@ -102,7 +108,8 @@ class ModelManager extends ChangeNotifier {
   }) async {
     if (isDownloading(model)) {
       throw ModelDownloadException(
-        '${model.displayName} wird bereits heruntergeladen.',
+        DownloadErrorKind.alreadyRunning,
+        modelName: model.displayName,
       );
     }
     final cancelToken = CancelToken();
@@ -155,12 +162,9 @@ class ModelManager extends ChangeNotifier {
       await excludeFromBackup(dir.path);
     } on DioException catch (e) {
       if (CancelToken.isCancel(e)) {
-        throw ModelDownloadException('Download abgebrochen.');
+        throw ModelDownloadException(DownloadErrorKind.cancelled);
       }
-      throw ModelDownloadException(
-        'Download fehlgeschlagen – bitte Internetverbindung prüfen '
-        'und erneut versuchen.',
-      );
+      throw ModelDownloadException(DownloadErrorKind.network);
     } finally {
       dio.close();
       _activeCancelTokens.remove(model.id);
@@ -194,7 +198,8 @@ class ModelManager extends ChangeNotifier {
       final availableKb = int.parse(cols[3]);
       if (availableKb * 1024 < model.totalSizeBytes + 50 * 1024 * 1024) {
         throw ModelDownloadException(
-          'Nicht genug Speicherplatz für ${model.displayName}.',
+          DownloadErrorKind.noSpace,
+          modelName: model.displayName,
         );
       }
     } on ModelDownloadException {
@@ -251,10 +256,7 @@ class ModelManager extends ChangeNotifier {
     final contentType = response.headers.value('content-type') ?? '';
     if ((status != 200 && status != 206) || contentType.contains('text/html')) {
       // Typical for captive portals: a login page instead of the file.
-      throw ModelDownloadException(
-        'Der Server hat keine Modelldatei geliefert (evtl. WLAN-Anmeldeseite). '
-        'Bitte Netzwerk prüfen und erneut versuchen.',
-      );
+      throw ModelDownloadException(DownloadErrorKind.notModelFile);
     }
     // Server ignored our range request and sent the full file: start over.
     if (startBytes > 0 && status != 206) {
@@ -284,8 +286,8 @@ class ModelManager extends ChangeNotifier {
     if (actualHash != spec.sha256) {
       await partFile.delete();
       throw ModelDownloadException(
-        'Die heruntergeladene Datei ${spec.remoteName} ist beschädigt. '
-        'Bitte erneut versuchen.',
+        DownloadErrorKind.corrupt,
+        fileName: spec.remoteName,
       );
     }
     await partFile.rename(target.path);

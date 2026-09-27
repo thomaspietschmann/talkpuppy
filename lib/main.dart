@@ -6,6 +6,8 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'app.dart';
+import 'l10n/app_localizations.dart';
+import 'l10n/locales.dart';
 import 'licenses.dart';
 import 'services/history_store.dart';
 import 'services/model_manager.dart';
@@ -95,17 +97,24 @@ class _BootstrapAppState extends State<_BootstrapApp> {
   @override
   Widget build(BuildContext context) {
     if (_child != null) return _child!;
+    // Settings aren't loaded yet here, so this follows the system language.
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      supportedLocales: [for (final code in kAppLanguages.keys) Locale(code)],
+      localizationsDelegates: kLocalizationsDelegates,
+      localeListResolutionCallback: (deviceLocales, _) =>
+          resolveAppLocale(deviceLocales),
       home: Scaffold(
         body: Center(
           child: _error == null
               ? const CircularProgressIndicator()
-              : Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Text(
-                    'Talkpuppy konnte nicht gestartet werden:\n$_error',
-                    textAlign: TextAlign.center,
+              : Builder(
+                  builder: (context) => Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Text(
+                      AppLocalizations.of(context).startupFailed('$_error'),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
         ),

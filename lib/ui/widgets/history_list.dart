@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/l10n_text.dart';
 import '../../models/recording.dart';
 
 class HistoryList extends StatelessWidget {
@@ -21,20 +22,21 @@ class HistoryList extends StatelessWidget {
   final void Function(Recording) onDelete;
   final void Function(Recording) onRetranscribe;
 
-  String _dayLabel(DateTime date) {
+  String _dayLabel(BuildContext context, DateTime date) {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final that = DateTime(date.year, date.month, date.day);
     final diff = today.difference(that).inDays;
-    if (diff == 0) return 'Heute';
-    if (diff == 1) return 'Gestern';
-    return '${date.day}.${date.month}.${date.year}';
+    if (diff == 0) return context.l10n.today;
+    if (diff == 1) return context.l10n.yesterday;
+    return MaterialLocalizations.of(context).formatShortDate(date);
   }
 
-  String _timeLabel(DateTime date) {
-    final h = date.hour.toString().padLeft(2, '0');
-    final m = date.minute.toString().padLeft(2, '0');
-    return '$h:$m';
+  String _timeLabel(BuildContext context, DateTime date) {
+    return MaterialLocalizations.of(context).formatTimeOfDay(
+      TimeOfDay.fromDateTime(date),
+      alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
+    );
   }
 
   @override
@@ -48,7 +50,7 @@ class HistoryList extends StatelessWidget {
     String? lastGroup;
 
     for (final recording in recordings) {
-      final group = _dayLabel(recording.updatedAt);
+      final group = _dayLabel(context, recording.updatedAt);
       if (group != lastGroup) {
         if (lastGroup != null) children.add(const SizedBox(height: 8));
         children.add(
@@ -96,14 +98,14 @@ class HistoryList extends StatelessWidget {
                     ? () => _showActions(context, recording)
                     : null,
                 title: Text(
-                  preview.isEmpty ? '(kein Text erkannt)' : preview,
+                  preview.isEmpty ? context.l10n.noTextRecognized : preview,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                subtitle: Text(_timeLabel(recording.updatedAt)),
+                subtitle: Text(_timeLabel(context, recording.updatedAt)),
                 trailing: IconButton(
                   icon: const Icon(Icons.copy_rounded),
-                  tooltip: 'Kopieren',
+                  tooltip: context.l10n.copy,
                   onPressed: () => onTapCopy(recording),
                 ),
               ),
@@ -126,7 +128,7 @@ class HistoryList extends StatelessWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.translate_rounded),
-              title: const Text('Neu transkribieren'),
+              title: Text(context.l10n.retranscribe),
               onTap: () {
                 Navigator.pop(sheetContext);
                 onRetranscribe(recording);
@@ -134,7 +136,7 @@ class HistoryList extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.delete_outline),
-              title: const Text('Löschen'),
+              title: Text(context.l10n.delete),
               onTap: () {
                 Navigator.pop(sheetContext);
                 onDelete(recording);

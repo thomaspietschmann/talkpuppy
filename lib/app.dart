@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'l10n/locales.dart';
+import 'state/controller_scope.dart';
 import 'ui/home_screen.dart';
 
 /// Root widget. Uses a fixed Talkpuppy brand system so the experience is
@@ -16,14 +18,28 @@ class TalkpuppyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final lightScheme = _buildScheme(Brightness.light);
     final darkScheme = _buildScheme(Brightness.dark);
+    final settings = ControllerScope.of(context).settings;
 
-    return MaterialApp(
-      title: 'Talkpuppy',
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.system,
-      theme: _buildTheme(lightScheme),
-      darkTheme: _buildTheme(darkScheme),
-      home: const HomeScreen(),
+    return ListenableBuilder(
+      listenable: settings,
+      builder: (context, _) {
+        final chosen = settings.appLanguage;
+        return MaterialApp(
+          title: 'Talkpuppy',
+          debugShowCheckedModeBanner: false,
+          themeMode: ThemeMode.system,
+          theme: _buildTheme(lightScheme),
+          darkTheme: _buildTheme(darkScheme),
+          // Null follows the system; the resolution callback then maps the
+          // device languages onto the ones the app ships.
+          locale: chosen == null ? null : Locale(chosen),
+          supportedLocales: [for (final code in kAppLanguages.keys) Locale(code)],
+          localizationsDelegates: kLocalizationsDelegates,
+          localeListResolutionCallback: (deviceLocales, _) =>
+              resolveAppLocale(deviceLocales),
+          home: const HomeScreen(),
+        );
+      },
     );
   }
 

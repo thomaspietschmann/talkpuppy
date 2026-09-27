@@ -57,10 +57,6 @@ final List<ModelSpec> kModelCatalog = [
   ModelSpec(
     id: 'parakeet-tdt-0.6b-v3-int8',
     displayName: 'Parakeet TDT 0.6B v3',
-    description:
-        'Sehr schnell und sehr genau, 25 europäische Sprachen inkl. '
-        'Deutsch, erkennt die Sprache automatisch. Empfohlen für Geräte '
-        'mit mindestens 6 GB RAM.',
     engine: ModelEngine.nemoTransducer,
     baseUrl: '$_hfCsukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/'
         'resolve/2bda32ec70b097a55adaa07d9a7173915b43cc78/',
@@ -100,10 +96,6 @@ final List<ModelSpec> kModelCatalog = [
   ModelSpec(
     id: 'whisper-small-int8',
     displayName: 'Whisper Small',
-    description:
-        'Ausgewogen zwischen Geschwindigkeit und Genauigkeit, 99 Sprachen, '
-        'Sprache kann fest eingestellt werden. Für Geräte mit mindestens '
-        '4 GB RAM.',
     engine: ModelEngine.whisper,
     baseUrl: '$_hfCsukuangfj/sherpa-onnx-whisper-small/resolve/8f3c18b358db4d1f2fc1eae49d75cd20989e4309/',
     files: const [
@@ -136,9 +128,6 @@ final List<ModelSpec> kModelCatalog = [
   ModelSpec(
     id: 'whisper-base-int8',
     displayName: 'Whisper Base',
-    description:
-        'Leichtgewichtig für ältere Geräte, 99 Sprachen, Sprache kann fest '
-        'eingestellt werden. Für Geräte mit mindestens 3 GB RAM.',
     engine: ModelEngine.whisper,
     baseUrl: '$_hfCsukuangfj/sherpa-onnx-whisper-base/resolve/bb53ee204431c90d314c1cc08d28d23e5b7927cc/',
     files: const [
@@ -171,9 +160,6 @@ final List<ModelSpec> kModelCatalog = [
   ModelSpec(
     id: 'whisper-tiny-int8',
     displayName: 'Whisper Tiny',
-    description:
-        'Minimal, lädt am schnellsten. 99 Sprachen, Sprache kann fest '
-        'eingestellt werden. Läuft auf praktisch jedem Gerät.',
     engine: ModelEngine.whisper,
     baseUrl: '$_hfCsukuangfj/sherpa-onnx-whisper-tiny/resolve/65176e2deb88badc814a94058666cadccc29b61c/',
     files: const [

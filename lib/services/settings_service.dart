@@ -11,6 +11,7 @@ class SettingsService extends ChangeNotifier {
   static const _kDefaultLanguage = 'defaultLanguage';
   static const _kHaptics = 'haptics';
   static const _kOnboardingComplete = 'onboardingComplete';
+  static const _kAppLanguage = 'appLanguage';
 
   final SharedPreferences _prefs;
 
@@ -49,6 +50,18 @@ class SettingsService extends ChangeNotifier {
 
   set haptics(bool value) {
     _prefs.setBool(_kHaptics, value);
+    notifyListeners();
+  }
+
+  /// UI language code (see `kAppLanguages`), or null to follow the system.
+  String? get appLanguage => _prefs.getString(_kAppLanguage);
+
+  set appLanguage(String? value) {
+    if (value == null) {
+      _prefs.remove(_kAppLanguage);
+    } else {
+      _prefs.setString(_kAppLanguage, value);
+    }
     notifyListeners();
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n_text.dart';
 import '../models/catalog.dart';
 import '../models/model_spec.dart';
 import '../models/recording.dart';
@@ -60,9 +61,9 @@ class _RetranscribeSheetState extends State<RetranscribeSheet> {
       if (mounted) setState(() => _selectedModel = model);
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Download fehlgeschlagen: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(downloadErrorText(context.l10n, e))),
+        );
       }
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -98,16 +99,22 @@ class _RetranscribeSheetState extends State<RetranscribeSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Neu transkribieren', style: Theme.of(context).textTheme.titleLarge),
+          Text(
+            context.l10n.retranscribe,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           const SizedBox(height: 16),
-          Text('Sprache', style: Theme.of(context).textTheme.labelLarge),
+          Text(
+            context.l10n.languageLabel,
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
             runSpacing: 8,
             children: [
               ChoiceChip(
-                label: const Text('Auto'),
+                label: Text(context.l10n.auto),
                 selected: _language == 'auto',
                 onSelected: (_) => setState(() => _language = 'auto'),
               ),
@@ -121,11 +128,14 @@ class _RetranscribeSheetState extends State<RetranscribeSheet> {
           ),
           if (forcedLanguage) ...[
             const SizedBox(height: 20),
-            Text('Modell', style: Theme.of(context).textTheme.labelLarge),
+            Text(
+              context.l10n.modelLabel,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
             const SizedBox(height: 8),
             if (whisperModels.isEmpty) ...[
               Text(
-                'Für eine feste Sprache wird ein Whisper-Modell benötigt.',
+                context.l10n.whisperRequired,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 8),
@@ -135,7 +145,7 @@ class _RetranscribeSheetState extends State<RetranscribeSheet> {
                 OutlinedButton.icon(
                   onPressed: _downloadWhisperSmall,
                   icon: const Icon(Icons.download_outlined),
-                  label: const Text('Whisper Small herunterladen'),
+                  label: Text(context.l10n.downloadWhisperSmall),
                 ),
             ] else
               Wrap(
@@ -156,7 +166,7 @@ class _RetranscribeSheetState extends State<RetranscribeSheet> {
             onPressed: (_busy || resolvedModel == null)
                 ? null
                 : () => _confirm(resolvedModel),
-            child: const Text('Neu transkribieren'),
+            child: Text(context.l10n.retranscribe),
           ),
         ],
       ),

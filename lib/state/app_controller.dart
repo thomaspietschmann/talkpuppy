@@ -14,6 +14,7 @@ import '../services/model_manager.dart';
 import '../services/recorder_service.dart';
 import '../services/settings_service.dart';
 import '../services/transcriber_service.dart';
+import 'app_error.dart';
 
 /// Discards a clip shorter than this — almost certainly an accidental tap.
 const Duration kMinClipDuration = Duration(milliseconds: 500);
@@ -45,7 +46,8 @@ class AppController extends ChangeNotifier {
   final bool useWakelock;
 
   RecordingPhase phase = RecordingPhase.idle;
-  String? errorMessage;
+  /// The current error, if [phase] is [RecordingPhase.error].
+  AppError? error;
   Recording? activeRecording;
   double amplitude = 0;
 
@@ -59,7 +61,7 @@ class AppController extends ChangeNotifier {
 
   /// Why the selected model couldn't be loaded, if it is downloaded but
   /// broken. Null when the model is fine or simply not installed.
-  String? modelError;
+  AppError? modelError;
 
   bool _appendMode = false;
   bool _starting = false;
@@ -137,10 +139,11 @@ class AppController extends ChangeNotifier {
       modelError = null;
     } catch (e) {
       modelReady = false;
-      modelError =
-          '${model.displayName} konnte nicht geladen werden. Falls das '
-          'wiederholt passiert, das Modell löschen und neu herunterladen. '
-          '($e)';
+      modelError = AppError(
+        AppErrorKind.modelLoad,
+        modelName: model.displayName,
+        detail: '$e',
+      );
     }
     notifyListeners();
   }
@@ -155,17 +158,14 @@ class AppController extends ChangeNotifier {
     // recorder twice.
     _starting = true;
     _appendMode = appendMode && activeRecording != null;
-    errorMessage = null;
+    error = null;
     notifyListeners();
 
     try {
       await historyStore.ensureDirExists();
       _pendingWavPath = historyStore.wavPathFor(historyStore.newWavFileName());
       if (!await recorder.hasPermission()) {
-        throw const _UserFacingError(
-          'Kein Zugriff aufs Mikrofon. Bitte in den Einstellungen des '
-          'Telefons erlauben.',
-        );
+        throw const _ErrorOf(AppError(AppErrorKind.micPermission));
       }
       await recorder.start(_pendingWavPath!);
     } catch (e) {
@@ -173,8 +173,11 @@ class AppController extends ChangeNotifier {
       _pendingWavPath = null;
       if (path != null) await _deleteFileIfExists(path);
       _starting = false;
-      _fail(e is _UserFacingError ? e.message : 'Aufnahme konnte nicht '
-          'gestartet werden ($e).');
+      _fail(
+        e is _ErrorOf
+            ? e.error
+            : AppError(AppErrorKind.recorderStart, detail: '$e'),
+      );
       return;
     }
 
@@ -207,7 +210,7 @@ class AppController extends ChangeNotifier {
       duration = await recorder.stop();
     } catch (e) {
       if (wavPath != null) await _deleteFileIfExists(wavPath);
-      _fail('Aufnahme konnte nicht beendet werden ($e).');
+      _fail(AppError(AppErrorKind.recorderStop, detail: '$e'));
       return;
     }
 
@@ -235,7 +238,9 @@ class AppController extends ChangeNotifier {
       result = await _serialized(() async {
         await _loadCurrentModel();
         if (!modelReady) {
-          throw _UserFacingError(modelError ?? 'Kein Modell geladen.');
+          throw _ErrorOf(
+            modelError ?? const AppError(AppErrorKind.noModel),
+          );
         }
         return transcriber.transcribeFile(wavPath);
       });
@@ -273,10 +278,9 @@ class AppController extends ChangeNotifier {
 
     if (failure != null) {
       _fail(
-        failure is _UserFacingError
-            ? failure.message
-            : 'Transkription fehlgeschlagen ($failure). Die Aufnahme ist '
-                  'gespeichert und kann neu transkribiert werden.',
+        failure is _ErrorOf
+            ? failure.error
+            : AppError(AppErrorKind.transcription, detail: '$failure'),
       );
       return;
     }
@@ -331,7 +335,7 @@ class AppController extends ChangeNotifier {
   }) async {
     if (isBusy) return;
     phase = RecordingPhase.transcribing;
-    errorMessage = null;
+    error = null;
     notifyListeners();
     try {
       final newClips = await _serialized(() async {
@@ -370,7 +374,7 @@ class AppController extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       // The existing clips are left untouched on failure.
-      _fail('Neu-Transkription fehlgeschlagen ($e).');
+      _fail(AppError(AppErrorKind.retranscribe, detail: '$e'));
     }
     // The retranscribe model/language may differ from the live default;
     // make sure the next fresh recording uses the default again.
@@ -380,7 +384,7 @@ class AppController extends ChangeNotifier {
   /// Dismisses an error state and returns to idle/done so the user can try
   /// again.
   void dismissError() {
-    errorMessage = null;
+    error = null;
     if (phase == RecordingPhase.error) phase = _restingPhase;
     notifyListeners();
   }
@@ -418,8 +422,8 @@ class AppController extends ChangeNotifier {
   RecordingPhase get _restingPhase =>
       activeRecording == null ? RecordingPhase.idle : RecordingPhase.done;
 
-  void _fail(String message) {
-    errorMessage = message;
+  void _fail(AppError appError) {
+    error = appError;
     phase = RecordingPhase.error;
     notifyListeners();
   }
@@ -438,10 +442,11 @@ class AppController extends ChangeNotifier {
   }
 }
 
-class _UserFacingError implements Exception {
-  const _UserFacingError(this.message);
-  final String message;
+/// Carries an [AppError] through a `throw` inside the controller.
+class _ErrorOf implements Exception {
+  const _ErrorOf(this.error);
+  final AppError error;
 
   @override
-  String toString() => message;
+  String toString() => error.toString();
 }

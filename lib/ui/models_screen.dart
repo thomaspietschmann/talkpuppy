@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n_text.dart';
 import '../models/catalog.dart';
 import '../models/model_spec.dart';
 import '../services/model_manager.dart';
@@ -18,8 +19,6 @@ class ModelsScreen extends StatefulWidget {
 class _ModelsScreenState extends State<ModelsScreen> {
   String? _busyId;
   DownloadProgress? _progress;
-
-  String _sizeLabel(int bytes) => '${(bytes / (1024 * 1024)).round()} MB';
 
   Future<void> _download(ModelSpec model) async {
     final scope = ControllerScope.of(context);
@@ -43,9 +42,7 @@ class _ModelsScreenState extends State<ModelsScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              e is ModelDownloadException ? e.message : 'Download fehlgeschlagen: $e',
-            ),
+            content: Text(downloadErrorText(context.l10n, e)),
           ),
         );
       }
@@ -64,19 +61,21 @@ class _ModelsScreenState extends State<ModelsScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Modell löschen?'),
+        title: Text(context.l10n.deleteModelTitle),
         content: Text(
-          '${model.displayName} wird vom Gerät gelöscht '
-          '(${_sizeLabel(model.totalSizeBytes)}).',
+          context.l10n.deleteModelBody(
+            model.displayName,
+            megabytes(model.totalSizeBytes),
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Abbrechen'),
+            child: Text(context.l10n.cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Löschen'),
+            child: Text(context.l10n.delete),
           ),
         ],
       ),
@@ -95,7 +94,7 @@ class _ModelsScreenState extends State<ModelsScreen> {
   Widget build(BuildContext context) {
     final scope = ControllerScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Modelle')),
+      appBar: AppBar(title: Text(context.l10n.modelsTitle)),
       body: ListenableBuilder(
         listenable: Listenable.merge([scope.modelManager, scope.settings]),
         builder: (context, _) {
@@ -147,8 +146,6 @@ class _ModelRow extends StatelessWidget {
   final VoidCallback onCancel;
   final VoidCallback onDelete;
 
-  String _sizeLabel(int bytes) => '${(bytes / (1024 * 1024)).round()} MB';
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -170,16 +167,16 @@ class _ModelRow extends StatelessWidget {
                 if (installed && !busy)
                   IconButton(
                     icon: const Icon(Icons.delete_outline),
-                    tooltip: 'Löschen',
+                    tooltip: context.l10n.delete,
                     onPressed: onDelete,
                   ),
               ],
             ),
             const SizedBox(height: 4),
-            Text(model.description),
+            Text(modelDescription(context.l10n, model)),
             const SizedBox(height: 4),
             Text(
-              _sizeLabel(model.totalSizeBytes),
+              context.l10n.sizeMb(megabytes(model.totalSizeBytes)),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 12),
@@ -191,13 +188,15 @@ class _ModelRow extends StatelessWidget {
                   Expanded(
                     child: Text(
                       progress == null
-                          ? 'Wird vorbereitet…'
-                          : '${_sizeLabel(progress!.receivedBytes)} / '
-                                '${_sizeLabel(progress!.totalBytes)}',
+                          ? context.l10n.preparing
+                          : context.l10n.downloadProgress(
+                              megabytes(progress!.receivedBytes),
+                              megabytes(progress!.totalBytes),
+                            ),
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
-                  TextButton(onPressed: onCancel, child: const Text('Abbrechen')),
+                  TextButton(onPressed: onCancel, child: Text(context.l10n.cancel)),
                 ],
               ),
             ] else if (!installed)
@@ -205,7 +204,7 @@ class _ModelRow extends StatelessWidget {
                 identifier: 'model_download_${model.id}',
                 child: FilledButton(
                   onPressed: onDownload,
-                  child: const Text('Herunterladen'),
+                  child: Text(context.l10n.download),
                 ),
               ),
           ],

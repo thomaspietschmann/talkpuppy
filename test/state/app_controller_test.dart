@@ -175,7 +175,7 @@ void main() {
     await controller.stopAndTranscribe();
 
     expect(controller.phase, RecordingPhase.error);
-    expect(controller.errorMessage, isNotNull);
+    expect(controller.error, isNotNull);
     // Audio isn't silently orphaned: it's tracked (so the purge covers it)
     // and can be retranscribed later.
     expect(historyStore.recordings, hasLength(1));
@@ -184,7 +184,7 @@ void main() {
 
     controller.dismissError();
     expect(controller.phase, RecordingPhase.done);
-    expect(controller.errorMessage, isNull);
+    expect(controller.error, isNull);
   });
 
   test('a failed model load is retried, not cached as loaded', () async {

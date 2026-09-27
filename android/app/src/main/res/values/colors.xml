@@ -2,4 +2,5 @@
 <resources>
     <!-- Talkpuppy brand ink, matches the iOS launch screen. -->
     <color name="launch_background">#15131F</color>
+	<color name="ic_launcher_background">#15131F</color>
 </resources>

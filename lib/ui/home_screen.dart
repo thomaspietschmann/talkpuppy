@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n_text.dart';
 import '../models/catalog.dart';
 import '../models/recording.dart';
 import '../state/app_controller.dart';
@@ -83,28 +84,11 @@ class _HomeContentState extends State<_HomeContent> {
         return Scaffold(
           appBar: AppBar(
             toolbarHeight: 72,
-            title: const Row(
-              children: [
-                BrandMark(size: 48),
-                SizedBox(width: 10),
-                Flexible(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Talkpuppy'),
-                      Text(
-                        'Offline Transkription',
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            // Just the mascot: next to the model chip there's no room for a
+            // readable app name on phone widths.
+            title: BrandMark(
+              size: 48,
+              semanticLabel: context.l10n.logoSemantics,
             ),
             actions: [
               _ModelChip(),
@@ -112,7 +96,7 @@ class _HomeContentState extends State<_HomeContent> {
                 identifier: 'settings_button',
                 child: IconButton(
                   icon: const Icon(Icons.settings_outlined),
-                  tooltip: 'Einstellungen',
+                  tooltip: context.l10n.settingsTooltip,
                   onPressed: () => showModalBottomSheet<void>(
                     context: context,
                     isScrollControlled: true,
@@ -131,9 +115,12 @@ class _HomeContentState extends State<_HomeContent> {
                   child: ListView(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
                     children: [
-                      if (controller.errorMessage != null)
+                      if (controller.error != null)
                         _ErrorBanner(
-                          message: controller.errorMessage!,
+                          message: appErrorText(
+                            context.l10n,
+                            controller.error!,
+                          ),
                           onDismiss: controller.dismissError,
                         ),
                       TranscriptCard(
@@ -195,7 +182,7 @@ class _ModelChip extends StatelessWidget {
         : null;
 
     return PopupMenuButton<String>(
-      tooltip: 'Modell wechseln',
+      tooltip: context.l10n.switchModelTooltip,
       initialValue: settings.selectedModelId,
       onSelected: (value) {
         if (value == '__manage__') {
@@ -210,16 +197,16 @@ class _ModelChip extends StatelessWidget {
         for (final m in installed)
           PopupMenuItem(value: m.id, child: Text(m.displayName)),
         const PopupMenuDivider(),
-        const PopupMenuItem(
+        PopupMenuItem(
           value: '__manage__',
-          child: Text('Modelle verwalten…'),
+          child: Text(context.l10n.manageModelsEllipsis),
         ),
       ],
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Chip(
           label: Text(
-            current?.displayName ?? 'Kein Modell',
+            current?.displayName ?? context.l10n.noModel,
             overflow: TextOverflow.ellipsis,
           ),
           avatar: const Icon(Icons.model_training, size: 18),
@@ -253,7 +240,7 @@ class _ErrorBanner extends StatelessWidget {
                 style: TextStyle(color: scheme.onErrorContainer),
               ),
             ),
-            TextButton(onPressed: onDismiss, child: const Text('OK')),
+            TextButton(onPressed: onDismiss, child: Text(context.l10n.ok)),
           ],
         ),
       ),
@@ -285,7 +272,7 @@ class _BottomControls extends StatelessWidget {
           if (!controller.modelReady) ...[
             if (controller.modelError != null) ...[
               Text(
-                controller.modelError!,
+                appErrorText(context.l10n, controller.modelError!),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
@@ -298,8 +285,8 @@ class _BottomControls extends StatelessWidget {
               icon: const Icon(Icons.download_outlined),
               label: Text(
                 controller.modelError != null
-                    ? 'Modelle verwalten'
-                    : 'Modell installieren',
+                    ? context.l10n.manageModels
+                    : context.l10n.installModel,
               ),
             ),
           ] else ...[
@@ -321,21 +308,21 @@ class _BottomControls extends StatelessWidget {
                       onStart: () {},
                       onStop: controller.stopAndTranscribe,
                       icon: Icons.stop_rounded,
-                      label: 'Beenden',
+                      label: context.l10n.stopRecording,
                     ),
                   ),
                 ],
               ),
-              RecordingPhase.transcribing => const Column(
+              RecordingPhase.transcribing => Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 56,
                     height: 56,
                     child: CircularProgressIndicator(),
                   ),
-                  SizedBox(height: 8),
-                  Text('Transkribiere…'),
+                  const SizedBox(height: 8),
+                  Text(context.l10n.transcribing),
                 ],
               ),
               RecordingPhase.done => Row(
@@ -349,7 +336,7 @@ class _BottomControls extends StatelessWidget {
                       onStart: controller.startNewRecording,
                       onStop: controller.stopAndTranscribe,
                       icon: Icons.mic_rounded,
-                      label: 'Neue Aufnahme',
+                      label: context.l10n.newRecording,
                     ),
                   ),
                   Semantics(
@@ -360,7 +347,7 @@ class _BottomControls extends StatelessWidget {
                       onStart: controller.startContinueRecording,
                       onStop: controller.stopAndTranscribe,
                       icon: Icons.add_circle_outline,
-                      label: 'Weiter aufnehmen',
+                      label: context.l10n.continueRecording,
                     ),
                   ),
                 ],
@@ -373,7 +360,7 @@ class _BottomControls extends StatelessWidget {
                   onStart: controller.startNewRecording,
                   onStop: controller.stopAndTranscribe,
                   icon: Icons.mic_rounded,
-                  label: 'Aufnehmen',
+                  label: context.l10n.record,
                 ),
               ),
             },

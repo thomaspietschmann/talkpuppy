@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n_text.dart';
 import '../models/catalog.dart';
 import '../models/model_spec.dart';
 import '../services/device_ram_service.dart';
@@ -66,7 +67,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       await scope.controller.recorder.hasPermission();
       scope.settings.onboardingComplete = true;
     } catch (e) {
-      if (mounted) setState(() => _error = e.toString());
+      if (mounted) {
+        setState(() => _error = downloadErrorText(context.l10n, e));
+      }
     } finally {
       if (mounted) setState(() => _downloadingId = null);
     }
@@ -98,7 +101,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: Text(
-                      'Willkommen bei Talkpuppy',
+                      context.l10n.welcomeTitle,
                       style: Theme.of(context).textTheme.headlineSmall
                           ?.copyWith(fontWeight: FontWeight.w800),
                     ),
@@ -108,8 +111,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Wähle ein Sprachmodell für die Transkription. Es läuft '
-              'komplett auf deinem Gerät, ohne Internet.',
+              context.l10n.welcomeBody,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
@@ -153,8 +155,6 @@ class _ModelOnboardingCard extends StatelessWidget {
   final DownloadProgress? progress;
   final VoidCallback onSelect;
 
-  String _sizeLabel(int bytes) => '${(bytes / (1024 * 1024)).round()} MB';
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -173,17 +173,17 @@ class _ModelOnboardingCard extends StatelessWidget {
                   ),
                 ),
                 if (recommended)
-                  const Chip(
-                    label: Text('Empfohlen'),
+                  Chip(
+                    label: Text(context.l10n.recommended),
                     visualDensity: VisualDensity.compact,
                   ),
               ],
             ),
             const SizedBox(height: 6),
-            Text(model.description),
+            Text(modelDescription(context.l10n, model)),
             const SizedBox(height: 4),
             Text(
-              _sizeLabel(model.totalSizeBytes),
+              context.l10n.sizeMb(megabytes(model.totalSizeBytes)),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 12),
@@ -192,9 +192,11 @@ class _ModelOnboardingCard extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 progress == null
-                    ? 'Wird vorbereitet…'
-                    : '${_sizeLabel(progress!.receivedBytes)} / '
-                          '${_sizeLabel(progress!.totalBytes)}',
+                    ? context.l10n.preparing
+                    : context.l10n.downloadProgress(
+                        megabytes(progress!.receivedBytes),
+                        megabytes(progress!.totalBytes),
+                      ),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ] else
@@ -202,7 +204,7 @@ class _ModelOnboardingCard extends StatelessWidget {
                 identifier: 'model_download_${model.id}',
                 child: FilledButton(
                   onPressed: onSelect,
-                  child: const Text('Herunterladen und loslegen'),
+                  child: Text(context.l10n.downloadAndStart),
                 ),
               ),
           ],

@@ -1,0 +1,262 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Czech (`cs`).
+class AppLocalizationsCs extends AppLocalizations {
+  AppLocalizationsCs([String locale = 'cs']) : super(locale);
+
+  @override
+  String get logoSemantics => 'Logo Talkpuppy';
+
+  @override
+  String startupFailed(String error) {
+    return 'Talkpuppy se nepodařilo spustit:\n$error';
+  }
+
+  @override
+  String get settingsTooltip => 'Nastavení';
+
+  @override
+  String get switchModelTooltip => 'Změnit model';
+
+  @override
+  String get manageModelsEllipsis => 'Spravovat modely…';
+
+  @override
+  String get manageModels => 'Spravovat modely';
+
+  @override
+  String get installModel => 'Nainstalovat model';
+
+  @override
+  String get noModel => 'Žádný model';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get cancel => 'Zrušit';
+
+  @override
+  String get delete => 'Smazat';
+
+  @override
+  String get copy => 'Kopírovat';
+
+  @override
+  String get record => 'Nahrát';
+
+  @override
+  String get stopRecording => 'Zastavit';
+
+  @override
+  String get transcribing => 'Přepisuji…';
+
+  @override
+  String get newRecording => 'Nová nahrávka';
+
+  @override
+  String get continueRecording => 'Nahrávat dál';
+
+  @override
+  String get transcriptLabel => 'Přepis';
+
+  @override
+  String get emptyTranscript =>
+      'Zatím žádná nahrávka.\nKlepni na mikrofon dole.';
+
+  @override
+  String get noTextRecognized => '(nebyl rozpoznán žádný text)';
+
+  @override
+  String get retranscribe => 'Přepsat znovu';
+
+  @override
+  String get today => 'Dnes';
+
+  @override
+  String get yesterday => 'Včera';
+
+  @override
+  String get welcomeTitle => 'Vítej v Talkpuppy';
+
+  @override
+  String get welcomeBody =>
+      'Vyber si řečový model pro přepis. Běží celý na tvém zařízení, bez internetu.';
+
+  @override
+  String get recommended => 'Doporučeno';
+
+  @override
+  String get preparing => 'Připravuji…';
+
+  @override
+  String sizeMb(int size) {
+    return '$size MB';
+  }
+
+  @override
+  String downloadProgress(int received, int total) {
+    return '$received MB / $total MB';
+  }
+
+  @override
+  String get downloadAndStart => 'Stáhnout a začít';
+
+  @override
+  String get download => 'Stáhnout';
+
+  @override
+  String downloadFailed(String error) {
+    return 'Stahování selhalo: $error';
+  }
+
+  @override
+  String get modelsTitle => 'Modely';
+
+  @override
+  String get deleteModelTitle => 'Smazat model?';
+
+  @override
+  String deleteModelBody(String model, int size) {
+    return '$model bude z tohoto zařízení smazán ($size MB).';
+  }
+
+  @override
+  String get modelDescParakeet =>
+      'Velmi rychlý a velmi přesný, 25 evropských jazyků, jazyk rozpozná automaticky. Doporučeno pro telefony s alespoň 6 GB RAM.';
+
+  @override
+  String get modelDescWhisperSmall =>
+      'Vyvážený poměr rychlosti a přesnosti, 99 jazyků, jazyk lze pevně nastavit. Pro telefony s alespoň 4 GB RAM.';
+
+  @override
+  String get modelDescWhisperBase =>
+      'Nenáročný pro starší telefony, 99 jazyků, jazyk lze pevně nastavit. Pro telefony s alespoň 3 GB RAM.';
+
+  @override
+  String get modelDescWhisperTiny =>
+      'Nejmenší a nejrychleji stažený. 99 jazyků, jazyk lze pevně nastavit. Poběží prakticky na každém telefonu.';
+
+  @override
+  String get languageLabel => 'Jazyk';
+
+  @override
+  String get auto => 'Auto';
+
+  @override
+  String get modelLabel => 'Model';
+
+  @override
+  String get whisperRequired => 'Pevně nastavený jazyk vyžaduje model Whisper.';
+
+  @override
+  String get downloadWhisperSmall => 'Stáhnout Whisper Small';
+
+  @override
+  String get settingsTitle => 'Nastavení';
+
+  @override
+  String get appLanguageTitle => 'Jazyk aplikace';
+
+  @override
+  String get appLanguageSystem => 'Podle systému';
+
+  @override
+  String get autoCopyTitle => 'Kopírovat automaticky';
+
+  @override
+  String get autoCopySubtitle => 'Vložit text do schránky hned po přepisu';
+
+  @override
+  String get hapticsTitle => 'Haptická odezva';
+
+  @override
+  String get defaultLanguageTitle => 'Výchozí jazyk nových nahrávek';
+
+  @override
+  String get defaultLanguageHint =>
+      'Používají ho jen modely Whisper; Parakeet jazyk vždy rozpozná automaticky.';
+
+  @override
+  String get licensesTitle => 'Licence';
+
+  @override
+  String get licensesSubtitle => 'Použitý software a modely';
+
+  @override
+  String get licensesLegalese =>
+      'Rozpoznávání řeči pomocí sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) a Whisper (OpenAI, MIT).';
+
+  @override
+  String get deleteAllTitle => 'Smazat všechny nahrávky';
+
+  @override
+  String get deleteAllConfirmTitle => 'Smazat všechny nahrávky?';
+
+  @override
+  String get deleteAllConfirmBody =>
+      'Všechny přepisy a nahrávky budou trvale smazány.';
+
+  @override
+  String get errorMicPermission =>
+      'Chybí přístup k mikrofonu. Povol ho prosím v nastavení telefonu.';
+
+  @override
+  String errorRecorderStart(String detail) {
+    return 'Nahrávání se nepodařilo spustit ($detail).';
+  }
+
+  @override
+  String errorRecorderStop(String detail) {
+    return 'Nahrávání se nepodařilo zastavit ($detail).';
+  }
+
+  @override
+  String errorTranscription(String detail) {
+    return 'Přepis selhal ($detail). Nahrávka je uložená a lze ji přepsat znovu.';
+  }
+
+  @override
+  String errorRetranscribe(String detail) {
+    return 'Opakovaný přepis selhal ($detail).';
+  }
+
+  @override
+  String errorModelLoad(String model, String detail) {
+    return 'Model $model se nepodařilo načíst. Pokud se to opakuje, smaž model a stáhni ho znovu. ($detail)';
+  }
+
+  @override
+  String get errorNoModel => 'Není načten žádný model.';
+
+  @override
+  String downloadAlreadyRunning(String model) {
+    return '$model se už stahuje.';
+  }
+
+  @override
+  String get downloadCancelled => 'Stahování zrušeno.';
+
+  @override
+  String get downloadNetworkError =>
+      'Stahování selhalo. Zkontroluj připojení k internetu a zkus to znovu.';
+
+  @override
+  String get downloadNotModelFile =>
+      'Server nevrátil soubor modelu (možná přihlašovací stránka Wi-Fi). Zkontroluj síť a zkus to znovu.';
+
+  @override
+  String downloadCorrupt(String file) {
+    return 'Stažený soubor $file je poškozený. Zkus to prosím znovu.';
+  }
+
+  @override
+  String downloadNoSpace(String model) {
+    return 'Nedostatek místa pro $model.';
+  }
+}

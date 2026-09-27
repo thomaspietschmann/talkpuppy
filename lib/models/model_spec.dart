@@ -34,7 +34,6 @@ class ModelSpec {
   const ModelSpec({
     required this.id,
     required this.displayName,
-    required this.description,
     required this.engine,
     required this.baseUrl,
     required this.files,
@@ -48,7 +47,6 @@ class ModelSpec {
   final String id;
 
   final String displayName;
-  final String description;
   final ModelEngine engine;
 
   /// Directory URL (with trailing slash) files are resolved against.

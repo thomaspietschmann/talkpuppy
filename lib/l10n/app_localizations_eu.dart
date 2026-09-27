@@ -1,0 +1,264 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Basque (`eu`).
+class AppLocalizationsEu extends AppLocalizations {
+  AppLocalizationsEu([String locale = 'eu']) : super(locale);
+
+  @override
+  String get logoSemantics => 'Talkpuppy-ren logoa';
+
+  @override
+  String startupFailed(String error) {
+    return 'Ezin izan da Talkpuppy abiarazi:\n$error';
+  }
+
+  @override
+  String get settingsTooltip => 'Ezarpenak';
+
+  @override
+  String get switchModelTooltip => 'Aldatu eredua';
+
+  @override
+  String get manageModelsEllipsis => 'Kudeatu ereduak…';
+
+  @override
+  String get manageModels => 'Kudeatu ereduak';
+
+  @override
+  String get installModel => 'Instalatu eredua';
+
+  @override
+  String get noModel => 'Eredurik ez';
+
+  @override
+  String get ok => 'Ados';
+
+  @override
+  String get cancel => 'Utzi';
+
+  @override
+  String get delete => 'Ezabatu';
+
+  @override
+  String get copy => 'Kopiatu';
+
+  @override
+  String get record => 'Grabatu';
+
+  @override
+  String get stopRecording => 'Gelditu';
+
+  @override
+  String get transcribing => 'Transkribatzen…';
+
+  @override
+  String get newRecording => 'Grabazio berria';
+
+  @override
+  String get continueRecording => 'Jarraitu grabatzen';
+
+  @override
+  String get transcriptLabel => 'Transkripzioa';
+
+  @override
+  String get emptyTranscript =>
+      'Oraindik ez dago grabaziorik.\nSakatu beheko mikrofonoa.';
+
+  @override
+  String get noTextRecognized => '(ez da testurik ezagutu)';
+
+  @override
+  String get retranscribe => 'Transkribatu berriro';
+
+  @override
+  String get today => 'Gaur';
+
+  @override
+  String get yesterday => 'Atzo';
+
+  @override
+  String get welcomeTitle => 'Ongi etorri Talkpuppy-ra';
+
+  @override
+  String get welcomeBody =>
+      'Aukeratu transkripziorako hizketa-eredu bat. Zure gailuan bertan exekutatzen da osorik, Interneterik gabe.';
+
+  @override
+  String get recommended => 'Gomendatua';
+
+  @override
+  String get preparing => 'Prestatzen…';
+
+  @override
+  String sizeMb(int size) {
+    return '$size MB';
+  }
+
+  @override
+  String downloadProgress(int received, int total) {
+    return '$received MB / $total MB';
+  }
+
+  @override
+  String get downloadAndStart => 'Deskargatu eta hasi';
+
+  @override
+  String get download => 'Deskargatu';
+
+  @override
+  String downloadFailed(String error) {
+    return 'Ezin izan da deskargatu: $error';
+  }
+
+  @override
+  String get modelsTitle => 'Ereduak';
+
+  @override
+  String get deleteModelTitle => 'Eredua ezabatu?';
+
+  @override
+  String deleteModelBody(String model, int size) {
+    return '$model gailu honetatik ezabatuko da ($size MB).';
+  }
+
+  @override
+  String get modelDescParakeet =>
+      'Oso azkarra eta oso zehatza, Europako 25 hizkuntza, hizkuntza automatikoki hautematen du. Gutxienez 6 GB RAM dituzten telefonoetarako gomendatua.';
+
+  @override
+  String get modelDescWhisperSmall =>
+      'Abiaduraren eta zehaztasunaren arteko oreka, 99 hizkuntza, hizkuntza finka daiteke. Gutxienez 4 GB RAM dituzten telefonoetarako.';
+
+  @override
+  String get modelDescWhisperBase =>
+      'Arina, telefono zaharretarako, 99 hizkuntza, hizkuntza finka daiteke. Gutxienez 3 GB RAM dituzten telefonoetarako.';
+
+  @override
+  String get modelDescWhisperTiny =>
+      'Txikiena eta azkarren deskargatzen dena. 99 hizkuntza, hizkuntza finka daiteke. Ia edozein telefonotan dabil.';
+
+  @override
+  String get languageLabel => 'Hizkuntza';
+
+  @override
+  String get auto => 'Auto';
+
+  @override
+  String get modelLabel => 'Eredua';
+
+  @override
+  String get whisperRequired =>
+      'Hizkuntza finko baterako Whisper eredu bat behar da.';
+
+  @override
+  String get downloadWhisperSmall => 'Deskargatu Whisper Small';
+
+  @override
+  String get settingsTitle => 'Ezarpenak';
+
+  @override
+  String get appLanguageTitle => 'Aplikazioaren hizkuntza';
+
+  @override
+  String get appLanguageSystem => 'Sistemaren lehenetsia';
+
+  @override
+  String get autoCopyTitle => 'Kopiatu automatikoki';
+
+  @override
+  String get autoCopySubtitle =>
+      'Jarri testua arbelean transkripzioa amaitu bezain laster';
+
+  @override
+  String get hapticsTitle => 'Erantzun haptikoa';
+
+  @override
+  String get defaultLanguageTitle => 'Grabazio berrien hizkuntza lehenetsia';
+
+  @override
+  String get defaultLanguageHint =>
+      'Whisper ereduek soilik erabiltzen dute; Parakeet-ek beti hautematen du hizkuntza automatikoki.';
+
+  @override
+  String get licensesTitle => 'Lizentziak';
+
+  @override
+  String get licensesSubtitle => 'Erabilitako softwarea eta ereduak';
+
+  @override
+  String get licensesLegalese =>
+      'Ahots-ezagutza sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) eta Whisper (OpenAI, MIT) bidez.';
+
+  @override
+  String get deleteAllTitle => 'Ezabatu grabazio guztiak';
+
+  @override
+  String get deleteAllConfirmTitle => 'Grabazio guztiak ezabatu?';
+
+  @override
+  String get deleteAllConfirmBody =>
+      'Transkripzio eta grabazio guztiak betiko ezabatuko dira.';
+
+  @override
+  String get errorMicPermission =>
+      'Ez dago mikrofonorako sarbiderik. Eman baimena telefonoaren ezarpenetan.';
+
+  @override
+  String errorRecorderStart(String detail) {
+    return 'Ezin izan da grabatzen hasi ($detail).';
+  }
+
+  @override
+  String errorRecorderStop(String detail) {
+    return 'Ezin izan da grabazioa gelditu ($detail).';
+  }
+
+  @override
+  String errorTranscription(String detail) {
+    return 'Ezin izan da transkribatu ($detail). Grabazioa gordeta dago eta berriro transkriba daiteke.';
+  }
+
+  @override
+  String errorRetranscribe(String detail) {
+    return 'Ezin izan da berriro transkribatu ($detail).';
+  }
+
+  @override
+  String errorModelLoad(String model, String detail) {
+    return 'Ezin izan da $model kargatu. Berriro gertatzen bada, ezabatu eredua eta deskargatu berriro. ($detail)';
+  }
+
+  @override
+  String get errorNoModel => 'Ez dago eredurik kargatuta.';
+
+  @override
+  String downloadAlreadyRunning(String model) {
+    return '$model deskargatzen ari da dagoeneko.';
+  }
+
+  @override
+  String get downloadCancelled => 'Deskarga bertan behera utzi da.';
+
+  @override
+  String get downloadNetworkError =>
+      'Ezin izan da deskargatu. Egiaztatu Interneteko konexioa eta saiatu berriro.';
+
+  @override
+  String get downloadNotModelFile =>
+      'Zerbitzariak ez du eredu-fitxategirik itzuli (agian wifi-saioa hasteko orri bat). Egiaztatu sarea eta saiatu berriro.';
+
+  @override
+  String downloadCorrupt(String file) {
+    return 'Deskargatutako $file fitxategia hondatuta dago. Saiatu berriro.';
+  }
+
+  @override
+  String downloadNoSpace(String model) {
+    return 'Ez dago leku nahikorik $model gordetzeko.';
+  }
+}

@@ -3,10 +3,18 @@ import 'package:flutter/material.dart';
 /// The Talkpuppy mascot, kept in one widget so the in-app mark always uses
 /// the same generated PNG and sizing rules.
 class BrandMark extends StatelessWidget {
-  const BrandMark({super.key, this.size = 48, this.showBackdrop = false});
+  const BrandMark({
+    super.key,
+    this.size = 48,
+    this.showBackdrop = false,
+    this.semanticLabel,
+  });
 
   final double size;
   final bool showBackdrop;
+
+  /// Localized label for screen readers; null makes the image decorative.
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +24,8 @@ class BrandMark extends StatelessWidget {
       width: size,
       height: size,
       fit: BoxFit.contain,
-      semanticLabel: 'Talkpuppy Logo',
+      semanticLabel: semanticLabel,
+      excludeFromSemantics: semanticLabel == null,
     );
 
     if (!showBackdrop) return image;
