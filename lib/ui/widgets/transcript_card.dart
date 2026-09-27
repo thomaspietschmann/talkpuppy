@@ -12,7 +12,9 @@ class TranscriptCard extends StatelessWidget {
 
   final Recording? recording;
   final VoidCallback onCopy;
-  final VoidCallback onRetranscribe;
+
+  /// Null disables the button (e.g. while a recording is running).
+  final VoidCallback? onRetranscribe;
 
   @override
   Widget build(BuildContext context) {

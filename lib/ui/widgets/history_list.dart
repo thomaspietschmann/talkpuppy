@@ -9,9 +9,14 @@ class HistoryList extends StatelessWidget {
     required this.onTapCopy,
     required this.onDelete,
     required this.onRetranscribe,
+    this.editable = true,
   });
 
   final List<Recording> recordings;
+
+  /// When false (recording/transcribing in progress), swipe-to-delete and
+  /// the long-press actions are disabled; copying still works.
+  final bool editable;
   final void Function(Recording) onTapCopy;
   final void Function(Recording) onDelete;
   final void Function(Recording) onRetranscribe;
@@ -67,7 +72,9 @@ class HistoryList extends StatelessWidget {
           identifier: 'history_item_${recording.id}',
           child: Dismissible(
             key: ValueKey(recording.id),
-            direction: DismissDirection.endToStart,
+            direction: editable
+                ? DismissDirection.endToStart
+                : DismissDirection.none,
             background: Container(
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -85,7 +92,9 @@ class HistoryList extends StatelessWidget {
               margin: const EdgeInsets.symmetric(vertical: 4),
               child: ListTile(
                 onTap: () => onTapCopy(recording),
-                onLongPress: () => _showActions(context, recording),
+                onLongPress: editable
+                    ? () => _showActions(context, recording)
+                    : null,
                 title: Text(
                   preview.isEmpty ? '(kein Text erkannt)' : preview,
                   maxLines: 1,

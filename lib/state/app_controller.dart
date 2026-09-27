@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../models/catalog.dart';
 import '../models/model_spec.dart';
@@ -30,6 +31,7 @@ class AppController extends ChangeNotifier {
     required this.settings,
     required this.modelManager,
     required this.vadModelPath,
+    this.useWakelock = true,
   });
 
   final RecorderService recorder;
@@ -38,6 +40,9 @@ class AppController extends ChangeNotifier {
   final SettingsService settings;
   final ModelManager modelManager;
   final String vadModelPath;
+
+  /// Keep the screen on while recording. Off in tests (no platform plugin).
+  final bool useWakelock;
 
   RecordingPhase phase = RecordingPhase.idle;
   String? errorMessage;
@@ -52,10 +57,27 @@ class AppController extends ChangeNotifier {
   /// whether recording is actually possible right now.
   bool modelReady = false;
 
+  /// Why the selected model couldn't be loaded, if it is downloaded but
+  /// broken. Null when the model is fine or simply not installed.
+  String? modelError;
+
   bool _appendMode = false;
+  bool _starting = false;
   String? _pendingWavPath;
   StreamSubscription<double>? _ampSub;
   int _idCounter = 0;
+
+  /// Tail of the transcriber work queue. The isolate handles one command at
+  /// a time, but "load model X, then transcribe" is two commands — without
+  /// this, a retranscribe (or a model switch) could slip in between and a
+  /// clip would be decoded with the wrong model/language.
+  Future<void> _transcriberQueue = Future.value();
+
+  Future<T> _serialized<T>(Future<T> Function() action) {
+    final result = _transcriberQueue.then((_) => action());
+    _transcriberQueue = result.then((_) {}, onError: (_) {});
+    return result;
+  }
 
   String _generateId() {
     _idCounter++;
@@ -66,19 +88,39 @@ class AppController extends ChangeNotifier {
     await ensureCurrentModelLoaded();
   }
 
+  /// True while a recording or transcription is in flight. History edits
+  /// (delete, retranscribe) are refused then, so they can't yank the state
+  /// out from under a live microphone.
+  bool get isBusy =>
+      _starting ||
+      phase == RecordingPhase.recording ||
+      phase == RecordingPhase.transcribing;
+
+  bool get canRecord =>
+      modelReady &&
+      !_starting &&
+      (phase == RecordingPhase.idle ||
+          phase == RecordingPhase.done ||
+          phase == RecordingPhase.error);
+
   /// (Re-)loads whichever model [SettingsService.selectedModelId] points at
-  /// into the transcriber, for live (auto-language) recording. Safe to call
-  /// repeatedly, including after retranscribing with a different model.
-  Future<void> ensureCurrentModelLoaded() async {
+  /// into the transcriber, for live recording. Safe to call repeatedly,
+  /// including after retranscribing with a different model.
+  Future<void> ensureCurrentModelLoaded() => _serialized(_loadCurrentModel);
+
+  /// Must only be called from inside [_serialized].
+  Future<void> _loadCurrentModel() async {
     final modelId = settings.selectedModelId;
     if (modelId == null) {
       modelReady = false;
+      modelError = null;
       notifyListeners();
       return;
     }
     final model = modelById(modelId);
     if (!await modelManager.isDownloaded(model)) {
       modelReady = false;
+      modelError = null;
       notifyListeners();
       return;
     }
@@ -92,15 +134,16 @@ class AppController extends ChangeNotifier {
         forcedLanguage: settings.defaultLanguage,
       );
       modelReady = true;
-    } catch (_) {
+      modelError = null;
+    } catch (e) {
       modelReady = false;
+      modelError =
+          '${model.displayName} konnte nicht geladen werden. Falls das '
+          'wiederholt passiert, das Modell löschen und neu herunterladen. '
+          '($e)';
     }
     notifyListeners();
   }
-
-  bool get canRecord =>
-      modelReady &&
-      (phase == RecordingPhase.idle || phase == RecordingPhase.done);
 
   Future<void> startNewRecording() => _startRecording(appendMode: false);
 
@@ -108,15 +151,37 @@ class AppController extends ChangeNotifier {
 
   Future<void> _startRecording({required bool appendMode}) async {
     if (!canRecord) return;
+    // Claim the start synchronously so a fast double tap can't start the
+    // recorder twice.
+    _starting = true;
     _appendMode = appendMode && activeRecording != null;
-    await historyStore.ensureDirExists();
-    final fileName = historyStore.newWavFileName();
-    _pendingWavPath = historyStore.wavPathFor(fileName);
-
-    await recorder.start(_pendingWavPath!);
-    phase = RecordingPhase.recording;
     errorMessage = null;
+    notifyListeners();
+
+    try {
+      await historyStore.ensureDirExists();
+      _pendingWavPath = historyStore.wavPathFor(historyStore.newWavFileName());
+      if (!await recorder.hasPermission()) {
+        throw const _UserFacingError(
+          'Kein Zugriff aufs Mikrofon. Bitte in den Einstellungen des '
+          'Telefons erlauben.',
+        );
+      }
+      await recorder.start(_pendingWavPath!);
+    } catch (e) {
+      final path = _pendingWavPath;
+      _pendingWavPath = null;
+      if (path != null) await _deleteFileIfExists(path);
+      _starting = false;
+      _fail(e is _UserFacingError ? e.message : 'Aufnahme konnte nicht '
+          'gestartet werden ($e).');
+      return;
+    }
+
+    _starting = false;
+    phase = RecordingPhase.recording;
     recordingStartedAt = DateTime.now();
+    if (useWakelock) unawaited(WakelockPlus.enable());
     notifyListeners();
 
     await _ampSub?.cancel();
@@ -133,22 +198,28 @@ class AppController extends ChangeNotifier {
     _ampSub = null;
     amplitude = 0;
     recordingStartedAt = null;
-
-    final duration = await recorder.stop();
+    if (useWakelock) unawaited(WakelockPlus.disable());
     final wavPath = _pendingWavPath;
     _pendingWavPath = null;
 
+    final Duration duration;
+    try {
+      duration = await recorder.stop();
+    } catch (e) {
+      if (wavPath != null) await _deleteFileIfExists(wavPath);
+      _fail('Aufnahme konnte nicht beendet werden ($e).');
+      return;
+    }
+
     if (wavPath == null) {
-      phase = RecordingPhase.idle;
+      phase = _restingPhase;
       notifyListeners();
       return;
     }
 
     if (duration < kMinClipDuration) {
       await _deleteFileIfExists(wavPath);
-      phase = activeRecording == null
-          ? RecordingPhase.idle
-          : RecordingPhase.done;
+      phase = _restingPhase;
       notifyListeners();
       return;
     }
@@ -156,46 +227,67 @@ class AppController extends ChangeNotifier {
     phase = RecordingPhase.transcribing;
     notifyListeners();
 
+    final modelId = settings.selectedModelId ?? '';
+    final now = DateTime.now();
+    TranscriptionResult? result;
+    Object? failure;
     try {
-      await ensureCurrentModelLoaded();
-      final result = await transcriber.transcribeFile(wavPath);
-      final now = DateTime.now();
-      final clip = Clip(
-        id: _generateId(),
-        wavFileName: p.basename(wavPath),
-        text: result.text,
-        language: result.language,
-        modelId: settings.selectedModelId ?? '',
-        durationMs: duration.inMilliseconds,
-        createdAt: now,
-      );
-
-      if (_appendMode && activeRecording != null) {
-        activeRecording!.clips.add(clip);
-        activeRecording!.updatedAt = now;
-        await historyStore.persistChange();
-      } else {
-        final recording = Recording(
-          id: _generateId(),
-          createdAt: now,
-          updatedAt: now,
-          clips: [clip],
-        );
-        activeRecording = recording;
-        await historyStore.addRecording(recording);
-      }
-
-      if (settings.autoCopy) {
-        await Clipboard.setData(ClipboardData(text: activeRecording!.text));
-      }
-      if (settings.haptics) {
-        await HapticFeedback.mediumImpact();
-      }
-      phase = RecordingPhase.done;
+      result = await _serialized(() async {
+        await _loadCurrentModel();
+        if (!modelReady) {
+          throw _UserFacingError(modelError ?? 'Kein Modell geladen.');
+        }
+        return transcriber.transcribeFile(wavPath);
+      });
     } catch (e) {
-      errorMessage = e.toString();
-      phase = RecordingPhase.error;
+      failure = e;
     }
+
+    // On failure the audio is still kept as an error clip: it stays covered
+    // by the 3-day purge and can be retranscribed once the model works.
+    final clip = Clip(
+      id: _generateId(),
+      wavFileName: p.basename(wavPath),
+      text: result?.text ?? '',
+      language: result?.language ?? '',
+      modelId: modelId,
+      durationMs: duration.inMilliseconds,
+      createdAt: now,
+      status: failure == null ? ClipStatus.done : ClipStatus.error,
+    );
+
+    if (_appendMode && activeRecording != null) {
+      activeRecording!.clips.add(clip);
+      activeRecording!.updatedAt = now;
+      await historyStore.persistChange();
+    } else {
+      final recording = Recording(
+        id: _generateId(),
+        createdAt: now,
+        updatedAt: now,
+        clips: [clip],
+      );
+      activeRecording = recording;
+      await historyStore.addRecording(recording);
+    }
+
+    if (failure != null) {
+      _fail(
+        failure is _UserFacingError
+            ? failure.message
+            : 'Transkription fehlgeschlagen ($failure). Die Aufnahme ist '
+                  'gespeichert und kann neu transkribiert werden.',
+      );
+      return;
+    }
+
+    if (settings.autoCopy) {
+      await Clipboard.setData(ClipboardData(text: activeRecording!.text));
+    }
+    if (settings.haptics) {
+      await HapticFeedback.mediumImpact();
+    }
+    phase = RecordingPhase.done;
     notifyListeners();
   }
 
@@ -205,48 +297,66 @@ class AppController extends ChangeNotifier {
     _ampSub = null;
     amplitude = 0;
     recordingStartedAt = null;
-    await recorder.cancel();
+    if (useWakelock) unawaited(WakelockPlus.disable());
+    try {
+      await recorder.cancel();
+    } catch (_) {
+      // Nothing more we can do; the file is removed below either way.
+    }
     final wavPath = _pendingWavPath;
     _pendingWavPath = null;
     if (wavPath != null) {
       await _deleteFileIfExists(wavPath);
     }
-    phase = activeRecording == null
-        ? RecordingPhase.idle
-        : RecordingPhase.done;
+    phase = _restingPhase;
     notifyListeners();
+  }
+
+  /// Called when the app goes to the background. iOS and Android both cut
+  /// the microphone for backgrounded apps, so finish what we have rather
+  /// than leaving a recording that silently captures nothing.
+  Future<void> handleAppBackgrounded() async {
+    if (phase == RecordingPhase.recording) {
+      await stopAndTranscribe();
+    }
   }
 
   /// Re-runs recognition over every clip of [recording] with [model] forced
   /// to [language] (or `'auto'`). Used when the input language was detected
-  /// wrong the first time.
+  /// wrong the first time. Refused while a recording/transcription runs.
   Future<void> retranscribeRecording(
     Recording recording, {
     required ModelSpec model,
     required String language,
   }) async {
+    if (isBusy) return;
     phase = RecordingPhase.transcribing;
+    errorMessage = null;
     notifyListeners();
     try {
-      await transcriber.ensureModel(
-        model: model,
-        modelDir: modelManager.modelDir(model),
-        vadModelPath: vadModelPath,
-        forcedLanguage: language,
-      );
-      final newClips = <Clip>[];
-      for (final clip in recording.clips) {
-        final result = await transcriber.transcribeFile(
-          historyStore.wavPathFor(clip.wavFileName),
+      final newClips = await _serialized(() async {
+        await transcriber.ensureModel(
+          model: model,
+          modelDir: modelManager.modelDir(model),
+          vadModelPath: vadModelPath,
+          forcedLanguage: language,
         );
-        newClips.add(
-          clip.copyWith(
-            text: result.text,
-            language: result.language,
-            modelId: model.id,
-          ),
-        );
-      }
+        final clips = <Clip>[];
+        for (final clip in recording.clips) {
+          final result = await transcriber.transcribeFile(
+            historyStore.wavPathFor(clip.wavFileName),
+          );
+          clips.add(
+            clip.copyWith(
+              text: result.text,
+              language: result.language,
+              modelId: model.id,
+              status: ClipStatus.done,
+            ),
+          );
+        }
+        return clips;
+      });
       recording.clips
         ..clear()
         ..addAll(newClips);
@@ -256,12 +366,12 @@ class AppController extends ChangeNotifier {
       if (activeRecording?.id == recording.id && settings.autoCopy) {
         await Clipboard.setData(ClipboardData(text: recording.text));
       }
-      phase = RecordingPhase.done;
+      phase = _restingPhase;
+      notifyListeners();
     } catch (e) {
-      errorMessage = e.toString();
-      phase = RecordingPhase.error;
+      // The existing clips are left untouched on failure.
+      _fail('Neu-Transkription fehlgeschlagen ($e).');
     }
-    notifyListeners();
     // The retranscribe model/language may differ from the live default;
     // make sure the next fresh recording uses the default again.
     unawaited(ensureCurrentModelLoaded());
@@ -271,9 +381,7 @@ class AppController extends ChangeNotifier {
   /// again.
   void dismissError() {
     errorMessage = null;
-    phase = activeRecording == null
-        ? RecordingPhase.idle
-        : RecordingPhase.done;
+    if (phase == RecordingPhase.error) phase = _restingPhase;
     notifyListeners();
   }
 
@@ -284,19 +392,35 @@ class AppController extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteRecording(String id) async {
+  /// Returns false (and does nothing) while a recording/transcription runs.
+  Future<bool> deleteRecording(String id) async {
+    if (isBusy) return false;
     await historyStore.deleteRecording(id);
     if (activeRecording?.id == id) {
       activeRecording = null;
       phase = RecordingPhase.idle;
     }
     notifyListeners();
+    return true;
   }
 
-  Future<void> deleteAllRecordings() async {
+  /// Returns false (and does nothing) while a recording/transcription runs.
+  Future<bool> deleteAllRecordings() async {
+    if (isBusy) return false;
     await historyStore.deleteAll();
     activeRecording = null;
     phase = RecordingPhase.idle;
+    notifyListeners();
+    return true;
+  }
+
+  /// Where the state machine rests when nothing is in flight.
+  RecordingPhase get _restingPhase =>
+      activeRecording == null ? RecordingPhase.idle : RecordingPhase.done;
+
+  void _fail(String message) {
+    errorMessage = message;
+    phase = RecordingPhase.error;
     notifyListeners();
   }
 
@@ -312,4 +436,12 @@ class AppController extends ChangeNotifier {
     _ampSub?.cancel();
     super.dispose();
   }
+}
+
+class _UserFacingError implements Exception {
+  const _UserFacingError(this.message);
+  final String message;
+
+  @override
+  String toString() => message;
 }

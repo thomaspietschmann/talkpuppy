@@ -11,6 +11,7 @@ class FakeRecorderService implements RecorderService {
   bool permissionGranted = true;
   String? lastStartedPath;
   bool recording = false;
+  void Function()? onStart;
 
   final _amplitudeController = StreamController<double>.broadcast();
 
@@ -22,6 +23,7 @@ class FakeRecorderService implements RecorderService {
 
   @override
   Future<void> start(String path) async {
+    onStart?.call();
     lastStartedPath = path;
     recording = true;
     await File(path).writeAsBytes([0, 1, 2, 3]);

@@ -35,11 +35,18 @@ class _BootstrapApp extends StatefulWidget {
 class _BootstrapAppState extends State<_BootstrapApp> {
   Widget? _child;
   Object? _error;
+  AppLifecycleListener? _lifecycleListener;
 
   @override
   void initState() {
     super.initState();
     _bootstrap();
+  }
+
+  @override
+  void dispose() {
+    _lifecycleListener?.dispose();
+    super.dispose();
   }
 
   Future<void> _bootstrap() async {
@@ -63,6 +70,9 @@ class _BootstrapAppState extends State<_BootstrapApp> {
         vadModelPath: vadModelPath,
       );
       await controller.init();
+      _lifecycleListener = AppLifecycleListener(
+        onHide: controller.handleAppBackgrounded,
+      );
 
       if (!mounted) return;
       setState(() {
@@ -108,11 +118,15 @@ class _BootstrapAppState extends State<_BootstrapApp> {
 Future<String> _extractBundledVadModel() async {
   final supportDir = await getApplicationSupportDirectory();
   final file = File(p.join(supportDir.path, 'silero_vad.onnx'));
-  if (!await file.exists()) {
-    final data = await rootBundle.load('assets/models/silero_vad.onnx');
-    await file.writeAsBytes(
+  final data = await rootBundle.load('assets/models/silero_vad.onnx');
+  // Re-extract if missing or a previous write was cut short.
+  if (!await file.exists() || await file.length() != data.lengthInBytes) {
+    final tmp = File('${file.path}.tmp');
+    await tmp.writeAsBytes(
       data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
+      flush: true,
     );
+    await tmp.rename(file.path);
   }
   return file.path;
 }

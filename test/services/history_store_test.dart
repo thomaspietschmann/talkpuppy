@@ -125,6 +125,25 @@ void main() {
     expect(store.recordings, hasLength(1));
   });
 
+  test('purge also deletes old WAVs no recording references', () async {
+    final store = HistoryStore(tempDir);
+    final now = DateTime.now();
+    await store.addRecording(_recording('kept', now, wavFileName: 'kept.wav'));
+
+    final keptWav = File(store.wavPathFor('kept.wav'))..createSync();
+    final oldOrphan = File(store.wavPathFor('orphan-old.wav'))..createSync();
+    oldOrphan.setLastModifiedSync(now.subtract(const Duration(days: 5)));
+    // e.g. a recording that's in progress right now: fresh, unreferenced.
+    final freshOrphan = File(store.wavPathFor('orphan-fresh.wav'))
+      ..createSync();
+
+    await store.purgeOlderThan(const Duration(days: 3), now: now);
+
+    expect(keptWav.existsSync(), isTrue);
+    expect(oldOrphan.existsSync(), isFalse);
+    expect(freshOrphan.existsSync(), isTrue);
+  });
+
   test('newWavFileName produces distinct names', () {
     final store = HistoryStore(tempDir);
     final a = store.newWavFileName();

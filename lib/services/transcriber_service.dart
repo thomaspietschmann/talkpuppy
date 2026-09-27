@@ -51,15 +51,40 @@ class TranscriberService implements Transcriber {
   Isolate? _isolate;
   SendPort? _commandPort;
   String? _loadedModelKey;
+  ReceivePort? _exitPort;
+  final Completer<void> _died = Completer<void>();
+
+  static final _diedReply = <String, dynamic>{
+    'ok': false,
+    'error': 'Der Transkriptions-Prozess wurde unerwartet beendet. '
+        'Bitte App neu starten.',
+  };
 
   Future<void> start() async {
     final initPort = ReceivePort();
+    final exitPort = ReceivePort();
+    _exitPort = exitPort;
+    // onError/onExit both land here, so a crash (e.g. native library failed
+    // to load) fails pending requests instead of hanging them forever.
+    exitPort.listen((_) {
+      if (!_died.isCompleted) _died.complete();
+    });
     _isolate = await Isolate.spawn(
       _isolateMain,
       initPort.sendPort,
       debugName: 'transcriber',
+      onError: exitPort.sendPort,
+      onExit: exitPort.sendPort,
     );
-    _commandPort = await initPort.first as SendPort;
+    final first = await Future.any<Object?>([
+      initPort.first,
+      _died.future.then((_) => null),
+    ]);
+    initPort.close();
+    if (first is! SendPort) {
+      throw TranscriberException(_diedReply['error'] as String);
+    }
+    _commandPort = first;
   }
 
   /// Loads [model]'s files from [modelDir] into the worker isolate unless
@@ -73,6 +98,9 @@ class TranscriberService implements Transcriber {
   }) async {
     final key = '${model.id}|$forcedLanguage';
     if (_loadedModelKey == key) return;
+    // Unknown until the isolate confirms; a failed load leaves nothing
+    // loaded there either.
+    _loadedModelKey = null;
 
     final files = <String, String>{
       for (final f in model.files) f.localName: p.join(modelDir, f.localName),
@@ -115,9 +143,13 @@ class TranscriberService implements Transcriber {
     if (commandPort == null) {
       throw StateError('TranscriberService.start() was not called');
     }
+    if (_died.isCompleted) return _diedReply;
     final replyPort = ReceivePort();
     commandPort.send({...message, 'replyPort': replyPort.sendPort});
-    final response = await replyPort.first;
+    final response = await Future.any<Object?>([
+      replyPort.first,
+      _died.future.then((_) => _diedReply),
+    ]);
     replyPort.close();
     return response as Map<String, dynamic>;
   }
@@ -134,6 +166,8 @@ class TranscriberService implements Transcriber {
     _isolate = null;
     _commandPort = null;
     _loadedModelKey = null;
+    _exitPort?.close();
+    _exitPort = null;
   }
 }
 
@@ -165,7 +199,12 @@ void _isolateMain(SendPort initSendPort) {
           final language = map['language'] as String? ?? 'auto';
           final key = '$modelId|$language';
           if (loadedKey != key) {
+            // Clear state before building: if _buildRecognizer throws, we
+            // must not keep a pointer to the freed recognizer or claim the
+            // old model is still loaded.
             recognizer?.free();
+            recognizer = null;
+            loadedKey = null;
             recognizer = _buildRecognizer(
               engine: map['engine'] as String,
               files: Map<String, String>.from(map['files'] as Map),
@@ -265,7 +304,9 @@ TranscriptionResult _transcribeWithVad(
 ) {
   final wave = sherpa_onnx.readWave(wavPath);
   if (wave.samples.isEmpty) {
-    return const TranscriptionResult(text: '', language: '');
+    // readWave returns empty samples for missing/unreadable files. Fail
+    // loudly so a retranscribe can't silently wipe a good transcript.
+    throw StateError('Die Aufnahme konnte nicht gelesen werden.');
   }
 
   vad.reset();

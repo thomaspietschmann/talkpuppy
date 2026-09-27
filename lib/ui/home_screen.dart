@@ -119,8 +119,10 @@ class _HomeContentState extends State<_HomeContent> {
                             : () => controller.copyToClipboard(
                                 controller.activeRecording!,
                               ),
-                        onRetranscribe: controller.activeRecording == null
-                            ? () {}
+                        onRetranscribe:
+                            controller.activeRecording == null ||
+                                controller.isBusy
+                            ? null
                             : () => _openRetranscribe(
                                 context,
                                 controller.activeRecording!,
@@ -129,6 +131,7 @@ class _HomeContentState extends State<_HomeContent> {
                       const SizedBox(height: 16),
                       HistoryList(
                         recordings: scope.historyStore.recordings,
+                        editable: !controller.isBusy,
                         onTapCopy: controller.copyToClipboard,
                         onDelete: (r) => controller.deleteRecording(r.id),
                         onRetranscribe: (r) => _openRetranscribe(context, r),
@@ -254,12 +257,24 @@ class _BottomControls extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (!controller.modelReady) ...[
+            if (controller.modelError != null) ...[
+              Text(
+                controller.modelError!,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
+              const SizedBox(height: 12),
+            ],
             FilledButton.tonalIcon(
               onPressed: () => Navigator.of(
                 context,
               ).push(MaterialPageRoute(builder: (_) => const ModelsScreen())),
               icon: const Icon(Icons.download_outlined),
-              label: const Text('Modell installieren'),
+              label: Text(
+                controller.modelError != null
+                    ? 'Modelle verwalten'
+                    : 'Modell installieren',
+              ),
             ),
           ] else ...[
             switch (controller.phase) {

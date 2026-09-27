@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talkpuppy/models/catalog.dart';
+import 'package:talkpuppy/models/recording.dart';
 import 'package:talkpuppy/services/history_store.dart';
 import 'package:talkpuppy/services/model_manager.dart';
 import 'package:talkpuppy/services/settings_service.dart';
@@ -40,13 +42,16 @@ void main() {
     historyStore = HistoryStore(Directory('${tempDir.path}/history'));
     modelManager = ModelManager(Directory('${tempDir.path}/models'));
 
-    // Pretend whisper-tiny is already downloaded: isDownloaded() only
-    // checks file existence.
+    // Pretend whisper-tiny is already downloaded: isDownloaded() checks
+    // existence and exact size, so create sparse files of the right length
+    // (no real disk usage).
     final model = modelById('whisper-tiny-int8');
     final modelDir = Directory(modelManager.modelDir(model));
     await modelDir.create(recursive: true);
     for (final f in model.files) {
-      await File('${modelDir.path}/${f.localName}').create();
+      File('${modelDir.path}/${f.localName}').openSync(mode: FileMode.write)
+        ..truncateSync(f.sizeBytes)
+        ..closeSync();
     }
     settings.selectedModelId = model.id;
 
@@ -60,6 +65,7 @@ void main() {
       settings: settings,
       modelManager: modelManager,
       vadModelPath: 'unused-in-tests.onnx',
+      useWakelock: false,
     );
     await controller.init();
   });
@@ -160,18 +166,102 @@ void main() {
     expect(recording.latestLanguage, 'en');
   });
 
-  test('a transcription error surfaces and can be dismissed', () async {
+  test('a transcription error surfaces, keeps the audio as an error clip, '
+      'and can be dismissed', () async {
     transcriber.throwOnTranscribe = true;
 
     await controller.startNewRecording();
+    final wavPath = recorder.lastStartedPath!;
     await controller.stopAndTranscribe();
 
     expect(controller.phase, RecordingPhase.error);
     expect(controller.errorMessage, isNotNull);
+    // Audio isn't silently orphaned: it's tracked (so the purge covers it)
+    // and can be retranscribed later.
+    expect(historyStore.recordings, hasLength(1));
+    expect(historyStore.recordings.single.clips.single.status, ClipStatus.error);
+    expect(File(wavPath).existsSync(), isTrue);
 
     controller.dismissError();
-    expect(controller.phase, RecordingPhase.idle);
+    expect(controller.phase, RecordingPhase.done);
     expect(controller.errorMessage, isNull);
+  });
+
+  test('a failed model load is retried, not cached as loaded', () async {
+    transcriber.ensureModelFailures = 1;
+    settings.defaultLanguage = 'de'; // forces a different load key
+    await controller.ensureCurrentModelLoaded();
+    expect(controller.modelReady, isFalse);
+    expect(controller.modelError, isNotNull);
+
+    final callsBefore = transcriber.ensureModelCalls;
+    await controller.ensureCurrentModelLoaded();
+    expect(transcriber.ensureModelCalls, callsBefore + 1);
+    expect(controller.modelReady, isTrue);
+    expect(controller.modelError, isNull);
+  });
+
+  test('a fast double tap starts the recorder only once', () async {
+    var starts = 0;
+    recorder.onStart = () => starts++;
+
+    await Future.wait([
+      controller.startNewRecording(),
+      controller.startNewRecording(),
+    ]);
+
+    expect(starts, 1);
+    expect(controller.phase, RecordingPhase.recording);
+  });
+
+  test('history edits are refused while recording', () async {
+    await controller.startNewRecording();
+    await controller.stopAndTranscribe();
+    final recording = controller.activeRecording!;
+
+    await controller.startNewRecording();
+    expect(controller.phase, RecordingPhase.recording);
+
+    expect(await controller.deleteRecording(recording.id), isFalse);
+    expect(await controller.deleteAllRecordings(), isFalse);
+    await controller.retranscribeRecording(
+      recording,
+      model: modelById('whisper-tiny-int8'),
+      language: 'en',
+    );
+
+    expect(controller.phase, RecordingPhase.recording);
+    expect(recorder.recording, isTrue);
+    expect(historyStore.recordings, hasLength(1));
+
+    // And the live recording can still be stopped normally.
+    await controller.stopAndTranscribe();
+    expect(controller.phase, RecordingPhase.done);
+  });
+
+  test('model load and transcribe are never interleaved', () async {
+    // Hold a live transcription in flight...
+    await controller.startNewRecording();
+    transcriber.transcribeGate = Completer<void>();
+    final live = controller.stopAndTranscribe();
+    while (!transcriber.log.contains('transcribe')) {
+      await Future<void>.delayed(Duration.zero);
+    }
+
+    // ...while something else asks for a different model.
+    settings.defaultLanguage = 'en';
+    final switchModel = controller.ensureCurrentModelLoaded();
+    // Give an (incorrectly) unserialized switch ample time to reach the
+    // transcriber before the live transcription is released.
+    await Future<void>.delayed(const Duration(milliseconds: 100));
+
+    transcriber.transcribeGate!.complete();
+    await Future.wait([live, switchModel]);
+
+    // The live clip must finish with the model it was started with; the
+    // switch only applies afterwards.
+    expect(transcriber.finishedWithKey, ['whisper-tiny-int8|auto']);
+    expect(transcriber.currentKey, 'whisper-tiny-int8|en');
   });
 
   test('deleteRecording removes it from history and clears activeRecording', () async {

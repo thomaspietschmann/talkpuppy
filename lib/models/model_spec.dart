@@ -14,11 +14,19 @@ class ModelFileSpec {
     required this.remoteName,
     required this.localName,
     required this.sizeBytes,
+    required this.sha256,
   });
 
   final String remoteName;
   final String localName;
+
+  /// Exact size of the file at the pinned revision in [ModelSpec.baseUrl].
   final int sizeBytes;
+
+  /// Lowercase hex SHA-256 of the file. A download is only accepted if it
+  /// matches — guards against captive-portal HTML pages, truncated
+  /// transfers and tampering, since these files are parsed by native code.
+  final String sha256;
 }
 
 /// Describes one downloadable offline speech-recognition model.

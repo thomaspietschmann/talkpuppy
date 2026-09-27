@@ -6,6 +6,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../models/recording.dart';
+import 'backup_exclusion.dart';
 
 /// Persists [Recording]s (their JSON index and WAV files) to disk and keeps
 /// an in-memory, newest-first list for the UI.
@@ -28,6 +29,8 @@ class HistoryStore extends ChangeNotifier {
     if (!await dir.exists()) {
       await dir.create(recursive: true);
     }
+    // Recordings and transcripts are private; keep them out of iCloud.
+    await excludeFromBackup(dir.path);
     final store = HistoryStore(dir);
     await store.load();
     return store;
@@ -65,7 +68,11 @@ class HistoryStore extends ChangeNotifier {
       await _dir.create(recursive: true);
     }
     final raw = jsonEncode(_recordings.map((r) => r.toJson()).toList());
-    await _indexFile.writeAsString(raw);
+    // Write-then-rename so a crash mid-write can't leave a truncated index
+    // (which load() would treat as empty history).
+    final tmp = File('${_indexFile.path}.tmp');
+    await tmp.writeAsString(raw, flush: true);
+    await tmp.rename(_indexFile.path);
   }
 
   /// Absolute path a WAV file with [fileName] should live at.
@@ -132,21 +139,42 @@ class HistoryStore extends ChangeNotifier {
     await _persist();
   }
 
-  /// Deletes recordings last updated before `now - maxAge`. Returns how many
-  /// were removed.
+  /// Deletes recordings last updated before `now - maxAge`, plus any WAV
+  /// file in the history directory that no recording references and that is
+  /// itself older than the cutoff (left behind by a crash or a lost index) —
+  /// the retention promise covers all audio, not just indexed audio.
+  /// Returns how many recordings were removed.
   Future<int> purgeOlderThan(Duration maxAge, {DateTime? now}) async {
     final cutoff = (now ?? DateTime.now()).subtract(maxAge);
     final toRemove = _recordings
         .where((r) => r.updatedAt.isBefore(cutoff))
         .toList();
-    if (toRemove.isEmpty) return 0;
     for (final rec in toRemove) {
       _recordings.remove(rec);
       await _deleteWavFiles(rec);
     }
-    notifyListeners();
-    await _persist();
+    if (toRemove.isNotEmpty) {
+      notifyListeners();
+      await _persist();
+    }
+    await _deleteOrphanedWavs(olderThan: cutoff);
     return toRemove.length;
+  }
+
+  Future<void> _deleteOrphanedWavs({required DateTime olderThan}) async {
+    if (!await _dir.exists()) return;
+    final referenced = {
+      for (final r in _recordings)
+        for (final c in r.clips) c.wavFileName,
+    };
+    await for (final entity in _dir.list()) {
+      if (entity is! File || !entity.path.endsWith('.wav')) continue;
+      if (referenced.contains(p.basename(entity.path))) continue;
+      // Age check also protects a recording that's in progress right now.
+      if ((await entity.lastModified()).isBefore(olderThan)) {
+        await entity.delete();
+      }
+    }
   }
 
   Future<void> _deleteWavFiles(Recording rec) async {

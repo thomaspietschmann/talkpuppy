@@ -1,13 +1,15 @@
 import 'dart:io';
+import 'dart:isolate';
 
+import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../models/catalog.dart';
 import '../models/model_spec.dart';
+import 'backup_exclusion.dart';
 
 /// Combined download progress across all files of one model.
 class DownloadProgress {
@@ -19,11 +21,22 @@ class DownloadProgress {
   double get fraction => totalBytes == 0 ? 0 : receivedBytes / totalBytes;
 }
 
-/// Downloads, verifies presence of, and deletes on-device model files.
+/// A download failed in a way worth showing to the user as-is.
+class ModelDownloadException implements Exception {
+  ModelDownloadException(this.message);
+  final String message;
+
+  @override
+  String toString() => message;
+}
+
+/// Downloads, verifies and deletes on-device model files.
 ///
 /// Each model lives at `<app support dir>/models/<modelId>/<localName>`.
 /// Downloads are resumable: an interrupted file is kept as `<name>.part`
 /// and continued (via an HTTP Range request) the next time it's requested.
+/// A file is only moved into place once its size and SHA-256 match the
+/// catalog.
 class ModelManager extends ChangeNotifier {
   ModelManager(this._modelsRootDir);
 
@@ -31,7 +44,7 @@ class ModelManager extends ChangeNotifier {
   final Map<String, CancelToken> _activeCancelTokens = {};
   Set<String> _downloadedIds = {};
 
-  static const _backupChannel = MethodChannel('talkpuppy/ios_backup');
+  static const _progressInterval = Duration(milliseconds: 100);
 
   static Future<ModelManager> create() async {
     final supportDir = await getApplicationSupportDirectory();
@@ -49,15 +62,21 @@ class ModelManager extends ChangeNotifier {
   /// [downloadedModelIds] to avoid re-scanning the filesystem on rebuild.
   Set<String> get downloadedIds => Set.unmodifiable(_downloadedIds);
 
+  bool isDownloading(ModelSpec model) =>
+      _activeCancelTokens.containsKey(model.id);
+
   Future<void> _refreshDownloadedIds() async {
     _downloadedIds = await downloadedModelIds();
   }
 
   String modelDir(ModelSpec model) => p.join(_modelsRootDir.path, model.id);
 
+  /// True when every file exists with its exact expected size. (The hash
+  /// was verified when the file was moved into place.)
   Future<bool> isDownloaded(ModelSpec model) async {
     for (final f in model.files) {
-      if (!await File(p.join(modelDir(model), f.localName)).exists()) {
+      final file = File(p.join(modelDir(model), f.localName));
+      if (!await file.exists() || await file.length() != f.sizeBytes) {
         return false;
       }
     }
@@ -75,42 +94,56 @@ class ModelManager extends ChangeNotifier {
   }
 
   /// Downloads all of [model]'s files, resuming partial downloads and
-  /// skipping files that already exist. Reports combined progress across
-  /// all of the model's files.
+  /// skipping files that are already in place. Reports combined progress
+  /// (throttled to ~10 Hz) across all of the model's files.
   Future<void> download(
     ModelSpec model, {
     required void Function(DownloadProgress progress) onProgress,
   }) async {
-    final dir = Directory(modelDir(model));
-    if (!await dir.exists()) {
-      await dir.create(recursive: true);
+    if (isDownloading(model)) {
+      throw ModelDownloadException(
+        '${model.displayName} wird bereits heruntergeladen.',
+      );
     }
-
     final cancelToken = CancelToken();
     _activeCancelTokens[model.id] = cancelToken;
+    notifyListeners();
 
+    final dir = Directory(modelDir(model));
     final receivedPerFile = List<int>.filled(model.files.length, 0);
     final totalBytes = model.totalSizeBytes;
+    var lastReport = DateTime.fromMillisecondsSinceEpoch(0);
 
-    void reportProgress() {
+    void reportProgress({bool force = false}) {
+      final now = DateTime.now();
+      if (!force && now.difference(lastReport) < _progressInterval) return;
+      lastReport = now;
       final received = receivedPerFile.fold<int>(0, (a, b) => a + b);
       onProgress(
         DownloadProgress(receivedBytes: received, totalBytes: totalBytes),
       );
     }
 
+    final dio = Dio();
     try {
+      if (!await dir.exists()) {
+        await dir.create(recursive: true);
+      }
+      await _ensureFreeSpace(dir.path, model);
       for (var i = 0; i < model.files.length; i++) {
         final fileSpec = model.files[i];
-        final targetPath = p.join(dir.path, fileSpec.localName);
-        if (await File(targetPath).exists()) {
+        final target = File(p.join(dir.path, fileSpec.localName));
+        if (await target.exists() &&
+            await target.length() == fileSpec.sizeBytes) {
           receivedPerFile[i] = fileSpec.sizeBytes;
-          reportProgress();
+          reportProgress(force: true);
           continue;
         }
         await _downloadFile(
+          dio: dio,
           url: '${model.baseUrl}${fileSpec.remoteName}',
-          targetPath: targetPath,
+          target: target,
+          spec: fileSpec,
           cancelToken: cancelToken,
           onBytesReceived: (received) {
             receivedPerFile[i] = received;
@@ -118,14 +151,22 @@ class ModelManager extends ChangeNotifier {
           },
         );
       }
-      if (Platform.isIOS) {
-        await _excludeFromICloudBackup(dir.path);
+      reportProgress(force: true);
+      await excludeFromBackup(dir.path);
+    } on DioException catch (e) {
+      if (CancelToken.isCancel(e)) {
+        throw ModelDownloadException('Download abgebrochen.');
       }
+      throw ModelDownloadException(
+        'Download fehlgeschlagen – bitte Internetverbindung prüfen '
+        'und erneut versuchen.',
+      );
     } finally {
+      dio.close();
       _activeCancelTokens.remove(model.id);
+      await _refreshDownloadedIds();
+      notifyListeners();
     }
-    await _refreshDownloadedIds();
-    notifyListeners();
   }
 
   void cancelDownload(ModelSpec model) {
@@ -133,6 +174,7 @@ class ModelManager extends ChangeNotifier {
   }
 
   Future<void> delete(ModelSpec model) async {
+    cancelDownload(model);
     final dir = Directory(modelDir(model));
     if (await dir.exists()) {
       await dir.delete(recursive: true);
@@ -141,29 +183,81 @@ class ModelManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> _ensureFreeSpace(String dirPath, ModelSpec model) async {
+    // Best-effort via `df` (available on Android; iOS apps can't spawn
+    // processes). If the lookup fails we just try the download.
+    if (!Platform.isAndroid) return;
+    try {
+      final result = await Process.run('df', ['-k', dirPath]);
+      final lines = (result.stdout as String).trim().split('\n');
+      final cols = lines.last.split(RegExp(r'\s+'));
+      final availableKb = int.parse(cols[3]);
+      if (availableKb * 1024 < model.totalSizeBytes + 50 * 1024 * 1024) {
+        throw ModelDownloadException(
+          'Nicht genug Speicherplatz für ${model.displayName}.',
+        );
+      }
+    } on ModelDownloadException {
+      rethrow;
+    } catch (_) {
+      // Couldn't determine free space; proceed.
+    }
+  }
+
   Future<void> _downloadFile({
+    required Dio dio,
     required String url,
-    required String targetPath,
+    required File target,
+    required ModelFileSpec spec,
     required CancelToken cancelToken,
     required void Function(int receivedBytes) onBytesReceived,
   }) async {
-    final partFile = File('$targetPath.part');
+    final partFile = File('${target.path}.part');
     var startBytes = await partFile.exists() ? await partFile.length() : 0;
+    if (startBytes >= spec.sizeBytes) {
+      // Either complete-but-unverified or garbage; re-verify from scratch
+      // rather than asking the server for a range past the end (416).
+      await partFile.delete();
+      startBytes = 0;
+    }
 
-    final dio = Dio();
-    final response = await dio.get<ResponseBody>(
-      url,
-      options: Options(
-        responseType: ResponseType.stream,
-        headers: startBytes > 0 ? {'range': 'bytes=$startBytes-'} : null,
-        followRedirects: true,
-      ),
-      cancelToken: cancelToken,
-    );
+    Response<ResponseBody> response;
+    try {
+      response = await dio.get<ResponseBody>(
+        url,
+        options: Options(
+          responseType: ResponseType.stream,
+          headers: startBytes > 0 ? {'range': 'bytes=$startBytes-'} : null,
+          followRedirects: true,
+        ),
+        cancelToken: cancelToken,
+      );
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 416 && startBytes > 0) {
+        await partFile.delete();
+        return _downloadFile(
+          dio: dio,
+          url: url,
+          target: target,
+          spec: spec,
+          cancelToken: cancelToken,
+          onBytesReceived: onBytesReceived,
+        );
+      }
+      rethrow;
+    }
 
-    // If we asked for a range but the server ignored it (sent 200 with the
-    // full body instead of 206 with the remainder), start this file over.
-    if (startBytes > 0 && response.statusCode != 206) {
+    final status = response.statusCode ?? 0;
+    final contentType = response.headers.value('content-type') ?? '';
+    if ((status != 200 && status != 206) || contentType.contains('text/html')) {
+      // Typical for captive portals: a login page instead of the file.
+      throw ModelDownloadException(
+        'Der Server hat keine Modelldatei geliefert (evtl. WLAN-Anmeldeseite). '
+        'Bitte Netzwerk prüfen und erneut versuchen.',
+      );
+    }
+    // Server ignored our range request and sent the full file: start over.
+    if (startBytes > 0 && status != 206) {
       startBytes = 0;
     }
 
@@ -172,23 +266,36 @@ class ModelManager extends ChangeNotifier {
     );
     var received = startBytes;
     onBytesReceived(received);
-    await for (final chunk in response.data!.stream) {
-      sink.add(chunk);
-      received += chunk.length;
-      onBytesReceived(received);
+    try {
+      await for (final chunk in response.data!.stream) {
+        sink.add(chunk);
+        received += chunk.length;
+        onBytesReceived(received);
+      }
+    } finally {
+      await sink.flush();
+      await sink.close();
     }
-    await sink.flush();
-    await sink.close();
 
-    await partFile.rename(targetPath);
+    final actualSize = await partFile.length();
+    final actualHash = actualSize == spec.sizeBytes
+        ? await _sha256Of(partFile.path)
+        : null;
+    if (actualHash != spec.sha256) {
+      await partFile.delete();
+      throw ModelDownloadException(
+        'Die heruntergeladene Datei ${spec.remoteName} ist beschädigt. '
+        'Bitte erneut versuchen.',
+      );
+    }
+    await partFile.rename(target.path);
   }
 
-  Future<void> _excludeFromICloudBackup(String path) async {
-    try {
-      await _backupChannel.invokeMethod('excludeFromBackup', {'path': path});
-    } catch (_) {
-      // Best-effort: a failed exclusion just means the model counts
-      // against the user's iCloud backup quota, nothing breaks.
-    }
+  /// Hashes a (possibly several hundred MB) file off the UI isolate.
+  static Future<String> _sha256Of(String path) {
+    return Isolate.run(() async {
+      final digest = await sha256.bind(File(path).openRead()).first;
+      return digest.toString();
+    });
   }
 }

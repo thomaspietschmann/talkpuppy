@@ -34,15 +34,20 @@ class _ModelsScreenState extends State<ModelsScreen> {
           if (mounted) setState(() => _progress = p);
         },
       );
-      if (scope.settings.selectedModelId == null) {
+      final selected = scope.settings.selectedModelId;
+      if (selected == null || selected == model.id) {
         scope.settings.selectedModelId = model.id;
         await scope.controller.ensureCurrentModelLoaded();
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Download fehlgeschlagen: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              e is ModelDownloadException ? e.message : 'Download fehlgeschlagen: $e',
+            ),
+          ),
+        );
       }
     } finally {
       if (mounted) setState(() => _busyId = null);
@@ -111,6 +116,7 @@ class _ModelsScreenState extends State<ModelsScreen> {
                     busy: _busyId == model.id,
                     progress: _busyId == model.id ? _progress : null,
                     onDownload: () => _download(model),
+                    onCancel: () => scope.modelManager.cancelDownload(model),
                     onDelete: () => _delete(model),
                   ),
               ],
@@ -129,6 +135,7 @@ class _ModelRow extends StatelessWidget {
     required this.busy,
     required this.progress,
     required this.onDownload,
+    required this.onCancel,
     required this.onDelete,
   });
 
@@ -137,6 +144,7 @@ class _ModelRow extends StatelessWidget {
   final bool busy;
   final DownloadProgress? progress;
   final VoidCallback onDownload;
+  final VoidCallback onCancel;
   final VoidCallback onDelete;
 
   String _sizeLabel(int bytes) => '${(bytes / (1024 * 1024)).round()} MB';
@@ -178,12 +186,19 @@ class _ModelRow extends StatelessWidget {
             if (busy) ...[
               LinearProgressIndicator(value: progress?.fraction),
               const SizedBox(height: 8),
-              Text(
-                progress == null
-                    ? 'Wird vorbereitet…'
-                    : '${_sizeLabel(progress!.receivedBytes)} / '
-                          '${_sizeLabel(progress!.totalBytes)}',
-                style: Theme.of(context).textTheme.bodySmall,
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      progress == null
+                          ? 'Wird vorbereitet…'
+                          : '${_sizeLabel(progress!.receivedBytes)} / '
+                                '${_sizeLabel(progress!.totalBytes)}',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                  TextButton(onPressed: onCancel, child: const Text('Abbrechen')),
+                ],
               ),
             ] else if (!installed)
               Semantics(

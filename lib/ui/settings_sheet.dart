@@ -118,14 +118,16 @@ class SettingsSheet extends StatelessWidget {
                 title: const Text('Modelle verwalten'),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  Navigator.pop(context);
-                  Navigator.of(
-                    context,
-                  ).push(MaterialPageRoute(builder: (_) => const ModelsScreen()));
+                  final navigator = Navigator.of(context);
+                  navigator.pop();
+                  navigator.push(
+                    MaterialPageRoute(builder: (_) => const ModelsScreen()),
+                  );
                 },
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
+                enabled: !scope.controller.isBusy,
                 leading: Icon(
                   Icons.delete_forever_outlined,
                   color: Theme.of(context).colorScheme.error,
