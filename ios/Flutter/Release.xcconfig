@@ -1,1 +1,6 @@
 #include "Generated.xcconfig"
+
+// Personal (free) Apple Developer team, for signing on-device builds
+// straight from the CLI without opening Xcode.
+DEVELOPMENT_TEAM = BQVT399D93
+CODE_SIGN_STYLE = Automatic
