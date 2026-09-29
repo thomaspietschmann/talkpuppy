@@ -188,6 +188,23 @@ class AppLocalizationsEl extends AppLocalizations {
   String get hapticsTitle => 'Απτική απόκριση';
 
   @override
+  String get minimizeToOverlay => 'Ελαχιστοποίηση και εμφάνιση επικάλυψης';
+
+  @override
+  String get overlaySetupTitle => 'Ενεργοποίησε την υπηρεσία προσβασιμότητας';
+
+  @override
+  String get overlaySetupBody =>
+      'Για να εμφανίζει το κουμπί πάνω από άλλες εφαρμογές και να εισάγει το κείμενο στη θέση του κέρσορα, το Talkpuppy χρειάζεται την υπηρεσία προσβασιμότητάς του. Διαβάζει μόνο το πεδίο όπου πληκτρολογείς και μόνο για να εισάγει το κείμενο. Δεν διαβάζει τίποτα άλλο στην οθόνη, δεν αποθηκεύει τίποτα από άλλες εφαρμογές και δεν στέλνει τίποτα πουθενά.\n\nΣτην επόμενη οθόνη, άνοιξε το «Talkpuppy» και ενεργοποίησέ το.';
+
+  @override
+  String get overlayOpenAccessibility => 'Άνοιγμα ρυθμίσεων προσβασιμότητας';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Ο διακόπτης είναι γκρι; Άνοιξε Πληροφορίες εφαρμογής → ⋮ → «Να επιτρέπονται οι περιορισμένες ρυθμίσεις» και δοκίμασε ξανά.';
+
+  @override
   String get defaultLanguageTitle => 'Προεπιλεγμένη γλώσσα για νέες εγγραφές';
 
   @override

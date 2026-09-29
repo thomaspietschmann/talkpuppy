@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Butonul de înregistrare plutitor Talkpuppy</string>
+    <string name="overlay_service_summary">Dictează în orice câmp de text</string>
+    <string name="overlay_service_description">Afișează un buton de înregistrare deasupra altor aplicații. Pune cursorul într-un câmp de text, atinge butonul, vorbește, atinge din nou: Talkpuppy transcrie pe telefonul tău și inserează textul la cursor. Serviciul citește doar câmpul în care scrii și doar pentru a insera textul. Nu citește nimic altceva de pe ecran, nu salvează nimic din alte aplicații și nu trimite nimic nicăieri.</string>
+    <string name="overlay_button_record">Începe dictarea</string>
+    <string name="overlay_button_stop">Oprește dictarea</string>
+    <string name="overlay_notification_channel">Dictare</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Ascultă… atinge Oprește când ai terminat.</string>
+    <string name="overlay_notification_stop">Oprește</string>
+    <string name="overlay_copied">Nu s-a putut insera aici: copiat, gata de lipit</string>
+    <string name="overlay_no_speech">Nu s-a recunoscut nimic</string>
+    <string name="overlay_error_microphone">Nu există acces la microfon. Deschide Talkpuppy o dată și permite-l.</string>
+    <string name="overlay_error_background">Android nu a permis înregistrarea în fundal. Încearcă din nou.</string>
+    <string name="overlay_error_no_model">Nu este instalat niciun model de vorbire. Deschide Talkpuppy și descarcă unul.</string>
+    <string name="overlay_error_model_load">Modelul de vorbire nu a putut fi încărcat.</string>
+    <string name="overlay_error_transcription">Transcrierea a eșuat.</string>
+</resources>

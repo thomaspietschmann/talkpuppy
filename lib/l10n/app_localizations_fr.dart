@@ -188,6 +188,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get hapticsTitle => 'Retour haptique';
 
   @override
+  String get minimizeToOverlay => 'Réduire et afficher la superposition';
+
+  @override
+  String get overlaySetupTitle => 'Active le service d\'accessibilité';
+
+  @override
+  String get overlaySetupBody =>
+      'Pour afficher le bouton par-dessus les autres applis et insérer le texte au niveau du curseur, Talkpuppy a besoin de son service d\'accessibilité. Il ne lit que le champ où tu écris, et uniquement pour y insérer le texte. Il ne lit rien d\'autre à l\'écran, n\'enregistre rien des autres applis et n\'envoie rien nulle part.\n\nSur l\'écran suivant, ouvre « Talkpuppy » et active-le.';
+
+  @override
+  String get overlayOpenAccessibility =>
+      'Ouvrir les paramètres d\'accessibilité';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Interrupteur grisé ? Ouvre Infos sur l\'appli → ⋮ → « Autoriser les paramètres restreints », puis réessaie.';
+
+  @override
   String get defaultLanguageTitle =>
       'Langue par défaut des nouveaux enregistrements';
 

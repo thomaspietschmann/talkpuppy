@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Pływający przycisk nagrywania Talkpuppy</string>
+    <string name="overlay_service_summary">Dyktuj do dowolnego pola tekstowego</string>
+    <string name="overlay_service_description">Wyświetla przycisk nagrywania nad innymi aplikacjami. Umieść kursor w polu tekstowym, kliknij przycisk, mów, kliknij ponownie: Talkpuppy transkrybuje na twoim telefonie i wstawia tekst w miejscu kursora. Usługa odczytuje tylko pole, w którym właśnie piszesz, i tylko po to, żeby wstawić tekst. Nie odczytuje niczego innego na ekranie, nie zapisuje niczego z innych aplikacji i nigdzie niczego nie wysyła.</string>
+    <string name="overlay_button_record">Rozpocznij dyktowanie</string>
+    <string name="overlay_button_stop">Zakończ dyktowanie</string>
+    <string name="overlay_notification_channel">Dyktowanie</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Słucham… kliknij Zatrzymaj, gdy skończysz.</string>
+    <string name="overlay_notification_stop">Zatrzymaj</string>
+    <string name="overlay_copied">Nie udało się tu wstawić: skopiowano, gotowe do wklejenia</string>
+    <string name="overlay_no_speech">Nic nie rozpoznano</string>
+    <string name="overlay_error_microphone">Brak dostępu do mikrofonu. Otwórz raz Talkpuppy i zezwól na dostęp.</string>
+    <string name="overlay_error_background">Android nie zezwolił na nagrywanie w tle. Spróbuj ponownie.</string>
+    <string name="overlay_error_no_model">Nie zainstalowano modelu mowy. Otwórz Talkpuppy i pobierz model.</string>
+    <string name="overlay_error_model_load">Nie udało się wczytać modelu mowy.</string>
+    <string name="overlay_error_transcription">Transkrypcja nie powiodła się.</string>
+</resources>

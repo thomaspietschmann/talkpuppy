@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Αιωρούμενο κουμπί εγγραφής Talkpuppy</string>
+    <string name="overlay_service_summary">Υπαγόρευσε σε οποιοδήποτε πεδίο κειμένου</string>
+    <string name="overlay_service_description">Εμφανίζει ένα κουμπί εγγραφής πάνω από άλλες εφαρμογές. Βάλε τον κέρσορα σε ένα πεδίο κειμένου, πάτα το κουμπί, μίλα, πάτα ξανά: το Talkpuppy κάνει απομαγνητοφώνηση στο κινητό σου και εισάγει το κείμενο στη θέση του κέρσορα. Η υπηρεσία διαβάζει μόνο το πεδίο όπου πληκτρολογείς και μόνο για να εισάγει το κείμενο. Δεν διαβάζει τίποτα άλλο στην οθόνη, δεν αποθηκεύει τίποτα από άλλες εφαρμογές και δεν στέλνει τίποτα πουθενά.</string>
+    <string name="overlay_button_record">Έναρξη υπαγόρευσης</string>
+    <string name="overlay_button_stop">Διακοπή υπαγόρευσης</string>
+    <string name="overlay_notification_channel">Υπαγόρευση</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Ακούει… πάτα Διακοπή όταν τελειώσεις.</string>
+    <string name="overlay_notification_stop">Διακοπή</string>
+    <string name="overlay_copied">Δεν ήταν δυνατή η εισαγωγή εδώ: αντιγράφηκε, έτοιμο για επικόλληση</string>
+    <string name="overlay_no_speech">Δεν αναγνωρίστηκε τίποτα</string>
+    <string name="overlay_error_microphone">Δεν υπάρχει πρόσβαση στο μικρόφωνο. Άνοιξε το Talkpuppy μία φορά και επίτρεψέ την.</string>
+    <string name="overlay_error_background">Το Android δεν επέτρεψε την εγγραφή στο παρασκήνιο. Δοκίμασε ξανά.</string>
+    <string name="overlay_error_no_model">Δεν έχει εγκατασταθεί μοντέλο ομιλίας. Άνοιξε το Talkpuppy και κατέβασε ένα.</string>
+    <string name="overlay_error_model_load">Δεν ήταν δυνατή η φόρτωση του μοντέλου ομιλίας.</string>
+    <string name="overlay_error_transcription">Η απομαγνητοφώνηση απέτυχε.</string>
+</resources>

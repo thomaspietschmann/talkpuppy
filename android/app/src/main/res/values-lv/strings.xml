@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Talkpuppy peldošā ierakstīšanas poga</string>
+    <string name="overlay_service_summary">Diktē jebkurā teksta laukā</string>
+    <string name="overlay_service_description">Rāda ierakstīšanas pogu virs citām lietotnēm. Novieto kursoru teksta laukā, pieskaries pogai, runā, pieskaries vēlreiz: Talkpuppy transkribē tavā tālrunī un ievieto tekstu kursora vietā. Pakalpojums lasa tikai lauku, kurā tu raksti, un tikai teksta ievietošanai. Tas ekrānā nelasa neko citu, nesaglabā neko no citām lietotnēm un nekur neko nesūta.</string>
+    <string name="overlay_button_record">Sākt diktēšanu</string>
+    <string name="overlay_button_stop">Beigt diktēšanu</string>
+    <string name="overlay_notification_channel">Diktēšana</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Klausās… pieskaries Apturēt, kad beigsi.</string>
+    <string name="overlay_notification_stop">Apturēt</string>
+    <string name="overlay_copied">Šeit ievietot neizdevās: nokopēts, gatavs ielīmēšanai</string>
+    <string name="overlay_no_speech">Nekas netika atpazīts</string>
+    <string name="overlay_error_microphone">Nav piekļuves mikrofonam. Vienreiz atver Talkpuppy un atļauj to.</string>
+    <string name="overlay_error_background">Android neatļāva ierakstīt fonā. Mēģini vēlreiz.</string>
+    <string name="overlay_error_no_model">Nav instalēts neviens runas modelis. Atver Talkpuppy un lejupielādē kādu.</string>
+    <string name="overlay_error_model_load">Runas modeli neizdevās ielādēt.</string>
+    <string name="overlay_error_transcription">Transkripcija neizdevās.</string>
+</resources>

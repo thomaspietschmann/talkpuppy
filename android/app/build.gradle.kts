@@ -10,7 +10,10 @@ plugins {
 // android/key.properties (gitignored, copy of
 // ~/Keystores/talkpuppy-release.properties) is read. With neither, the
 // release build falls back to the debug key so `flutter run --release`
-// still works.
+// still works. F-Droid needs an unsigned release APK (it signs itself, or
+// copies the upstream signature when verifying a reproducible build), so
+// TALKPUPPY_UNSIGNED_RELEASE=true disables that debug-key fallback.
+val unsignedRelease = System.getenv("TALKPUPPY_UNSIGNED_RELEASE") == "true"
 val keystoreProperties = Properties().apply {
     val file = rootProject.file("key.properties")
     if (file.exists()) file.inputStream().use { load(it) }
@@ -52,12 +55,20 @@ android {
 
     buildTypes {
         release {
-            signingConfig = if (keystoreProperties.isEmpty) {
-                signingConfigs.getByName("debug")
-            } else {
-                signingConfigs.getByName("release")
+            signingConfig = when {
+                !keystoreProperties.isEmpty -> signingConfigs.getByName("release")
+                unsignedRelease -> null
+                else -> signingConfigs.getByName("debug")
             }
         }
+    }
+
+    // Don't embed the "dependency metadata" signing block (encrypted with a
+    // Google key, only readable by Google Play). F-Droid flags it and it
+    // gets in the way of reproducible-build verification.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
     }
 }
 
@@ -69,4 +80,10 @@ kotlin {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // Plain JVM tests for the floating button's insertion logic
+    // (android/app/src/test); the Android side is faked there.
+    testImplementation("junit:junit:4.13.2")
 }

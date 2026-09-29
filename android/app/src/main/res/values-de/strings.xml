@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Talkpuppy schwebender Aufnahme-Button</string>
+    <string name="overlay_service_summary">In jedes Textfeld diktieren</string>
+    <string name="overlay_service_description">Zeigt einen Aufnahme-Button über anderen Apps. Cursor in ein Textfeld setzen, Button tippen, sprechen, wieder tippen: Talkpuppy transkribiert auf deinem Handy und fügt den Text am Cursor ein. Der Dienst liest nur das Textfeld, in dem du gerade tippst, und nur, um den Text einzufügen. Er liest sonst nichts auf dem Bildschirm, speichert nichts aus anderen Apps und sendet nichts irgendwohin.</string>
+    <string name="overlay_button_record">Diktat starten</string>
+    <string name="overlay_button_stop">Diktat beenden</string>
+    <string name="overlay_notification_channel">Diktat</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Hört zu… tippe auf Stopp, wenn du fertig bist.</string>
+    <string name="overlay_notification_stop">Stopp</string>
+    <string name="overlay_copied">Einfügen ging hier nicht: kopiert, bereit zum Einfügen</string>
+    <string name="overlay_no_speech">Nichts erkannt</string>
+    <string name="overlay_error_microphone">Kein Mikrofonzugriff. Öffne Talkpuppy einmal und erlaube ihn.</string>
+    <string name="overlay_error_background">Android hat die Aufnahme im Hintergrund nicht erlaubt. Bitte versuch es noch einmal.</string>
+    <string name="overlay_error_no_model">Kein Sprachmodell installiert. Öffne Talkpuppy und lade eins herunter.</string>
+    <string name="overlay_error_model_load">Das Sprachmodell konnte nicht geladen werden.</string>
+    <string name="overlay_error_transcription">Die Transkription ist fehlgeschlagen.</string>
+</resources>

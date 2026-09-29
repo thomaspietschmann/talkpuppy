@@ -188,6 +188,23 @@ class AppLocalizationsNb extends AppLocalizations {
   String get hapticsTitle => 'Haptisk tilbakemelding';
 
   @override
+  String get minimizeToOverlay => 'Minimer og vis overlegg';
+
+  @override
+  String get overlaySetupTitle => 'Slå på tilgjengelighetstjenesten';
+
+  @override
+  String get overlaySetupBody =>
+      'For å vise knappen over andre apper og sette inn teksten ved markøren trenger Talkpuppy tilgjengelighetstjenesten sin. Den leser bare feltet du skriver i, og bare for å sette inn teksten. Den leser ikke noe annet på skjermen, lagrer ingenting fra andre apper og sender ingenting noe sted.\n\nÅpne «Talkpuppy» på neste skjerm, og slå den på.';
+
+  @override
+  String get overlayOpenAccessibility => 'Åpne tilgjengelighetsinnstillinger';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Er bryteren grå? Åpne Appinfo → ⋮ → «Tillat begrensede innstillinger», og prøv igjen.';
+
+  @override
   String get defaultLanguageTitle => 'Standardspråk for nye opptak';
 
   @override

@@ -188,6 +188,23 @@ class AppLocalizationsNl extends AppLocalizations {
   String get hapticsTitle => 'Haptische feedback';
 
   @override
+  String get minimizeToOverlay => 'Minimaliseren en overlay tonen';
+
+  @override
+  String get overlaySetupTitle => 'Zet de toegankelijkheidsservice aan';
+
+  @override
+  String get overlaySetupBody =>
+      'Om de knop boven andere apps te tonen en de tekst bij de cursor in te voegen, heeft Talkpuppy zijn toegankelijkheidsservice nodig. Die leest alleen het veld waarin je typt, en alleen om de tekst in te voegen. Verder leest hij niets op het scherm, slaat hij niets uit andere apps op en stuurt hij nergens iets naartoe.\n\nOpen in het volgende scherm ‘Talkpuppy’ en zet het aan.';
+
+  @override
+  String get overlayOpenAccessibility => 'Toegankelijkheidsinstellingen openen';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Schakelaar grijs? Open App-info → ⋮ → ‘Beperkte instellingen toestaan’ en probeer het opnieuw.';
+
+  @override
   String get defaultLanguageTitle => 'Standaardtaal voor nieuwe opnames';
 
   @override

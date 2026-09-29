@@ -187,6 +187,23 @@ class AppLocalizationsSr extends AppLocalizations {
   String get hapticsTitle => 'Тактилни одзив';
 
   @override
+  String get minimizeToOverlay => 'Умањи и прикажи преклоп';
+
+  @override
+  String get overlaySetupTitle => 'Укључи услугу приступачности';
+
+  @override
+  String get overlaySetupBody =>
+      'Да би дугме могло да се прикаже изнад других апликација и да би се текст уметнуо на место курсора, апликација Talkpuppy мора да користи своју услугу приступачности. Чита само поље у које управо куцаш, и то само да унесе текст. Не чита ништа друго на екрану, не чува ништа из других апликација и ништа никуда не шаље.\n\nНа следећем екрану отвори „Talkpuppy“ и укључи га.';
+
+  @override
+  String get overlayOpenAccessibility => 'Отвори подешавања приступачности';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Прекидач је сив? Отвори Информације о апликацији → ⋮ → „Дозволи ограничена подешавања“ и покушај поново.';
+
+  @override
   String get defaultLanguageTitle => 'Подразумевани језик за нове снимке';
 
   @override

@@ -188,6 +188,23 @@ class AppLocalizationsMk extends AppLocalizations {
   String get hapticsTitle => 'Хаптички повратни информации';
 
   @override
+  String get minimizeToOverlay => 'Минимизирај и прикажи преклоп';
+
+  @override
+  String get overlaySetupTitle => 'Вклучи ја услугата за пристапност';
+
+  @override
+  String get overlaySetupBody =>
+      'За да го прикаже копчето над другите апликации и да го внесе текстот на местото на курсорот, на Talkpuppy му е потребна неговата услуга за пристапност. Го чита само полето во кое пишуваш, и тоа само за да го внесе текстот. Не чита ништо друго на екранот, не зачувува ништо од други апликации и не испраќа ништо никаде.\n\nНа следниот екран отвори „Talkpuppy“ и вклучи го.';
+
+  @override
+  String get overlayOpenAccessibility => 'Отвори ги поставките за пристапност';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Прекинувачот е сив? Отвори Информации за апликацијата → ⋮ → „Дозволи ограничени поставки“ и обиди се повторно.';
+
+  @override
   String get defaultLanguageTitle => 'Стандарден јазик за нови снимки';
 
   @override

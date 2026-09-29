@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Talkpuppy slankusis įrašymo mygtukas</string>
+    <string name="overlay_service_summary">Diktuok į bet kurį teksto lauką</string>
+    <string name="overlay_service_description">Rodo įrašymo mygtuką virš kitų programų. Padėk žymeklį į teksto lauką, paliesk mygtuką, kalbėk, paliesk dar kartą: Talkpuppy transkribuoja tavo telefone ir įterpia tekstą žymeklio vietoje. Paslauga skaito tik lauką, kuriame rašai, ir tik tam, kad įterptų tekstą. Ji neskaito nieko kito ekrane, nieko neišsaugo iš kitų programų ir niekur nieko nesiunčia.</string>
+    <string name="overlay_button_record">Pradėti diktavimą</string>
+    <string name="overlay_button_stop">Baigti diktavimą</string>
+    <string name="overlay_notification_channel">Diktavimas</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Klausomasi… kai baigsi, paliesk Stabdyti.</string>
+    <string name="overlay_notification_stop">Stabdyti</string>
+    <string name="overlay_copied">Čia įterpti nepavyko: nukopijuota, galima įklijuoti</string>
+    <string name="overlay_no_speech">Nieko neatpažinta</string>
+    <string name="overlay_error_microphone">Nėra prieigos prie mikrofono. Vieną kartą atidaryk Talkpuppy ir leisk ją.</string>
+    <string name="overlay_error_background">Android neleido įrašyti fone. Bandyk dar kartą.</string>
+    <string name="overlay_error_no_model">Neįdiegtas joks kalbos modelis. Atidaryk Talkpuppy ir atsisiųsk vieną.</string>
+    <string name="overlay_error_model_load">Nepavyko įkelti kalbos modelio.</string>
+    <string name="overlay_error_transcription">Transkripcija nepavyko.</string>
+</resources>

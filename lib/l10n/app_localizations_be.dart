@@ -188,6 +188,23 @@ class AppLocalizationsBe extends AppLocalizations {
   String get hapticsTitle => 'Тактыльны водгук';
 
   @override
+  String get minimizeToOverlay => 'Згарнуць і паказаць накладку';
+
+  @override
+  String get overlaySetupTitle => 'Уключы службу спецыяльных магчымасцей';
+
+  @override
+  String get overlaySetupBody =>
+      'Каб паказваць кнопку паверх іншых праграм і ўстаўляць тэкст у месца курсора, Talkpuppy патрэбна яго служба спецыяльных магчымасцей. Яна чытае толькі поле, у якім ты пішаш, і толькі для таго, каб уставіць тэкст. Больш яна нічога не чытае на экране, нічога не захоўвае з іншых праграм і нікуды нічога не адпраўляе.\n\nНа наступным экране адкрый «Talkpuppy» і ўключы яго.';
+
+  @override
+  String get overlayOpenAccessibility => 'Адкрыць спецыяльныя магчымасці';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Пераключальнік неактыўны? Адкрый «Звесткі пра праграму» → ⋮ → «Дазволіць абмежаваныя налады» і паспрабуй зноў.';
+
+  @override
   String get defaultLanguageTitle => 'Мова па змаўчанні для новых запісаў';
 
   @override

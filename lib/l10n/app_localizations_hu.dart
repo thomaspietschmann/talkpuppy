@@ -188,6 +188,23 @@ class AppLocalizationsHu extends AppLocalizations {
   String get hapticsTitle => 'Haptikus visszajelzés';
 
   @override
+  String get minimizeToOverlay => 'Kis méret és az átfedés megjelenítése';
+
+  @override
+  String get overlaySetupTitle => 'Kapcsold be a kisegítő szolgáltatást';
+
+  @override
+  String get overlaySetupBody =>
+      'Ahhoz, hogy a gomb más alkalmazások felett megjelenhessen, és a szöveg a kurzor helyére kerüljön, a Talkpuppynak szüksége van a kisegítő szolgáltatására. Csak azt a mezőt olvassa, amelybe éppen gépelsz, és csak azért, hogy beillessze a szöveget. Semmi mást nem olvas a képernyőn, semmit nem ment más alkalmazásokból, és semmit nem küld sehová.\n\nA következő képernyőn nyisd meg a „Talkpuppy” elemet, és kapcsold be.';
+
+  @override
+  String get overlayOpenAccessibility => 'Kisegítő lehetőségek megnyitása';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Szürke a kapcsoló? Nyisd meg: Alkalmazásinformáció → ⋮ → „Korlátozott beállítások engedélyezése”, majd próbáld újra.';
+
+  @override
   String get defaultLanguageTitle => 'Alapértelmezett nyelv új felvételekhez';
 
   @override

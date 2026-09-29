@@ -187,6 +187,23 @@ class AppLocalizationsCs extends AppLocalizations {
   String get hapticsTitle => 'Haptická odezva';
 
   @override
+  String get minimizeToOverlay => 'Minimalizovat a zobrazit překryv';
+
+  @override
+  String get overlaySetupTitle => 'Zapni službu přístupnosti';
+
+  @override
+  String get overlaySetupBody =>
+      'Aby se tlačítko mohlo zobrazit nad ostatními aplikacemi a text se vložil na místo kurzoru, potřebuje Talkpuppy svou službu přístupnosti. Čte jen pole, do kterého právě píšeš, a jen proto, aby do něj vložil text. Nic jiného na obrazovce nečte, nic z jiných aplikací neukládá a nikam nic neposílá.\n\nNa další obrazovce otevři „Talkpuppy“ a zapni ho.';
+
+  @override
+  String get overlayOpenAccessibility => 'Otevřít nastavení přístupnosti';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Přepínač je šedý? Otevři Informace o aplikaci → ⋮ → „Povolit omezená nastavení“ a zkus to znovu.';
+
+  @override
   String get defaultLanguageTitle => 'Výchozí jazyk nových nahrávek';
 
   @override

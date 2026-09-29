@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Talkpuppy plutajući gumb za snimanje</string>
+    <string name="overlay_service_summary">Diktiraj u bilo koje tekstno polje</string>
+    <string name="overlay_service_description">Prikazuje gumb za snimanje iznad drugih aplikacija. Postavi kursor u tekstno polje, dodirni gumb, govori, ponovno dodirni: Talkpuppy transkribira na tvom telefonu i umeće tekst na mjesto kursora. Usluga čita samo polje u kojem upravo pišeš, i to samo radi umetanja teksta. Ne čita ništa drugo na zaslonu, ne sprema ništa iz drugih aplikacija i ništa nikamo ne šalje.</string>
+    <string name="overlay_button_record">Pokreni diktiranje</string>
+    <string name="overlay_button_stop">Zaustavi diktiranje</string>
+    <string name="overlay_notification_channel">Diktiranje</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Slušam… dodirni Zaustavi kad završiš.</string>
+    <string name="overlay_notification_stop">Zaustavi</string>
+    <string name="overlay_copied">Umetanje ovdje nije uspjelo: kopirano, spremno za lijepljenje</string>
+    <string name="overlay_no_speech">Ništa nije prepoznato</string>
+    <string name="overlay_error_microphone">Nema pristupa mikrofonu. Otvori Talkpuppy jednom i dopusti ga.</string>
+    <string name="overlay_error_background">Android nije dopustio snimanje u pozadini. Pokušaj ponovno.</string>
+    <string name="overlay_error_no_model">Nije instaliran nijedan govorni model. Otvori Talkpuppy i preuzmi jedan.</string>
+    <string name="overlay_error_model_load">Govorni model nije moguće učitati.</string>
+    <string name="overlay_error_transcription">Transkripcija nije uspjela.</string>
+</resources>

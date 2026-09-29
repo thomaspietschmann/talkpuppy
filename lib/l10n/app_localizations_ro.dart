@@ -188,6 +188,23 @@ class AppLocalizationsRo extends AppLocalizations {
   String get hapticsTitle => 'Feedback haptic';
 
   @override
+  String get minimizeToOverlay => 'Minimizează și afișează suprapunerea';
+
+  @override
+  String get overlaySetupTitle => 'Activează serviciul de accesibilitate';
+
+  @override
+  String get overlaySetupBody =>
+      'Pentru a afișa butonul deasupra altor aplicații și a insera textul la cursor, Talkpuppy are nevoie de serviciul său de accesibilitate. Citește doar câmpul în care scrii și doar pentru a insera textul. Nu citește nimic altceva de pe ecran, nu salvează nimic din alte aplicații și nu trimite nimic nicăieri.\n\nPe ecranul următor, deschide „Talkpuppy” și activează-l.';
+
+  @override
+  String get overlayOpenAccessibility => 'Deschide setările de accesibilitate';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Comutatorul e gri? Deschide Informații despre aplicație → ⋮ → „Permite setările restricționate”, apoi încearcă din nou.';
+
+  @override
   String get defaultLanguageTitle => 'Limba implicită pentru înregistrări noi';
 
   @override

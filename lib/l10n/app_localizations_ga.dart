@@ -188,6 +188,23 @@ class AppLocalizationsGa extends AppLocalizations {
   String get hapticsTitle => 'Aiseolas haptach';
 
   @override
+  String get minimizeToOverlay => 'Íoslaghdaigh agus taispeáin an forleagan';
+
+  @override
+  String get overlaySetupTitle => 'Cuir an tseirbhís inrochtaineachta ar siúl';
+
+  @override
+  String get overlaySetupBody =>
+      'Chun an cnaipe a thaispeáint os cionn aipeanna eile agus an téacs a chur isteach ag an gcúrsóir, teastaíonn a sheirbhís inrochtaineachta ó Talkpuppy. Ní léann sé ach an réimse ina bhfuil tú ag clóscríobh, agus sin amháin chun an téacs a chur isteach. Ní léann sé aon rud eile ar an scáileán, ní shábhálann sé aon rud ó aipeanna eile agus ní sheolann sé aon rud áit ar bith.\n\nAr an gcéad scáileán eile, oscail “Talkpuppy” agus cuir ar siúl é.';
+
+  @override
+  String get overlayOpenAccessibility => 'Oscail socruithe inrochtaineachta';
+
+  @override
+  String get overlayRestrictedHint =>
+      'An lasc liath? Oscail Faisnéis na haipe → ⋮ → “Ceadaigh socruithe srianta”, ansin bain triail eile as.';
+
+  @override
   String get defaultLanguageTitle => 'Teanga réamhshocraithe do thaifid nua';
 
   @override

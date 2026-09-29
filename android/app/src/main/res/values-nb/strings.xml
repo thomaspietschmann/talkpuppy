@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Talkpuppy flytende opptaksknapp</string>
+    <string name="overlay_service_summary">Dikter i et hvilket som helst tekstfelt</string>
+    <string name="overlay_service_description">Viser en opptaksknapp over andre apper. Plasser markøren i et tekstfelt, trykk på knappen, snakk, trykk igjen: Talkpuppy transkriberer på telefonen din og setter inn teksten ved markøren. Tjenesten leser bare feltet du skriver i, og bare for å sette inn teksten. Den leser ikke noe annet på skjermen, lagrer ingenting fra andre apper og sender ingenting noe sted.</string>
+    <string name="overlay_button_record">Start diktering</string>
+    <string name="overlay_button_stop">Stopp diktering</string>
+    <string name="overlay_notification_channel">Diktering</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Lytter… trykk på Stopp når du er ferdig.</string>
+    <string name="overlay_notification_stop">Stopp</string>
+    <string name="overlay_copied">Kunne ikke sette inn her: kopiert, klar til å limes inn</string>
+    <string name="overlay_no_speech">Ingenting ble gjenkjent</string>
+    <string name="overlay_error_microphone">Ingen tilgang til mikrofonen. Åpne Talkpuppy én gang og gi tilgang.</string>
+    <string name="overlay_error_background">Android tillot ikke opptak i bakgrunnen. Prøv igjen.</string>
+    <string name="overlay_error_no_model">Ingen talemodell er installert. Åpne Talkpuppy og last ned en.</string>
+    <string name="overlay_error_model_load">Talemodellen kunne ikke lastes inn.</string>
+    <string name="overlay_error_transcription">Transkriberingen mislyktes.</string>
+</resources>

@@ -188,6 +188,23 @@ class AppLocalizationsSq extends AppLocalizations {
   String get hapticsTitle => 'Reagimi me prekje';
 
   @override
+  String get minimizeToOverlay => 'Minimizo dhe shfaq mbivendosjen';
+
+  @override
+  String get overlaySetupTitle => 'Aktivizo shërbimin e qasshmërisë';
+
+  @override
+  String get overlaySetupBody =>
+      'Për të shfaqur butonin mbi aplikacionet e tjera dhe për të futur tekstin te kursori, Talkpuppy ka nevojë për shërbimin e vet të qasshmërisë. Lexon vetëm fushën ku po shkruan, dhe vetëm për të futur tekstin. Nuk lexon asgjë tjetër në ekran, nuk ruan asgjë nga aplikacionet e tjera dhe nuk dërgon asgjë askund.\n\nNë ekranin tjetër, hap “Talkpuppy” dhe aktivizoje.';
+
+  @override
+  String get overlayOpenAccessibility => 'Hap cilësimet e qasshmërisë';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Çelësi është gri? Hap Informacioni i aplikacionit → ⋮ → “Lejo cilësimet e kufizuara” dhe provo përsëri.';
+
+  @override
   String get defaultLanguageTitle =>
       'Gjuha e parazgjedhur për regjistrimet e reja';
 

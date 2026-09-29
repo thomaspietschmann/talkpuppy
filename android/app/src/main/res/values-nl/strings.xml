@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Talkpuppy zwevende opnameknop</string>
+    <string name="overlay_service_summary">Dicteer in elk tekstveld</string>
+    <string name="overlay_service_description">Toont een opnameknop boven andere apps. Zet de cursor in een tekstveld, tik op de knop, spreek, tik opnieuw: Talkpuppy transcribeert op je telefoon en voegt de tekst bij de cursor in. De service leest alleen het veld waarin je typt, en alleen om de tekst in te voegen. Verder leest hij niets op het scherm, slaat hij niets uit andere apps op en stuurt hij nergens iets naartoe.</string>
+    <string name="overlay_button_record">Dicteren starten</string>
+    <string name="overlay_button_stop">Dicteren stoppen</string>
+    <string name="overlay_notification_channel">Dicteren</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Aan het luisteren… tik op Stoppen als je klaar bent.</string>
+    <string name="overlay_notification_stop">Stoppen</string>
+    <string name="overlay_copied">Invoegen lukte hier niet: gekopieerd, klaar om te plakken</string>
+    <string name="overlay_no_speech">Niets herkend</string>
+    <string name="overlay_error_microphone">Geen toegang tot de microfoon. Open Talkpuppy één keer en sta het toe.</string>
+    <string name="overlay_error_background">Android stond opnemen op de achtergrond niet toe. Probeer het opnieuw.</string>
+    <string name="overlay_error_no_model">Geen spraakmodel geïnstalleerd. Open Talkpuppy en download er een.</string>
+    <string name="overlay_error_model_load">Het spraakmodel kon niet worden geladen.</string>
+    <string name="overlay_error_transcription">Transcriptie mislukt.</string>
+</resources>

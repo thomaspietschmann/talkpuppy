@@ -188,6 +188,23 @@ class AppLocalizationsLv extends AppLocalizations {
   String get hapticsTitle => 'Haptiskā atgriezeniskā saite';
 
   @override
+  String get minimizeToOverlay => 'Minimizēt un rādīt pārklājumu';
+
+  @override
+  String get overlaySetupTitle => 'Ieslēdz pieejamības pakalpojumu';
+
+  @override
+  String get overlaySetupBody =>
+      'Lai poga varētu parādīties virs citām lietotnēm un teksts tiktu ievietots kursora vietā, Talkpuppy ir nepieciešams tās pieejamības pakalpojums. Tas lasa tikai lauku, kurā tu raksti, un tikai teksta ievietošanai. Tas ekrānā nelasa neko citu, nesaglabā neko no citām lietotnēm un nekur neko nesūta.\n\nNākamajā ekrānā atver “Talkpuppy” un ieslēdz to.';
+
+  @override
+  String get overlayOpenAccessibility => 'Atvērt pieejamības iestatījumus';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Slēdzis ir pelēks? Atver Lietotnes informācija → ⋮ → “Atļaut ierobežotos iestatījumus” un mēģini vēlreiz.';
+
+  @override
   String get defaultLanguageTitle => 'Noklusējuma valoda jauniem ierakstiem';
 
   @override

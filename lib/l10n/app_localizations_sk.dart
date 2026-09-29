@@ -187,6 +187,23 @@ class AppLocalizationsSk extends AppLocalizations {
   String get hapticsTitle => 'Hmatová odozva';
 
   @override
+  String get minimizeToOverlay => 'Minimalizovať a zobraziť prekrytie';
+
+  @override
+  String get overlaySetupTitle => 'Zapni službu dostupnosti';
+
+  @override
+  String get overlaySetupBody =>
+      'Aby sa tlačidlo mohlo zobraziť nad ostatnými aplikáciami a text sa vložil na miesto kurzora, Talkpuppy potrebuje svoju službu dostupnosti. Číta len pole, do ktorého práve píšeš, a len preto, aby doň vložil text. Nič iné na obrazovke nečíta, nič z iných aplikácií neukladá a nikam nič neposiela.\n\nNa ďalšej obrazovke otvor „Talkpuppy“ a zapni ho.';
+
+  @override
+  String get overlayOpenAccessibility => 'Otvoriť nastavenia dostupnosti';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Prepínač je sivý? Otvor Informácie o aplikácii → ⋮ → „Povoliť obmedzené nastavenia“ a skús to znova.';
+
+  @override
   String get defaultLanguageTitle => 'Predvolený jazyk nových nahrávok';
 
   @override

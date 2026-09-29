@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Talkpuppy lebegő felvétel gomb</string>
+    <string name="overlay_service_summary">Diktálj bármelyik szövegmezőbe</string>
+    <string name="overlay_service_description">Felvétel gombot jelenít meg más alkalmazások felett. Tedd a kurzort egy szövegmezőbe, koppints a gombra, beszélj, koppints újra: a Talkpuppy a telefonodon írja át a beszédet, és a kurzor helyére illeszti a szöveget. A szolgáltatás csak azt a mezőt olvassa, amelybe éppen gépelsz, és csak azért, hogy beillessze a szöveget. Semmi mást nem olvas a képernyőn, semmit nem ment más alkalmazásokból, és semmit nem küld sehová.</string>
+    <string name="overlay_button_record">Diktálás indítása</string>
+    <string name="overlay_button_stop">Diktálás leállítása</string>
+    <string name="overlay_notification_channel">Diktálás</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Figyel… koppints a Leállítás gombra, ha végeztél.</string>
+    <string name="overlay_notification_stop">Leállítás</string>
+    <string name="overlay_copied">Ide nem sikerült beilleszteni: kimásolva, beilleszthető</string>
+    <string name="overlay_no_speech">Nem sikerült semmit felismerni</string>
+    <string name="overlay_error_microphone">Nincs hozzáférés a mikrofonhoz. Nyisd meg egyszer a Talkpuppyt, és engedélyezd.</string>
+    <string name="overlay_error_background">Az Android nem engedélyezte a háttérben történő felvételt. Próbáld újra.</string>
+    <string name="overlay_error_no_model">Nincs telepítve beszédmodell. Nyisd meg a Talkpuppyt, és tölts le egyet.</string>
+    <string name="overlay_error_model_load">A beszédmodellt nem sikerült betölteni.</string>
+    <string name="overlay_error_transcription">Az átírás nem sikerült.</string>
+</resources>

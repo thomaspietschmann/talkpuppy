@@ -490,6 +490,36 @@ abstract class AppLocalizations {
   /// **'Haptic feedback'**
   String get hapticsTitle;
 
+  /// No description provided for @minimizeToOverlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimize and show overlay'**
+  String get minimizeToOverlay;
+
+  /// No description provided for @overlaySetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on the accessibility service'**
+  String get overlaySetupTitle;
+
+  /// No description provided for @overlaySetupBody.
+  ///
+  /// In en, this message translates to:
+  /// **'To show the button over other apps and insert the text at the cursor, Talkpuppy needs its accessibility service. It only reads the text field you\'re typing in, and only to insert the text. It doesn\'t read anything else on the screen, stores nothing from other apps and sends nothing anywhere.\n\nIn the next screen, open “Talkpuppy” and turn it on.'**
+  String get overlaySetupBody;
+
+  /// No description provided for @overlayOpenAccessibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Open accessibility settings'**
+  String get overlayOpenAccessibility;
+
+  /// No description provided for @overlayRestrictedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch greyed out? Open App info → ⋮ → “Allow restricted settings”, then try again.'**
+  String get overlayRestrictedHint;
+
   /// No description provided for @defaultLanguageTitle.
   ///
   /// In en, this message translates to:

@@ -13,6 +13,11 @@ class SettingsService extends ChangeNotifier {
   static const _kOnboardingComplete = 'onboardingComplete';
   static const _kAppLanguage = 'appLanguage';
 
+  /// Read directly by the Android accessibility service (as
+  /// `flutter.overlayEnabled` in `FlutterSharedPreferences`), which shows
+  /// or hides the floating button when it changes.
+  static const kOverlayEnabled = 'overlayEnabled';
+
   final SharedPreferences _prefs;
 
   static Future<SettingsService> create() async {
@@ -64,6 +69,19 @@ class SettingsService extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  /// Android only: floating record button over other apps.
+  bool get overlayEnabled => _prefs.getBool(kOverlayEnabled) ?? false;
+
+  set overlayEnabled(bool value) {
+    _prefs.setBool(kOverlayEnabled, value);
+    notifyListeners();
+  }
+
+  /// Re-reads values another Flutter engine in the same process may have
+  /// written (the Android overlay runs in its own engine, with its own
+  /// cached copy of the preferences).
+  Future<void> reload() => _prefs.reload();
 
   bool get onboardingComplete =>
       _prefs.getBool(_kOnboardingComplete) ?? false;

@@ -13,6 +13,9 @@ transcript is already in your clipboard, ready to paste into any app.
 - **No friction**: one big record button, auto-copy after transcription,
   "continue recording" to append to the last text, re-transcribe with a
   different language or model.
+- **Dictate into any app (Android)**: a floating record button over other
+  apps inserts the transcript right at the cursor — see
+  [Floating button](#floating-button-android).
 - **Short-lived history**: recordings and transcripts are deleted
   automatically after 3 days (or manually), and excluded from iCloud/Android
   backups.
@@ -60,6 +63,32 @@ There is no App Store build. Build and install from a Mac with Xcode and a
 4. Wrong language detected? Tap the translate icon to re-transcribe with a
    fixed language (requires a Whisper or Nemotron model).
 
+## Floating button (Android)
+
+Dictate straight into any text field, in any app:
+
+1. In Talkpuppy, tap **Minimize and show overlay**. The first time, turn on
+   the Talkpuppy accessibility service in the system settings (if the switch
+   is greyed out because the app was installed from a browser: App info →
+   ⋮ → *Allow restricted settings*). The app then goes to the background and
+   the floating button appears over your other apps.
+2. Put the cursor in a text field, tap the button, speak, tap again. The
+   text is inserted at the cursor, with a space in front or after where a
+   word touches it. A call or alarm ends the dictation and inserts what was
+   said so far; holding the button during a recording cancels it.
+3. To close the button, drag it onto the ✕ at the bottom of the screen, or
+   open Talkpuppy again.
+
+The button uses the model and language set in the app; Nemotron gives the
+quickest results. Only one model is kept in memory: the app frees its own
+while the button is in use and loads it again when you come back.
+
+How the text gets in: on Android 13+ the accessibility service types into
+the field like a keyboard (your keyboard stays active); on older versions
+it sets the field's text, or pastes it in browsers and password fields. If
+none of that works (a field that doesn't accept text from outside), the
+text is put on the clipboard and the button says so.
+
 ## Privacy
 
 - Audio is recorded to app-private storage and transcribed on the device.
@@ -70,6 +99,11 @@ There is no App Store build. Build and install from a Mac with Xcode and a
 - Recordings and transcripts are deleted after 3 days (checked at start and
   whenever the app returns to the foreground) and are excluded from device
   backups; downloaded models are never backed up either.
+- The floating button's accessibility service only reads the text field
+  you're typing in, and only to insert the dictation; it doesn't read other
+  screen content, stores nothing from other apps and logs nothing. Its
+  recordings go to the app's cache and are deleted right after
+  transcription.
 - Transcripts copied to the clipboard are marked sensitive: Android 13+
   hides them from the clipboard preview and clipboard sync, iOS keeps them
   local (no Universal Clipboard to your other devices). Turn off

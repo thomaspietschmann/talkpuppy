@@ -187,6 +187,24 @@ class AppLocalizationsLb extends AppLocalizations {
   String get hapticsTitle => 'Haptesche Feedback';
 
   @override
+  String get minimizeToOverlay => 'Minimiséieren an Overlay weisen';
+
+  @override
+  String get overlaySetupTitle => 'Accessibilitéitsdéngscht aschalten';
+
+  @override
+  String get overlaySetupBody =>
+      'Fir de Knäppchen iwwer aneren Apps ze weisen an den Text beim Cursor anzefügen, brauch Talkpuppy säin Accessibilitéitsdéngscht. En liest nëmmen d\'Feld, an deem s du grad tipps, an nëmmen, fir den Text anzefügen. Soss liest en näischt um Bildschierm, späichert näischt vun aneren Apps a schéckt näischt iergendwouhin.\n\nMaach um nächste Bildschierm „Talkpuppy“ op a schalt et an.';
+
+  @override
+  String get overlayOpenAccessibility =>
+      'Accessibilitéitsastellungen opmaachen';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Schalter gro? Maach App-Info → ⋮ → „Ageschränkt Astellungen erlaben“ op a prob et nach eng Kéier.';
+
+  @override
   String get defaultLanguageTitle => 'Standardsprooch fir nei Opnamen';
 
   @override

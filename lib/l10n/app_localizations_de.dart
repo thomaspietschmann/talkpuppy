@@ -188,6 +188,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String get hapticsTitle => 'Haptisches Feedback';
 
   @override
+  String get minimizeToOverlay => 'Minimieren und Overlay anzeigen';
+
+  @override
+  String get overlaySetupTitle => 'Bedienungshilfe einschalten';
+
+  @override
+  String get overlaySetupBody =>
+      'Damit der Button über anderen Apps erscheint und den Text am Cursor einfügen kann, braucht Talkpuppy seine Bedienungshilfe. Sie liest nur das Textfeld, in dem du gerade tippst, und nur, um den Text einzufügen. Sie liest sonst nichts auf dem Bildschirm, speichert nichts aus anderen Apps und sendet nichts irgendwohin.\n\nÖffne im nächsten Bildschirm „Talkpuppy“ und schalte es ein.';
+
+  @override
+  String get overlayOpenAccessibility => 'Bedienungshilfen öffnen';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Schalter ausgegraut? Öffne App-Info → ⋮ → „Eingeschränkte Einstellungen zulassen“ und versuch es noch einmal.';
+
+  @override
   String get defaultLanguageTitle => 'Standardsprache für neue Aufnahmen';
 
   @override

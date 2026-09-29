@@ -188,6 +188,23 @@ class AppLocalizationsEt extends AppLocalizations {
   String get hapticsTitle => 'Haptiline tagasiside';
 
   @override
+  String get minimizeToOverlay => 'Minimeeri ja näita ülekatet';
+
+  @override
+  String get overlaySetupTitle => 'Lülita juurdepääsetavuse teenus sisse';
+
+  @override
+  String get overlaySetupBody =>
+      'Et kuvada nuppu teiste rakenduste peal ja sisestada tekst kursori kohale, vajab Talkpuppy oma juurdepääsetavuse teenust. See loeb ainult välja, kuhu sa parajasti kirjutad, ja ainult teksti sisestamiseks. See ei loe ekraanilt midagi muud, ei salvesta midagi teistest rakendustest ega saada midagi kuhugi.\n\nAva järgmisel ekraanil „Talkpuppy“ ja lülita see sisse.';
+
+  @override
+  String get overlayOpenAccessibility => 'Ava juurdepääsetavuse seaded';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Lüliti on hall? Ava Rakenduse teave → ⋮ → „Luba piiratud seaded“ ja proovi uuesti.';
+
+  @override
   String get defaultLanguageTitle => 'Uute salvestuste vaikekeel';
 
   @override

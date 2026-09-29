@@ -1,13 +1,9 @@
 package de.pietschie.talkpuppy
 
 import android.app.ActivityManager
-import android.content.ClipData
-import android.content.ClipDescription
-import android.content.ClipboardManager
 import android.content.Context
-import android.os.Build
-import android.os.PersistableBundle
 import android.os.StatFs
+import de.pietschie.talkpuppy.overlay.RecognitionArbiter
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -44,26 +40,33 @@ class MainActivity : FlutterActivity() {
             }
         }
 
-        // Transcripts can be private: mark them sensitive so Android 13+
-        // doesn't show them in the clipboard preview overlay and clipboard
-        // sync tools skip them.
+        // Transcripts can be private; see SensitiveClip.
         MethodChannel(messenger, clipboardChannel).setMethodCallHandler { call, result ->
             if (call.method == "copySensitive") {
-                val text = call.argument<String>("text") ?: ""
-                val clip = ClipData.newPlainText("Talkpuppy", text)
-                clip.description.extras = PersistableBundle().apply {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        putBoolean(ClipDescription.EXTRA_IS_SENSITIVE, true)
-                    } else {
-                        putBoolean("android.content.extra.IS_SENSITIVE", true)
-                    }
-                }
-                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                clipboard.setPrimaryClip(clip)
+                SensitiveClip.copy(this, call.argument<String>("text") ?: "")
                 result.success(null)
             } else {
                 result.notImplemented()
             }
         }
+
+        overlaySetup = OverlaySetupChannel(this, messenger)
+    }
+
+    private var overlaySetup: OverlaySetupChannel? = null
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        overlaySetup?.onRequestPermissionsResult(requestCode)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // The app wants its model back; the floating button frees its own.
+        RecognitionArbiter.appResumed()
     }
 }

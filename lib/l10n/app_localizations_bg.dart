@@ -187,6 +187,23 @@ class AppLocalizationsBg extends AppLocalizations {
   String get hapticsTitle => 'Вибрация при докосване';
 
   @override
+  String get minimizeToOverlay => 'Минимизиране и показване на наслагването';
+
+  @override
+  String get overlaySetupTitle => 'Включи услугата за достъпност';
+
+  @override
+  String get overlaySetupBody =>
+      'За да показва бутона върху другите приложения и да вмъква текста на мястото на курсора, Talkpuppy има нужда от своята услуга за достъпност. Тя чете само полето, в което пишеш, и само за да вмъкне текста. Не чете нищо друго от екрана, не запазва нищо от други приложения и не изпраща нищо никъде.\n\nНа следващия екран отвори „Talkpuppy“ и го включи.';
+
+  @override
+  String get overlayOpenAccessibility => 'Отвори настройките за достъпност';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Превключвателят е сив? Отвори Информация за приложението → ⋮ → „Разрешаване на ограничените настройки“ и опитай отново.';
+
+  @override
   String get defaultLanguageTitle => 'Език по подразбиране за нови записи';
 
   @override

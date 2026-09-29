@@ -187,6 +187,23 @@ class AppLocalizationsCy extends AppLocalizations {
   String get hapticsTitle => 'Adborth haptig';
 
   @override
+  String get minimizeToOverlay => 'Lleihau a dangos y troshaen';
+
+  @override
+  String get overlaySetupTitle => 'Tro\'r gwasanaeth hygyrchedd ymlaen';
+
+  @override
+  String get overlaySetupBody =>
+      'I ddangos y botwm dros apiau eraill a rhoi\'r testun wrth y cyrchwr, mae Talkpuppy angen ei wasanaeth hygyrchedd. Dim ond y maes rwyt ti\'n teipio ynddo y mae\'n ei ddarllen, a dim ond i roi\'r testun ynddo. Nid yw\'n darllen dim byd arall ar y sgrin, nid yw\'n cadw dim o apiau eraill ac nid yw\'n anfon dim i unman.\n\nAr y sgrin nesaf, agora “Talkpuppy” a\'i droi ymlaen.';
+
+  @override
+  String get overlayOpenAccessibility => 'Agor gosodiadau hygyrchedd';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Switsh yn llwyd? Agora Gwybodaeth ap → ⋮ → “Caniatáu gosodiadau cyfyngedig”, yna rho gynnig arall arni.';
+
+  @override
   String get defaultLanguageTitle =>
       'Iaith ragosodedig ar gyfer recordiadau newydd';
 

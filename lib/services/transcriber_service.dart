@@ -55,6 +55,11 @@ abstract class Transcriber {
 
   /// Drops the live session without a result.
   Future<void> cancelLive();
+
+  /// Frees the loaded recognizer (hundreds of MB) until the next
+  /// [ensureModel]. Used when the app and the Android overlay would
+  /// otherwise both hold a model in memory.
+  Future<void> unloadModel();
 }
 
 /// Owns a persistent background isolate that keeps a loaded sherpa-onnx
@@ -207,6 +212,16 @@ class TranscriberService implements Transcriber {
   void _closeLivePort() {
     _livePort?.close();
     _livePort = null;
+  }
+
+  @override
+  Future<void> unloadModel() async {
+    _loadedModelKey = null;
+    _closeLivePort();
+    final reply = await _send({'type': 'unloadModel'});
+    if (reply['ok'] != true) {
+      throw TranscriberException(reply['error'] as String? ?? 'unknown error');
+    }
   }
 
   Future<Map<String, dynamic>> _send(Map<String, dynamic> message) async {
@@ -492,6 +507,10 @@ void _isolateMain(SendPort initSendPort) {
             // since it started.
             'language': _reportedLanguage(live.session.language),
           });
+        case 'unloadModel':
+          // The VAD is tiny and stays.
+          state.freeRecognizers();
+          replyPort.send({'ok': true});
         case 'liveCancel':
           state.live?.free();
           state.live = null;

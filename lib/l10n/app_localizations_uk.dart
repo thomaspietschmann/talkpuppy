@@ -187,6 +187,23 @@ class AppLocalizationsUk extends AppLocalizations {
   String get hapticsTitle => 'Тактильний відгук';
 
   @override
+  String get minimizeToOverlay => 'Згорнути й показати накладку';
+
+  @override
+  String get overlaySetupTitle => 'Увімкни сервіс спеціальних можливостей';
+
+  @override
+  String get overlaySetupBody =>
+      'Щоб показувати кнопку поверх інших додатків і вставляти текст у місце курсора, Talkpuppy потрібен його сервіс спеціальних можливостей. Він читає лише поле, в якому ти пишеш, і лише для того, щоб вставити текст. Більше він нічого не читає на екрані, нічого не зберігає з інших додатків і нікуди нічого не надсилає.\n\nНа наступному екрані відкрий «Talkpuppy» і ввімкни його.';
+
+  @override
+  String get overlayOpenAccessibility => 'Відкрити спеціальні можливості';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Перемикач неактивний? Відкрий «Про додаток» → ⋮ → «Дозволити обмежені налаштування» і спробуй ще раз.';
+
+  @override
   String get defaultLanguageTitle => 'Мова за замовчуванням для нових записів';
 
   @override

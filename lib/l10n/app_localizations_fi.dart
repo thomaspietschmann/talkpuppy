@@ -188,6 +188,23 @@ class AppLocalizationsFi extends AppLocalizations {
   String get hapticsTitle => 'Värinäpalaute';
 
   @override
+  String get minimizeToOverlay => 'Pienennä ja näytä päällekkäisnäkymä';
+
+  @override
+  String get overlaySetupTitle => 'Ota esteettömyyspalvelu käyttöön';
+
+  @override
+  String get overlaySetupBody =>
+      'Jotta painike voi näkyä muiden sovellusten päällä ja teksti voidaan lisätä kohdistimen kohtaan, Talkpuppy tarvitsee esteettömyyspalvelunsa. Se lukee vain kenttää, johon kirjoitat, ja vain tekstin lisäämiseksi. Se ei lue näytöltä mitään muuta, ei tallenna mitään muista sovelluksista eikä lähetä mitään minnekään.\n\nAvaa seuraavassa näkymässä ”Talkpuppy” ja ota se käyttöön.';
+
+  @override
+  String get overlayOpenAccessibility => 'Avaa esteettömyysasetukset';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Onko kytkin harmaana? Avaa Sovelluksen tiedot → ⋮ → ”Salli rajoitetut asetukset” ja yritä uudelleen.';
+
+  @override
   String get defaultLanguageTitle => 'Uusien nauhoitusten oletuskieli';
 
   @override

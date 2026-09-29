@@ -187,6 +187,23 @@ class AppLocalizationsTr extends AppLocalizations {
   String get hapticsTitle => 'Dokunsal geri bildirim';
 
   @override
+  String get minimizeToOverlay => 'Küçült ve katmanı göster';
+
+  @override
+  String get overlaySetupTitle => 'Erişilebilirlik hizmetini aç';
+
+  @override
+  String get overlaySetupBody =>
+      'Düğmeyi diğer uygulamaların üzerinde göstermek ve metni imlecin olduğu yere eklemek için Talkpuppy\'nin kendi erişilebilirlik hizmetine ihtiyacı var. Yalnızca yazdığın alanı okur, o da sadece metni eklemek için. Ekrandaki başka hiçbir şeyi okumaz, diğer uygulamalardan hiçbir şey kaydetmez ve hiçbir yere bir şey göndermez.\n\nSonraki ekranda “Talkpuppy”yi aç ve etkinleştir.';
+
+  @override
+  String get overlayOpenAccessibility => 'Erişilebilirlik ayarlarını aç';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Anahtar gri mi? Uygulama bilgileri → ⋮ → “Kısıtlanmış ayarlara izin ver” seçeneğine git ve tekrar dene.';
+
+  @override
   String get defaultLanguageTitle => 'Yeni kayıtlar için varsayılan dil';
 
   @override

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Лебдечко копче за снимање на Talkpuppy</string>
+    <string name="overlay_service_summary">Диктирај во кое било текстуално поле</string>
+    <string name="overlay_service_description">Прикажува копче за снимање над другите апликации. Стави го курсорот во текстуално поле, допри го копчето, зборувај, допри повторно: Talkpuppy транскрибира на твојот телефон и го внесува текстот на местото на курсорот. Услугата го чита само полето во кое пишуваш, и тоа само за да го внесе текстот. Не чита ништо друго на екранот, не зачувува ништо од други апликации и не испраќа ништо никаде.</string>
+    <string name="overlay_button_record">Започни диктирање</string>
+    <string name="overlay_button_stop">Запри диктирање</string>
+    <string name="overlay_notification_channel">Диктирање</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Слуша… допри Запри кога ќе завршиш.</string>
+    <string name="overlay_notification_stop">Запри</string>
+    <string name="overlay_copied">Не можеше да се внесе тука: копирано, подготвено за залепување</string>
+    <string name="overlay_no_speech">Ништо не е препознаено</string>
+    <string name="overlay_error_microphone">Нема пристап до микрофонот. Отвори го Talkpuppy еднаш и дозволи го.</string>
+    <string name="overlay_error_background">Android не дозволи снимање во заднина. Обиди се повторно.</string>
+    <string name="overlay_error_no_model">Нема инсталиран говорен модел. Отвори го Talkpuppy и преземи еден.</string>
+    <string name="overlay_error_model_load">Говорниот модел не можеше да се вчита.</string>
+    <string name="overlay_error_transcription">Транскрипцијата не успеа.</string>
+</resources>

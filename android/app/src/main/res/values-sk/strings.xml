@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Plávajúce tlačidlo nahrávania Talkpuppy</string>
+    <string name="overlay_service_summary">Diktuj do ľubovoľného textového poľa</string>
+    <string name="overlay_service_description">Zobrazuje tlačidlo nahrávania nad ostatnými aplikáciami. Umiestni kurzor do textového poľa, ťukni na tlačidlo, hovor, ťukni znova: Talkpuppy prepíše reč priamo v tvojom telefóne a vloží text na miesto kurzora. Služba číta len pole, do ktorého práve píšeš, a len preto, aby doň vložila text. Nič iné na obrazovke nečíta, nič z iných aplikácií neukladá a nikam nič neposiela.</string>
+    <string name="overlay_button_record">Spustiť diktovanie</string>
+    <string name="overlay_button_stop">Ukončiť diktovanie</string>
+    <string name="overlay_notification_channel">Diktovanie</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Počúvam… keď skončíš, ťukni na Zastaviť.</string>
+    <string name="overlay_notification_stop">Zastaviť</string>
+    <string name="overlay_copied">Sem sa nepodarilo vložiť: skopírované, pripravené na vloženie</string>
+    <string name="overlay_no_speech">Nič sa nerozpoznalo</string>
+    <string name="overlay_error_microphone">Chýba prístup k mikrofónu. Raz otvor Talkpuppy a povoľ ho.</string>
+    <string name="overlay_error_background">Android nepovolil nahrávanie na pozadí. Skús to znova.</string>
+    <string name="overlay_error_no_model">Nie je nainštalovaný žiadny rečový model. Otvor Talkpuppy a nejaký stiahni.</string>
+    <string name="overlay_error_model_load">Rečový model sa nepodarilo načítať.</string>
+    <string name="overlay_error_transcription">Prepis zlyhal.</string>
+</resources>

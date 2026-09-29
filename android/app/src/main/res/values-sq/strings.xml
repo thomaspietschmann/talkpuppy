@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Butoni lundrues i regjistrimit i Talkpuppy</string>
+    <string name="overlay_service_summary">Dikto në çdo fushë teksti</string>
+    <string name="overlay_service_description">Shfaq një buton regjistrimi mbi aplikacionet e tjera. Vendos kursorin në një fushë teksti, trokit butonin, fol, trokit përsëri: Talkpuppy e transkripton në telefonin tënd dhe e fut tekstin te kursori. Shërbimi lexon vetëm fushën ku po shkruan, dhe vetëm për të futur tekstin. Nuk lexon asgjë tjetër në ekran, nuk ruan asgjë nga aplikacionet e tjera dhe nuk dërgon asgjë askund.</string>
+    <string name="overlay_button_record">Nis diktimin</string>
+    <string name="overlay_button_stop">Ndalo diktimin</string>
+    <string name="overlay_notification_channel">Diktim</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Po dëgjon… trokit Ndalo kur të mbarosh.</string>
+    <string name="overlay_notification_stop">Ndalo</string>
+    <string name="overlay_copied">Nuk u fut dot këtu: u kopjua, gati për ngjitje</string>
+    <string name="overlay_no_speech">Nuk u njoh asgjë</string>
+    <string name="overlay_error_microphone">Nuk ka qasje te mikrofoni. Hap Talkpuppy një herë dhe lejoje.</string>
+    <string name="overlay_error_background">Android nuk e lejoi regjistrimin në sfond. Provo përsëri.</string>
+    <string name="overlay_error_no_model">Nuk është instaluar asnjë model i të folurit. Hap Talkpuppy dhe shkarko një.</string>
+    <string name="overlay_error_model_load">Modeli i të folurit nuk mund të ngarkohej.</string>
+    <string name="overlay_error_transcription">Transkriptimi dështoi.</string>
+</resources>

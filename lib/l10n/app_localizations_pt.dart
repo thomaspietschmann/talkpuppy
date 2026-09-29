@@ -188,6 +188,23 @@ class AppLocalizationsPt extends AppLocalizations {
   String get hapticsTitle => 'Resposta tátil';
 
   @override
+  String get minimizeToOverlay => 'Minimizar e mostrar sobreposição';
+
+  @override
+  String get overlaySetupTitle => 'Ativa o serviço de acessibilidade';
+
+  @override
+  String get overlaySetupBody =>
+      'Para mostrar o botão sobre outras apps e inserir o texto no cursor, o Talkpuppy precisa do seu serviço de acessibilidade. Só lê o campo em que estás a escrever, e só para inserir o texto. Não lê mais nada no ecrã, não guarda nada de outras apps e não envia nada para lado nenhum.\n\nNo ecrã seguinte, abre «Talkpuppy» e ativa-o.';
+
+  @override
+  String get overlayOpenAccessibility => 'Abrir definições de acessibilidade';
+
+  @override
+  String get overlayRestrictedHint =>
+      'O interruptor está a cinzento? Abre Informações da app → ⋮ → «Permitir definições restritas» e tenta novamente.';
+
+  @override
   String get defaultLanguageTitle => 'Idioma predefinido para novas gravações';
 
   @override

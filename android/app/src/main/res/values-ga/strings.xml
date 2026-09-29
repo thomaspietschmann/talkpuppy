@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Cnaipe taifeadta ar snámh Talkpuppy</string>
+    <string name="overlay_service_summary">Deachtaigh isteach in aon réimse téacs</string>
+    <string name="overlay_service_description">Taispeánann sé cnaipe taifeadta os cionn aipeanna eile. Cuir an cúrsóir i réimse téacs, tapáil an cnaipe, labhair, tapáil arís: tras-scríobhann Talkpuppy ar do ghuthán agus cuireann sé an téacs isteach ag an gcúrsóir. Ní léann an tseirbhís ach an réimse ina bhfuil tú ag clóscríobh, agus sin amháin chun an téacs a chur isteach. Ní léann sí aon rud eile ar an scáileán, ní shábhálann sí aon rud ó aipeanna eile agus ní sheolann sí aon rud áit ar bith.</string>
+    <string name="overlay_button_record">Tosaigh deachtú</string>
+    <string name="overlay_button_stop">Stop deachtú</string>
+    <string name="overlay_notification_channel">Deachtú</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Ag éisteacht… tapáil Stop nuair atá tú réidh.</string>
+    <string name="overlay_notification_stop">Stop</string>
+    <string name="overlay_copied">Níorbh fhéidir é a chur isteach anseo: cóipeáilte, réidh le greamú</string>
+    <string name="overlay_no_speech">Níor aithníodh aon rud</string>
+    <string name="overlay_error_microphone">Níl rochtain ar an micreafón. Oscail Talkpuppy uair amháin agus ceadaigh é.</string>
+    <string name="overlay_error_background">Níor cheadaigh Android taifeadadh sa chúlra. Bain triail eile as.</string>
+    <string name="overlay_error_no_model">Níl aon samhail cainte suiteáilte. Oscail Talkpuppy agus íoslódáil ceann.</string>
+    <string name="overlay_error_model_load">Níorbh fhéidir an tsamhail cainte a lódáil.</string>
+    <string name="overlay_error_transcription">Theip ar an tras-scríobh.</string>
+</resources>

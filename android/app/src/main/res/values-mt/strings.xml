@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Buttuna tar-reġistrazzjoni li tgħum ta\' Talkpuppy</string>
+    <string name="overlay_service_summary">Iddetta f\'kwalunkwe qasam tat-test</string>
+    <string name="overlay_service_description">Turi buttuna tar-reġistrazzjoni fuq apps oħra. Poġġi l-cursor f\'qasam tat-test, agħfas il-buttuna, tkellem, agħfas mill-ġdid: Talkpuppy jittraskrivi fuq it-telefown tiegħek u jdaħħal it-test fejn hemm il-cursor. Is-servizz jaqra biss il-qasam fejn qed tikteb, u biss biex idaħħal it-test. Ma jaqra xejn iżjed fuq l-iskrin, ma jaħżen xejn minn apps oħra u ma jibgħat xejn imkien.</string>
+    <string name="overlay_button_record">Ibda d-dettatura</string>
+    <string name="overlay_button_stop">Waqqaf id-dettatura</string>
+    <string name="overlay_notification_channel">Dettatura</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Qed jisma\'… agħfas Waqqaf meta tlesti.</string>
+    <string name="overlay_notification_stop">Waqqaf</string>
+    <string name="overlay_copied">Ma setax jiddaħħal hawn: ikkupjat, lest biex jitwaħħal</string>
+    <string name="overlay_no_speech">Ma ntgħaraf xejn</string>
+    <string name="overlay_error_microphone">M\'hemmx aċċess għall-mikrofonu. Iftaħ Talkpuppy darba u ppermettih.</string>
+    <string name="overlay_error_background">Android ma ppermettiex ir-reġistrazzjoni fl-isfond. Jekk jogħġbok erġa\' pprova.</string>
+    <string name="overlay_error_no_model">L-ebda mudell tad-diskors mhu installat. Iftaħ Talkpuppy u niżżel wieħed.</string>
+    <string name="overlay_error_model_load">Il-mudell tad-diskors ma setax jitgħabba.</string>
+    <string name="overlay_error_transcription">It-traskrizzjoni falliet.</string>
+</resources>

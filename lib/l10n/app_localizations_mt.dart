@@ -188,6 +188,23 @@ class AppLocalizationsMt extends AppLocalizations {
   String get hapticsTitle => 'Feedback haptiku';
 
   @override
+  String get minimizeToOverlay => 'Imminimizza u uri l-overlay';
+
+  @override
+  String get overlaySetupTitle => 'Ixgħel is-servizz tal-aċċessibbiltà';
+
+  @override
+  String get overlaySetupBody =>
+      'Biex juri l-buttuna fuq apps oħra u jdaħħal it-test fejn hemm il-cursor, Talkpuppy jeħtieġ is-servizz tal-aċċessibbiltà tiegħu. Jaqra biss il-qasam fejn qed tikteb, u biss biex idaħħal it-test. Ma jaqra xejn iżjed fuq l-iskrin, ma jaħżen xejn minn apps oħra u ma jibgħat xejn imkien.\n\nFl-iskrin li jmiss, iftaħ “Talkpuppy” u ixgħlu.';
+
+  @override
+  String get overlayOpenAccessibility => 'Iftaħ is-settings tal-aċċessibbiltà';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Is-swiċċ griż? Iftaħ Informazzjoni dwar l-app → ⋮ → “Ippermetti settings ristretti”, imbagħad erġa\' pprova.';
+
+  @override
   String get defaultLanguageTitle =>
       'Lingwa default għal reġistrazzjonijiet ġodda';
 

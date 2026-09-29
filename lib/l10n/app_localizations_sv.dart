@@ -188,6 +188,23 @@ class AppLocalizationsSv extends AppLocalizations {
   String get hapticsTitle => 'Haptisk feedback';
 
   @override
+  String get minimizeToOverlay => 'Minimera och visa överlägg';
+
+  @override
+  String get overlaySetupTitle => 'Aktivera tillgänglighetstjänsten';
+
+  @override
+  String get overlaySetupBody =>
+      'För att visa knappen ovanpå andra appar och infoga texten vid markören behöver Talkpuppy sin tillgänglighetstjänst. Den läser bara fältet du skriver i, och bara för att infoga texten. Den läser inget annat på skärmen, sparar inget från andra appar och skickar inget någonstans.\n\nÖppna ”Talkpuppy” på nästa skärm och aktivera den.';
+
+  @override
+  String get overlayOpenAccessibility => 'Öppna tillgänglighetsinställningar';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Är reglaget grått? Öppna Appinfo → ⋮ → ”Tillåt begränsade inställningar” och försök igen.';
+
+  @override
   String get defaultLanguageTitle => 'Standardspråk för nya inspelningar';
 
   @override

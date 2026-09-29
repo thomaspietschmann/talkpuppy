@@ -187,6 +187,23 @@ class AppLocalizationsRu extends AppLocalizations {
   String get hapticsTitle => 'Виброотклик';
 
   @override
+  String get minimizeToOverlay => 'Свернуть и показать оверлей';
+
+  @override
+  String get overlaySetupTitle => 'Включи службу специальных возможностей';
+
+  @override
+  String get overlaySetupBody =>
+      'Чтобы показывать кнопку поверх других приложений и вставлять текст в место курсора, Talkpuppy нужна его служба специальных возможностей. Она читает только поле, в котором ты печатаешь, и только для того, чтобы вставить текст. Больше она ничего не читает на экране, ничего не сохраняет из других приложений и никуда ничего не отправляет.\n\nНа следующем экране открой «Talkpuppy» и включи его.';
+
+  @override
+  String get overlayOpenAccessibility => 'Открыть специальные возможности';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Переключатель неактивен? Открой «О приложении» → ⋮ → «Разрешить ограниченные настройки» и попробуй ещё раз.';
+
+  @override
   String get defaultLanguageTitle => 'Язык по умолчанию для новых записей';
 
   @override

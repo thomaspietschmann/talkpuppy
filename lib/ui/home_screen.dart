@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import '../l10n/l10n_text.dart';
 import '../models/catalog.dart';
 import '../models/recording.dart';
+import '../services/overlay_setup_service.dart';
 import '../state/app_controller.dart';
 import '../state/controller_scope.dart';
 import 'models_screen.dart';
 import 'onboarding_screen.dart';
+import 'overlay_launcher.dart';
 import 'retranscribe_sheet.dart';
 import 'settings_sheet.dart';
 import 'widgets/history_list.dart';
@@ -49,10 +51,23 @@ class _HomeContent extends StatefulWidget {
 
 class _HomeContentState extends State<_HomeContent> {
   Timer? _tickTimer;
+  OverlayLauncher? _overlayLauncher;
+  AppLifecycleListener? _lifecycle;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (OverlaySetupService.isSupported && _overlayLauncher == null) {
+      final launcher = OverlayLauncher(ControllerScope.of(context).settings);
+      _overlayLauncher = launcher;
+      _lifecycle = AppLifecycleListener(onResume: launcher.onResumed);
+    }
+  }
 
   @override
   void dispose() {
     _tickTimer?.cancel();
+    _lifecycle?.dispose();
     super.dispose();
   }
 
@@ -159,7 +174,12 @@ class _HomeContentState extends State<_HomeContent> {
                     ],
                   ),
                 ),
-                _BottomControls(controller: controller),
+                _BottomControls(
+                  controller: controller,
+                  onMinimizeToOverlay: _overlayLauncher == null
+                      ? null
+                      : () => _overlayLauncher!.launch(context),
+                ),
               ],
             ),
           ),
@@ -258,9 +278,15 @@ class _ErrorBanner extends StatelessWidget {
 }
 
 class _BottomControls extends StatelessWidget {
-  const _BottomControls({required this.controller});
+  const _BottomControls({
+    required this.controller,
+    required this.onMinimizeToOverlay,
+  });
 
   final AppController controller;
+
+  /// "Minimize and show overlay" (Android only); null hides the button.
+  final VoidCallback? onMinimizeToOverlay;
 
   String _elapsedLabel() {
     final started = controller.recordingStartedAt;
@@ -373,6 +399,17 @@ class _BottomControls extends StatelessWidget {
                 ),
               ),
             },
+            if (onMinimizeToOverlay != null && !controller.isBusy) ...[
+              const SizedBox(height: 8),
+              Semantics(
+                identifier: 'minimize_to_overlay_button',
+                child: TextButton.icon(
+                  onPressed: onMinimizeToOverlay,
+                  icon: const Icon(Icons.picture_in_picture_alt_outlined),
+                  label: Text(context.l10n.minimizeToOverlay),
+                ),
+              ),
+            ],
           ],
         ],
       ),

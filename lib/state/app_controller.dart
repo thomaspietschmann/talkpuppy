@@ -505,6 +505,15 @@ class AppController extends ChangeNotifier {
     unawaited(ensureCurrentModelLoaded());
   }
 
+  /// Frees the loaded model while the app is in the background, so the
+  /// Android floating button (its own engine) can load one without two
+  /// models sitting in memory. The next recording or
+  /// [ensureCurrentModelLoaded] loads it again.
+  Future<void> releaseModel() => _serialized(() async {
+    if (isBusy) return;
+    await transcriber.unloadModel();
+  });
+
   /// Deletes recordings older than [maxAge]. Runs at startup and whenever
   /// the app comes back to the foreground, since a resident process may
   /// otherwise keep old audio for days. Skipped while a recording or

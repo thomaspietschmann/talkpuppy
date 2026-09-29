@@ -1,21 +1,20 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'app.dart';
 import 'l10n/app_localizations.dart';
 import 'l10n/locales.dart';
 import 'licenses.dart';
+import 'overlay/overlay_main.dart';
 import 'services/backup_exclusion.dart';
 import 'services/history_store.dart';
 import 'services/model_manager.dart';
+import 'services/overlay_setup_service.dart';
 import 'services/recorder_service.dart';
 import 'services/settings_service.dart';
 import 'services/transcriber_service.dart';
+import 'services/vad_asset.dart';
 import 'state/app_controller.dart';
 import 'state/controller_scope.dart';
 
@@ -27,6 +26,11 @@ void main() {
   registerModelLicenses();
   runApp(const _BootstrapApp());
 }
+
+/// Entry point of the second, UI-less Flutter engine the Android
+/// accessibility service starts for the floating record button.
+@pragma('vm:entry-point')
+Future<void> overlayMain() => runOverlayEngine();
 
 /// Shows a minimal splash while the app's services (settings, history,
 /// model manager, the transcriber isolate) are set up, then hands off to
@@ -67,7 +71,7 @@ class _BootstrapAppState extends State<_BootstrapApp> {
       final historyStore = await HistoryStore.create();
       await historyStore.purgeOlderThan(kHistoryRetention);
       final modelManager = await ModelManager.create();
-      final vadModelPath = await _extractBundledVadModel();
+      final vadModelPath = await extractBundledVadModel();
 
       final recorder = MicRecorderService();
       final transcriber = TranscriberService();
@@ -83,8 +87,26 @@ class _BootstrapAppState extends State<_BootstrapApp> {
       );
       await controller.init();
       _lifecycleListener = AppLifecycleListener(
-        onHide: controller.handleAppBackgrounded,
-        onShow: () => controller.purgeExpired(kHistoryRetention),
+        onHide: () async {
+          await controller.handleAppBackgrounded();
+          // Only one model in memory: with the floating button on, the
+          // overlay loads its own while the app is in the background.
+          if (settings.overlayEnabled) await controller.releaseModel();
+        },
+        onShow: () async {
+          await controller.purgeExpired(kHistoryRetention);
+          // The overlay may have been closed from its ✕ meanwhile (written
+          // by the accessibility service, not through this engine).
+          await settings.reload();
+          if (settings.overlayEnabled) {
+            // Back in the app: the overlay closes, like picture-in-picture.
+            settings.overlayEnabled = false;
+            // It frees its model now (or after a running dictation); load
+            // ours only once that's done.
+            await OverlaySetupService.waitUntilOverlayIdle();
+            await controller.ensureCurrentModelLoaded();
+          }
+        },
       );
       // While the app stays in the foreground for long, too.
       _purgeTimer = Timer.periodic(
@@ -135,25 +157,4 @@ class _BootstrapAppState extends State<_BootstrapApp> {
       ),
     );
   }
-}
-
-/// The Silero VAD model is bundled as a Flutter asset (it's tiny), but
-/// sherpa-onnx needs a real file path, not an asset key — so it's copied
-/// out to app support storage once.
-Future<String> _extractBundledVadModel() async {
-  final supportDir = await getApplicationSupportDirectory();
-  final file = File(p.join(supportDir.path, 'silero_vad.onnx'));
-  final data = await rootBundle.load('assets/models/silero_vad.onnx');
-  // Re-extract if missing or a previous write was cut short.
-  if (!await file.exists() || await file.length() != data.lengthInBytes) {
-    final tmp = File('${file.path}.tmp');
-    await tmp.writeAsBytes(
-      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
-      flush: true,
-    );
-    await tmp.rename(file.path);
-  }
-  // Bundled with the app anyway; no reason to back it up.
-  await excludeFromBackup(file.path);
-  return file.path;
 }

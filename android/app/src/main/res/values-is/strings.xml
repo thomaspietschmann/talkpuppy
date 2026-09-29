@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Fljótandi upptökuhnappur Talkpuppy</string>
+    <string name="overlay_service_summary">Lestu fyrir í hvaða textareit sem er</string>
+    <string name="overlay_service_description">Birtir upptökuhnapp ofan á öðrum forritum. Settu bendilinn í textareit, ýttu á hnappinn, talaðu, ýttu aftur: Talkpuppy umritar í símanum þínum og setur textann inn við bendilinn. Þjónustan les aðeins reitinn sem þú ert að skrifa í, og aðeins til að setja textann inn. Hún les ekkert annað á skjánum, vistar ekkert úr öðrum forritum og sendir ekkert neitt.</string>
+    <string name="overlay_button_record">Hefja talinnslátt</string>
+    <string name="overlay_button_stop">Stöðva talinnslátt</string>
+    <string name="overlay_notification_channel">Talinnsláttur</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Hlustar… ýttu á Stöðva til að ljúka.</string>
+    <string name="overlay_notification_stop">Stöðva</string>
+    <string name="overlay_copied">Ekki tókst að setja inn hér: afritað, tilbúið til að líma</string>
+    <string name="overlay_no_speech">Ekkert greindist</string>
+    <string name="overlay_error_microphone">Enginn aðgangur að hljóðnema. Opnaðu Talkpuppy einu sinni og leyfðu hann.</string>
+    <string name="overlay_error_background">Android leyfði ekki upptöku í bakgrunni. Reyndu aftur.</string>
+    <string name="overlay_error_no_model">Ekkert talmálslíkan er uppsett. Opnaðu Talkpuppy og sæktu eitt.</string>
+    <string name="overlay_error_model_load">Ekki tókst að hlaða talmálslíkaninu.</string>
+    <string name="overlay_error_transcription">Umritun mistókst.</string>
+</resources>

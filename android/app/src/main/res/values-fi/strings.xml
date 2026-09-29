@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Talkpuppyn kelluva tallennuspainike</string>
+    <string name="overlay_service_summary">Sanele mihin tahansa tekstikenttään</string>
+    <string name="overlay_service_description">Näyttää tallennuspainikkeen muiden sovellusten päällä. Vie kohdistin tekstikenttään, napauta painiketta, puhu, napauta uudelleen: Talkpuppy litteroi puhelimessasi ja lisää tekstin kohdistimen kohtaan. Palvelu lukee vain kenttää, johon kirjoitat, ja vain tekstin lisäämiseksi. Se ei lue näytöltä mitään muuta, ei tallenna mitään muista sovelluksista eikä lähetä mitään minnekään.</string>
+    <string name="overlay_button_record">Aloita sanelu</string>
+    <string name="overlay_button_stop">Lopeta sanelu</string>
+    <string name="overlay_notification_channel">Sanelu</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Kuunnellaan… napauta Lopeta, kun olet valmis.</string>
+    <string name="overlay_notification_stop">Lopeta</string>
+    <string name="overlay_copied">Lisääminen tähän ei onnistunut: kopioitu, valmis liitettäväksi</string>
+    <string name="overlay_no_speech">Mitään ei tunnistettu</string>
+    <string name="overlay_error_microphone">Ei pääsyä mikrofoniin. Avaa Talkpuppy kerran ja salli se.</string>
+    <string name="overlay_error_background">Android ei sallinut tallennusta taustalla. Yritä uudelleen.</string>
+    <string name="overlay_error_no_model">Puhemallia ei ole asennettu. Avaa Talkpuppy ja lataa malli.</string>
+    <string name="overlay_error_model_load">Puhemallin lataaminen epäonnistui.</string>
+    <string name="overlay_error_transcription">Litterointi epäonnistui.</string>
+</resources>

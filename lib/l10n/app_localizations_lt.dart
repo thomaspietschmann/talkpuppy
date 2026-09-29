@@ -187,6 +187,24 @@ class AppLocalizationsLt extends AppLocalizations {
   String get hapticsTitle => 'Lytėjimo grįžtamasis ryšys';
 
   @override
+  String get minimizeToOverlay => 'Sumažinti ir rodyti perdangą';
+
+  @override
+  String get overlaySetupTitle => 'Įjunk pritaikymo neįgaliesiems paslaugą';
+
+  @override
+  String get overlaySetupBody =>
+      'Kad mygtukas galėtų būti rodomas virš kitų programų, o tekstas būtų įterpiamas žymeklio vietoje, Talkpuppy reikia savo pritaikymo neįgaliesiems paslaugos. Ji skaito tik lauką, kuriame rašai, ir tik tam, kad įterptų tekstą. Ji neskaito nieko kito ekrane, nieko neišsaugo iš kitų programų ir niekur nieko nesiunčia.\n\nKitame ekrane atidaryk „Talkpuppy“ ir įjunk.';
+
+  @override
+  String get overlayOpenAccessibility =>
+      'Atidaryti pritaikymo neįgaliesiems nustatymus';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Jungiklis pilkas? Atidaryk Programos informacija → ⋮ → „Leisti apribotus nustatymus“ ir bandyk dar kartą.';
+
+  @override
   String get defaultLanguageTitle => 'Numatytoji naujų įrašų kalba';
 
   @override

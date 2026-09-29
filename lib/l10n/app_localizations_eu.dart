@@ -188,6 +188,23 @@ class AppLocalizationsEu extends AppLocalizations {
   String get hapticsTitle => 'Erantzun haptikoa';
 
   @override
+  String get minimizeToOverlay => 'Minimizatu eta erakutsi gainjartzea';
+
+  @override
+  String get overlaySetupTitle => 'Aktibatu erabilerraztasun-zerbitzua';
+
+  @override
+  String get overlaySetupBody =>
+      'Botoia beste aplikazioen gainean erakusteko eta testua kurtsorearen lekuan txertatzeko, Talkpuppy-k bere erabilerraztasun-zerbitzua behar du. Idazten ari zaren eremua soilik irakurtzen du, eta testua txertatzeko soilik. Ez du pantailan beste ezer irakurtzen, ez du beste aplikazioetako ezer gordetzen eta ez du ezer inora bidaltzen.\n\nHurrengo pantailan, ireki «Talkpuppy» eta aktibatu.';
+
+  @override
+  String get overlayOpenAccessibility => 'Ireki erabilerraztasun-ezarpenak';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Etengailua grisez dago? Ireki Aplikazioari buruzko informazioa → ⋮ → «Eman ezarpen murriztuak erabiltzeko baimena» eta saiatu berriro.';
+
+  @override
   String get defaultLanguageTitle => 'Grabazio berrien hizkuntza lehenetsia';
 
   @override

@@ -188,6 +188,23 @@ class AppLocalizationsIs extends AppLocalizations {
   String get hapticsTitle => 'Snertisvörun';
 
   @override
+  String get minimizeToOverlay => 'Lágmarka og sýna yfirlag';
+
+  @override
+  String get overlaySetupTitle => 'Kveiktu á aðgengisþjónustunni';
+
+  @override
+  String get overlaySetupBody =>
+      'Til að birta hnappinn ofan á öðrum forritum og setja textann inn við bendilinn þarf Talkpuppy aðgengisþjónustuna sína. Hún les aðeins reitinn sem þú ert að skrifa í, og aðeins til að setja textann inn. Hún les ekkert annað á skjánum, vistar ekkert úr öðrum forritum og sendir ekkert neitt.\n\nOpnaðu „Talkpuppy“ á næsta skjá og kveiktu á því.';
+
+  @override
+  String get overlayOpenAccessibility => 'Opna aðgengisstillingar';
+
+  @override
+  String get overlayRestrictedHint =>
+      'Er rofinn grár? Opnaðu Upplýsingar um forrit → ⋮ → „Leyfa takmarkaðar stillingar“ og reyndu svo aftur.';
+
+  @override
   String get defaultLanguageTitle => 'Sjálfgefið tungumál fyrir nýjar upptökur';
 
   @override

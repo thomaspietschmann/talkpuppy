@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="overlay_service_label">Talkpuppy плутајуће дугме за снимање</string>
+    <string name="overlay_service_summary">Диктирај у било које текстуално поље</string>
+    <string name="overlay_service_description">Приказује дугме за снимање изнад других апликација. Постави курсор у текстуално поље, додирни дугме, говори, поново додирни: Talkpuppy транскрибује на твом телефону и умеће текст на место курсора. Услуга чита само поље у које управо куцаш, и то само да унесе текст. Не чита ништа друго на екрану, не чува ништа из других апликација и ништа никуда не шаље.</string>
+    <string name="overlay_button_record">Покрени диктирање</string>
+    <string name="overlay_button_stop">Заустави диктирање</string>
+    <string name="overlay_notification_channel">Диктирање</string>
+    <string name="overlay_notification_title">Talkpuppy</string>
+    <string name="overlay_notification_listening">Слушам… додирни Заустави када завршиш.</string>
+    <string name="overlay_notification_stop">Заустави</string>
+    <string name="overlay_copied">Уметање овде није успело: копирано, спремно за лепљење</string>
+    <string name="overlay_no_speech">Ништа није препознато</string>
+    <string name="overlay_error_microphone">Нема приступа микрофону. Отвори Talkpuppy једном и дозволи га.</string>
+    <string name="overlay_error_background">Android није дозволио снимање у позадини. Покушај поново.</string>
+    <string name="overlay_error_no_model">Није инсталиран ниједан говорни модел. Отвори Talkpuppy и преузми један.</string>
+    <string name="overlay_error_model_load">Говорни модел није могуће учитати.</string>
+    <string name="overlay_error_transcription">Транскрипција није успела.</string>
+</resources>

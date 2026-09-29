@@ -88,6 +88,16 @@ class FakeTranscriber implements Transcriber {
     return TranscriptionResult(text: liveFinalText, language: '');
   }
 
+  int unloadCalls = 0;
+
+  @override
+  Future<void> unloadModel() async {
+    unloadCalls++;
+    log.add('unload');
+    currentKey = null;
+    currentModelId = null;
+  }
+
   @override
   Future<void> cancelLive() async {
     log.add('liveCancel');
