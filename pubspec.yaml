@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 0.0.3+3
+version: 0.0.4+4
 
 environment:
   sdk: ^3.13.4
@@ -80,12 +80,12 @@ flutter_launcher_icons:
   image_path: assets/branding/talkpuppy_launcher.png
   remove_alpha_ios: true
   min_sdk_android: 21
-  # Adaptive icon (Android 8+): the artwork's background is exactly the brand
-  # ink, so the layers blend seamlessly. The 16 % inset keeps ears and
-  # shoulders inside the launcher's mask.
+  # Adaptive icon (Android 8+): the foreground is a full 108dp canvas on the
+  # brand ink, with the artwork placed so head and harness badge fill the
+  # visible mask and the cut-off chest edge stays outside it.
   adaptive_icon_background: "#15131F"
-  adaptive_icon_foreground: assets/branding/talkpuppy_launcher.png
-  adaptive_icon_foreground_inset: 16
+  adaptive_icon_foreground: assets/branding/talkpuppy_launcher_adaptive_foreground.png
+  adaptive_icon_foreground_inset: 0
 
   # To add assets to your application, add an assets section, like this:
   # assets:
