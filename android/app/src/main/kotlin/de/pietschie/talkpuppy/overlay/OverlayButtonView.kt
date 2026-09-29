@@ -52,6 +52,18 @@ class OverlayButtonView(
             invalidate()
         }
 
+    /**
+     * Greyed out and not tappable, while Talkpuppy itself is in front (it
+     * has its own record button there). Dragging still works.
+     */
+    var dimmed: Boolean = false
+        set(value) {
+            if (field == value) return
+            field = value
+            alpha = if (value) DIMMED_ALPHA else 1f
+            invalidate()
+        }
+
     /** Microphone level 0..1 while recording. */
     var level: Float = 0f
         set(value) {
@@ -119,7 +131,7 @@ class OverlayButtonView(
             fill.color = Color.argb((80 * level).toInt() + 40, 229, 57, 53)
             canvas.drawCircle(cx, cy, radius + level * 7 * density, fill)
         }
-        fill.color = colorFor(state)
+        fill.color = if (dimmed) Color.rgb(120, 116, 132) else colorFor(state)
         fill.alpha = if (state == OverlayState.IDLE) 225 else 255
         canvas.drawCircle(cx, cy, radius, fill)
 
@@ -211,6 +223,7 @@ class OverlayButtonView(
 
     companion object {
         const val SIZE_DP = 64
+        private const val DIMMED_ALPHA = 0.45f
         private const val LONG_PRESS_MS = 600L
     }
 }

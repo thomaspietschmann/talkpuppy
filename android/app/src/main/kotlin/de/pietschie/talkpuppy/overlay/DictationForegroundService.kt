@@ -79,6 +79,11 @@ class DictationForegroundService : Service() {
             @Suppress("DEPRECATION")
             Notification.Builder(this)
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            // Android 12+ would hold it back for up to 10 s; the microphone
+            // being on should be visible right away (with its Stop button).
+            builder.setForegroundServiceBehavior(Notification.FOREGROUND_SERVICE_IMMEDIATE)
+        }
         return builder
             .setSmallIcon(R.drawable.ic_notification_mic)
             .setContentTitle(getString(R.string.overlay_notification_title))

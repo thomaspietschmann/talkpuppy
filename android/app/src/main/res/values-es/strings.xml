@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Botón de grabación flotante de Talkpuppy</string>
+    <string name="overlay_service_label">Dictado de Talkpuppy</string>
     <string name="overlay_service_summary">Dicta en cualquier campo de texto</string>
-    <string name="overlay_service_description">Muestra un botón de grabación sobre otras apps. Pon el cursor en un campo de texto, toca el botón, habla y vuelve a tocarlo: Talkpuppy transcribe en tu móvil e inserta el texto en el cursor. El servicio solo lee el campo en el que estás escribiendo, y solo para insertar el texto. No lee nada más de la pantalla, no guarda nada de otras apps y no envía nada a ningún sitio.</string>
+    <string name="overlay_service_description">Muestra un botón de grabación sobre otras apps. Pon el cursor en un campo de texto, toca el botón, habla y vuelve a tocarlo: Talkpuppy transcribe en tu móvil e inserta el texto en el cursor. El servicio solo lee el campo en el que estás escribiendo, y solo para insertar el texto. No lee nada más de la pantalla, no guarda nada de otras apps y no envía nada a ningún sitio. Activa solo el interruptor de arriba; el acceso directo no hace falta.</string>
     <string name="overlay_button_record">Iniciar dictado</string>
     <string name="overlay_button_stop">Detener dictado</string>
     <string name="overlay_notification_channel">Dictado</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">No hay ningún modelo de voz instalado. Abre Talkpuppy y descarga uno.</string>
     <string name="overlay_error_model_load">No se ha podido cargar el modelo de voz.</string>
     <string name="overlay_error_transcription">La transcripción ha fallado.</string>
+    <string name="overlay_error_startup">Talkpuppy no pudo iniciar la grabación. Inténtalo de nuevo.</string>
 </resources>

@@ -197,6 +197,17 @@ class AppLocalizationsTr extends AppLocalizations {
       'Düğmeyi diğer uygulamaların üzerinde göstermek ve metni imlecin olduğu yere eklemek için Talkpuppy\'nin kendi erişilebilirlik hizmetine ihtiyacı var. Yalnızca yazdığın alanı okur, o da sadece metni eklemek için. Ekrandaki başka hiçbir şeyi okumaz, diğer uygulamalardan hiçbir şey kaydetmez ve hiçbir yere bir şey göndermez.\n\nSonraki ekranda “Talkpuppy”yi aç ve etkinleştir.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Yalnızca Talkpuppy anahtarını aç ve “Kısayol”u kapalı bırak: düğme kendiliğinden görünür.';
+
+  @override
+  String get shortcutHint =>
+      'Talkpuppy için “Kısayol” açık, bu yüzden Android uygulama simgesini ekranın kenarına sabitliyor. Buna ihtiyacın yok: kayan düğme kendiliğinden görünür. Talkpuppy erişilebilirlik ayarlarında “Kısayol”u kapat.';
+
+  @override
+  String get shortcutHintAction => 'Talkpuppy ayarlarını aç';
+
+  @override
   String get overlayOpenAccessibility => 'Erişilebilirlik ayarlarını aç';
 
   @override
@@ -249,6 +260,10 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Mikrofon erişimi yok. Lütfen telefonunun ayarlarından izin ver.';
+
+  @override
+  String get errorMicBusy =>
+      'Mikrofon şu anda kullanımda, örneğin bir telefon görüşmesi tarafından. Görüşmeden sonra tekrar dene.';
 
   @override
   String errorRecorderStart(String detail) {

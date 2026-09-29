@@ -198,6 +198,17 @@ class AppLocalizationsDe extends AppLocalizations {
       'Damit der Button über anderen Apps erscheint und den Text am Cursor einfügen kann, braucht Talkpuppy seine Bedienungshilfe. Sie liest nur das Textfeld, in dem du gerade tippst, und nur, um den Text einzufügen. Sie liest sonst nichts auf dem Bildschirm, speichert nichts aus anderen Apps und sendet nichts irgendwohin.\n\nÖffne im nächsten Bildschirm „Talkpuppy“ und schalte es ein.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Schalte nur den Talkpuppy-Schalter ein und lass den „Kurzbefehl“ aus: Der Button erscheint von selbst.';
+
+  @override
+  String get shortcutHint =>
+      'Der „Kurzbefehl“ für Talkpuppy ist an, deshalb heftet Android das App-Icon an den Bildschirmrand. Den brauchst du nicht: Der schwebende Button erscheint von selbst. Schalte den „Kurzbefehl“ in den Talkpuppy-Bedienungshilfen aus.';
+
+  @override
+  String get shortcutHintAction => 'Talkpuppy-Einstellungen öffnen';
+
+  @override
   String get overlayOpenAccessibility => 'Bedienungshilfen öffnen';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Kein Zugriff aufs Mikrofon. Bitte erlaube ihn in den Einstellungen deines Handys.';
+
+  @override
+  String get errorMicBusy =>
+      'Das Mikrofon ist gerade belegt, zum Beispiel durch ein Telefonat. Versuch es nach dem Gespräch noch einmal.';
 
   @override
   String errorRecorderStart(String detail) {

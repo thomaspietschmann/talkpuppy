@@ -508,6 +508,24 @@ abstract class AppLocalizations {
   /// **'To show the button over other apps and insert the text at the cursor, Talkpuppy needs its accessibility service. It only reads the text field you\'re typing in, and only to insert the text. It doesn\'t read anything else on the screen, stores nothing from other apps and sends nothing anywhere.\n\nIn the next screen, open “Talkpuppy” and turn it on.'**
   String get overlaySetupBody;
 
+  /// No description provided for @overlaySetupShortcut.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on only the Talkpuppy switch and leave “Shortcut” off: the button appears by itself.'**
+  String get overlaySetupShortcut;
+
+  /// No description provided for @shortcutHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The Talkpuppy “Shortcut” is on, so Android pins the app icon to the edge of the screen. You don\'t need it: the floating button appears by itself. Turn off “Shortcut” in the Talkpuppy accessibility settings.'**
+  String get shortcutHint;
+
+  /// No description provided for @shortcutHintAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Talkpuppy settings'**
+  String get shortcutHintAction;
+
   /// No description provided for @overlayOpenAccessibility.
   ///
   /// In en, this message translates to:
@@ -603,6 +621,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No microphone access. Please allow it in your phone\'s settings.'**
   String get errorMicPermission;
+
+  /// No description provided for @errorMicBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'The microphone is in use right now, for example by a phone call. Please try again after the call.'**
+  String get errorMicBusy;
 
   /// No description provided for @errorRecorderStart.
   ///

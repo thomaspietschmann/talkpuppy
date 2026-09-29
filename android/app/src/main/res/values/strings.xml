@@ -2,9 +2,9 @@
 <!-- Texts shown by the Android side of the floating record button. The
      rest of the app is localized through lib/l10n/*.arb. -->
 <resources>
-    <string name="overlay_service_label">Talkpuppy floating record button</string>
+    <string name="overlay_service_label">Talkpuppy dictation</string>
     <string name="overlay_service_summary">Dictate into any text field</string>
-    <string name="overlay_service_description">Shows a record button over other apps. Put the cursor in a text field, tap the button, speak, tap again: Talkpuppy transcribes on your phone and inserts the text at the cursor. The service only reads the text field you\'re typing in, and only to insert the text. It doesn\'t read anything else on the screen, stores nothing from other apps and sends nothing anywhere.</string>
+    <string name="overlay_service_description">Shows a record button over other apps. Put the cursor in a text field, tap the button, speak, tap again: Talkpuppy transcribes on your phone and inserts the text at the cursor. The service only reads the text field you\'re typing in, and only to insert the text. It doesn\'t read anything else on the screen, stores nothing from other apps and sends nothing anywhere. Only turn on the switch above; the shortcut isn\'t needed.</string>
     <string name="overlay_button_record">Start dictation</string>
     <string name="overlay_button_stop">Stop dictation</string>
     <string name="overlay_notification_channel">Dictation</string>
@@ -18,4 +18,5 @@
     <string name="overlay_error_no_model">No speech model installed. Open Talkpuppy and download one.</string>
     <string name="overlay_error_model_load">The speech model couldn\'t be loaded.</string>
     <string name="overlay_error_transcription">Transcription failed.</string>
+    <string name="overlay_error_startup">Talkpuppy couldn\'t start the recording. Please try again.</string>
 </resources>

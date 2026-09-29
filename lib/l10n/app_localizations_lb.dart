@@ -197,6 +197,17 @@ class AppLocalizationsLb extends AppLocalizations {
       'Fir de Knäppchen iwwer aneren Apps ze weisen an den Text beim Cursor anzefügen, brauch Talkpuppy säin Accessibilitéitsdéngscht. En liest nëmmen d\'Feld, an deem s du grad tipps, an nëmmen, fir den Text anzefügen. Soss liest en näischt um Bildschierm, späichert näischt vun aneren Apps a schéckt näischt iergendwouhin.\n\nMaach um nächste Bildschierm „Talkpuppy“ op a schalt et an.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Schalt just de Talkpuppy-Schalter an a looss d\'„Ofkiirzung“ aus: De Knäppchen erschéngt vum selwen.';
+
+  @override
+  String get shortcutHint =>
+      'D\'„Ofkiirzung“ fir Talkpuppy ass un, dofir pinnt Android d\'App-Icon un de Bildschiermrand. Déi brauchs de net: De schwiewende Knäppchen erschéngt vum selwen. Schalt d\'„Ofkiirzung“ an den Accessibilitéitsastellunge vun Talkpuppy aus.';
+
+  @override
+  String get shortcutHintAction => 'Talkpuppy-Astellungen opmaachen';
+
+  @override
   String get overlayOpenAccessibility =>
       'Accessibilitéitsastellungen opmaachen';
 
@@ -250,6 +261,10 @@ class AppLocalizationsLb extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Keen Zougrëff op de Mikro. Erlaab en an den Astellunge vun dengem Handy.';
+
+  @override
+  String get errorMicBusy =>
+      'De Mikro gëtt grad benotzt, zum Beispill vun engem Telefonsgespréich. Probéier nom Gespréich nach eng Kéier.';
 
   @override
   String errorRecorderStart(String detail) {

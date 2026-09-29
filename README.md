@@ -76,12 +76,15 @@ Dictate straight into any text field, in any app:
    text is inserted at the cursor, with a space in front or after where a
    word touches it. A call or alarm ends the dictation and inserts what was
    said so far; holding the button during a recording cancels it.
-3. To close the button, drag it onto the ✕ at the bottom of the screen, or
-   open Talkpuppy again.
+3. While Talkpuppy itself is open the button stays, greyed out; it becomes
+   active again as soon as you leave the app. To close it, drag it onto the
+   ✕ at the bottom of the screen.
 
-The button uses the model and language set in the app; Nemotron gives the
-quickest results. Only one model is kept in memory: the app frees its own
-while the button is in use and loads it again when you come back.
+The button uses the model and language set in the app, and the app's
+already loaded model (app and button share one engine), so a tap records
+right away. If Android shows a Talkpuppy icon pinned to the screen edge,
+that's the system's accessibility “Shortcut” for the service; it isn't
+needed, and the app points to where to turn it off.
 
 How the text gets in: on Android 13+ the accessibility service types into
 the field like a keyboard (your keyboard stays active); on older versions
@@ -162,6 +165,23 @@ flutter pub get
 flutter analyze
 flutter test
 ```
+
+### End-to-end tests
+
+UI flows run with [Maestro](https://maestro.dev) on an emulator/simulator:
+
+```bash
+tool/e2e_android.sh            # Android emulator: full setup incl. permissions
+                               # and accessibility service, floating button,
+                               # insertion, calls, rotation, process death, …
+maestro test .maestro/ios      # iOS simulator: onboarding, settings, licenses,
+                               # denied microphone
+```
+
+The Android script resets Talkpuppy's data on the emulator and uses the
+debug APK, whose `DebugInsertReceiver` triggers insertion without a
+microphone. Emulators/simulators record silence (or no audio at all on the
+iOS simulator), so real speech is tested on devices.
 
 ### Releases
 

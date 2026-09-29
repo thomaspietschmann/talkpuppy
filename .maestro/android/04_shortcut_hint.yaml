@@ -1,0 +1,23 @@
+# The runner turns on the system accessibility shortcut for Talkpuppy
+# before this flow: the app shows the hint and leads to the settings. (The
+# service's own page can't be deep-linked by apps; the list is one tap
+# away from it.)
+appId: de.pietschie.talkpuppy
+---
+# Plain launch: Maestro grants all permissions ("unset" would take the
+# microphone away again).
+- launchApp
+- extendedWaitUntil:
+    visible: "(?s).*Shortcut.* is on.*"
+    timeout: 15000
+- tapOn: "Open Talkpuppy settings"
+- extendedWaitUntil:
+    visible: "Talkpuppy dictation"
+    timeout: 10000
+- tapOn: "Talkpuppy dictation"
+- scrollUntilVisible:
+    element: "(?i).*shortcut.*"
+    direction: DOWN
+    timeout: 15000
+- back
+- back

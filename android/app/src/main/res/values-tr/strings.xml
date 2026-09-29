@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Talkpuppy kayan kayıt düğmesi</string>
+    <string name="overlay_service_label">Talkpuppy dikte</string>
     <string name="overlay_service_summary">Herhangi bir metin alanına dikte et</string>
-    <string name="overlay_service_description">Diğer uygulamaların üzerinde bir kayıt düğmesi gösterir. İmleci bir metin alanına koy, düğmeye dokun, konuş, tekrar dokun: Talkpuppy telefonunda yazıya döker ve metni imlecin olduğu yere ekler. Hizmet yalnızca yazdığın alanı okur, o da sadece metni eklemek için. Ekrandaki başka hiçbir şeyi okumaz, diğer uygulamalardan hiçbir şey kaydetmez ve hiçbir yere bir şey göndermez.</string>
+    <string name="overlay_service_description">Diğer uygulamaların üzerinde bir kayıt düğmesi gösterir. İmleci bir metin alanına koy, düğmeye dokun, konuş, tekrar dokun: Talkpuppy telefonunda yazıya döker ve metni imlecin olduğu yere ekler. Hizmet yalnızca yazdığın alanı okur, o da sadece metni eklemek için. Ekrandaki başka hiçbir şeyi okumaz, diğer uygulamalardan hiçbir şey kaydetmez ve hiçbir yere bir şey göndermez. Yalnızca yukarıdaki anahtarı aç; kısayola gerek yok.</string>
     <string name="overlay_button_record">Dikteyi başlat</string>
     <string name="overlay_button_stop">Dikteyi durdur</string>
     <string name="overlay_notification_channel">Dikte</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Yüklü konuşma modeli yok. Talkpuppy\'yi aç ve bir tane indir.</string>
     <string name="overlay_error_model_load">Konuşma modeli yüklenemedi.</string>
     <string name="overlay_error_transcription">Yazıya dökme başarısız oldu.</string>
+    <string name="overlay_error_startup">Talkpuppy kaydı başlatamadı. Tekrar dene.</string>
 </resources>

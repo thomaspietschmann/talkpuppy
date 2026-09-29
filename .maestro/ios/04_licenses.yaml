@@ -1,0 +1,16 @@
+# License overview and the full license list behind it.
+appId: de.pietschie.talkpuppy
+---
+- launchApp
+- tapOn:
+    id: "settings_button"
+- scrollUntilVisible:
+    element: "(?s)Licenses.*"
+    direction: DOWN
+- tapOn: "(?s)Licenses.*"
+- assertVisible: "(?s)Nemotron 3.5 ASR Streaming.*"
+- assertVisible: "(?s)sherpa-onnx.*"
+- tapOn: "Show all license texts"
+- extendedWaitUntil:
+    visible: ".*Parakeet.*"
+    timeout: 10000

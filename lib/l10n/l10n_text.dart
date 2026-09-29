@@ -11,6 +11,7 @@ extension L10nContext on BuildContext {
 
 String appErrorText(AppLocalizations l, AppError e) => switch (e.kind) {
   AppErrorKind.micPermission => l.errorMicPermission,
+  AppErrorKind.micBusy => l.errorMicBusy,
   AppErrorKind.recorderStart => l.errorRecorderStart(e.detail),
   AppErrorKind.recorderStop => l.errorRecorderStop(e.detail),
   AppErrorKind.transcription => l.errorTranscription(e.detail),

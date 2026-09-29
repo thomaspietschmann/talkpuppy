@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Pływający przycisk nagrywania Talkpuppy</string>
+    <string name="overlay_service_label">Dyktowanie Talkpuppy</string>
     <string name="overlay_service_summary">Dyktuj do dowolnego pola tekstowego</string>
-    <string name="overlay_service_description">Wyświetla przycisk nagrywania nad innymi aplikacjami. Umieść kursor w polu tekstowym, kliknij przycisk, mów, kliknij ponownie: Talkpuppy transkrybuje na twoim telefonie i wstawia tekst w miejscu kursora. Usługa odczytuje tylko pole, w którym właśnie piszesz, i tylko po to, żeby wstawić tekst. Nie odczytuje niczego innego na ekranie, nie zapisuje niczego z innych aplikacji i nigdzie niczego nie wysyła.</string>
+    <string name="overlay_service_description">Wyświetla przycisk nagrywania nad innymi aplikacjami. Umieść kursor w polu tekstowym, kliknij przycisk, mów, kliknij ponownie: Talkpuppy transkrybuje na twoim telefonie i wstawia tekst w miejscu kursora. Usługa odczytuje tylko pole, w którym właśnie piszesz, i tylko po to, żeby wstawić tekst. Nie odczytuje niczego innego na ekranie, nie zapisuje niczego z innych aplikacji i nigdzie niczego nie wysyła. Włącz tylko przełącznik powyżej; skrót nie jest potrzebny.</string>
     <string name="overlay_button_record">Rozpocznij dyktowanie</string>
     <string name="overlay_button_stop">Zakończ dyktowanie</string>
     <string name="overlay_notification_channel">Dyktowanie</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Nie zainstalowano modelu mowy. Otwórz Talkpuppy i pobierz model.</string>
     <string name="overlay_error_model_load">Nie udało się wczytać modelu mowy.</string>
     <string name="overlay_error_transcription">Transkrypcja nie powiodła się.</string>
+    <string name="overlay_error_startup">Talkpuppy nie mógł rozpocząć nagrywania. Spróbuj ponownie.</string>
 </resources>

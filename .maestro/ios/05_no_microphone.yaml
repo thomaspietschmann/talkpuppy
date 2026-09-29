@@ -1,0 +1,16 @@
+# Microphone denied: recording must explain it instead of failing.
+appId: de.pietschie.talkpuppy
+---
+- launchApp:
+    permissions:
+      microphone: deny
+- extendedWaitUntil:
+    visible:
+      id: "record_button"
+      enabled: true
+    timeout: 30000
+- tapOn:
+    id: "record_button"
+- extendedWaitUntil:
+    visible: "(?s).*No microphone access.*"
+    timeout: 10000

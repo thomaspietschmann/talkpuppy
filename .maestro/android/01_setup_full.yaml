@@ -1,0 +1,54 @@
+# Fresh install → model → microphone → "Minimize and show overlay" →
+# notifications → accessibility service in the system settings (incl.
+# Android's "full control" confirmation) → back → app minimizes itself and
+# the floating button appears. The runner resets the app and turns the
+# service off before this flow.
+appId: de.pietschie.talkpuppy
+---
+- launchApp:
+    clearState: true
+    # Maestro grants everything by default; this flow asks for real.
+    permissions:
+      all: unset
+- scrollUntilVisible:
+    element:
+      id: "model_download_whisper-tiny-int8"
+    direction: DOWN
+- tapOn:
+    id: "model_download_whisper-tiny-int8"
+- extendedWaitUntil:
+    visible: "While using the app"
+    timeout: 240000
+- tapOn: "While using the app"
+- extendedWaitUntil:
+    visible:
+      id: "minimize_to_overlay_button"
+    timeout: 30000
+- tapOn:
+    id: "minimize_to_overlay_button"
+# Android 13+: notification permission (for the Stop button).
+- extendedWaitUntil:
+    visible: "Allow"
+    timeout: 10000
+- tapOn: "Allow"
+- assertVisible: "Turn on the accessibility service"
+- assertVisible: ".*leave “Shortcut” off.*"
+- tapOn: "Open accessibility settings"
+- scrollUntilVisible:
+    element: "Talkpuppy dictation"
+    direction: DOWN
+- tapOn: "Talkpuppy dictation"
+- tapOn: "Use Talkpuppy dictation"
+- extendedWaitUntil:
+    visible: ".*full control.*"
+    timeout: 10000
+- tapOn: "Allow"
+- back
+- back
+# The app notices the service is on and minimizes into the overlay (the
+# runner checks the floating button itself; Maestro doesn't reliably see
+# other apps' accessibility overlays).
+- extendedWaitUntil:
+    notVisible:
+      id: "minimize_to_overlay_button"
+    timeout: 15000

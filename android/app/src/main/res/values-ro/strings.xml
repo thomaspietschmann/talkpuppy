@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Butonul de înregistrare plutitor Talkpuppy</string>
+    <string name="overlay_service_label">Dictare Talkpuppy</string>
     <string name="overlay_service_summary">Dictează în orice câmp de text</string>
-    <string name="overlay_service_description">Afișează un buton de înregistrare deasupra altor aplicații. Pune cursorul într-un câmp de text, atinge butonul, vorbește, atinge din nou: Talkpuppy transcrie pe telefonul tău și inserează textul la cursor. Serviciul citește doar câmpul în care scrii și doar pentru a insera textul. Nu citește nimic altceva de pe ecran, nu salvează nimic din alte aplicații și nu trimite nimic nicăieri.</string>
+    <string name="overlay_service_description">Afișează un buton de înregistrare deasupra altor aplicații. Pune cursorul într-un câmp de text, atinge butonul, vorbește, atinge din nou: Talkpuppy transcrie pe telefonul tău și inserează textul la cursor. Serviciul citește doar câmpul în care scrii și doar pentru a insera textul. Nu citește nimic altceva de pe ecran, nu salvează nimic din alte aplicații și nu trimite nimic nicăieri. Activează doar comutatorul de mai sus; comanda rapidă nu este necesară.</string>
     <string name="overlay_button_record">Începe dictarea</string>
     <string name="overlay_button_stop">Oprește dictarea</string>
     <string name="overlay_notification_channel">Dictare</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Nu este instalat niciun model de vorbire. Deschide Talkpuppy și descarcă unul.</string>
     <string name="overlay_error_model_load">Modelul de vorbire nu a putut fi încărcat.</string>
     <string name="overlay_error_transcription">Transcrierea a eșuat.</string>
+    <string name="overlay_error_startup">Talkpuppy nu a putut porni înregistrarea. Încearcă din nou.</string>
 </resources>

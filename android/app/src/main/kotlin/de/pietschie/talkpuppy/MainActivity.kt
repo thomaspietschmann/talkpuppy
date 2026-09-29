@@ -3,12 +3,19 @@ package de.pietschie.talkpuppy
 import android.app.ActivityManager
 import android.content.Context
 import android.os.StatFs
-import de.pietschie.talkpuppy.overlay.RecognitionArbiter
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
+    // The screen attaches to the process-wide engine instead of owning one:
+    // closing it must not take the model (or a floating-button dictation)
+    // with it.
+    override fun provideFlutterEngine(context: android.content.Context): FlutterEngine =
+        TalkpuppyEngine.get(context)
+
+    override fun shouldDestroyEngineWithHost() = false
+
     private val deviceInfoChannel = "talkpuppy/device_info"
     private val clipboardChannel = "talkpuppy/clipboard"
 
@@ -62,11 +69,5 @@ class MainActivity : FlutterActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         overlaySetup?.onRequestPermissionsResult(requestCode)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // The app wants its model back; the floating button frees its own.
-        RecognitionArbiter.appResumed()
     }
 }

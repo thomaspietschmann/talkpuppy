@@ -59,7 +59,11 @@ void main() {
     }
   }
 
-  OverlayController build({Duration idle = const Duration(minutes: 3)}) =>
+  /// Records every transcriber job that went through the shared queue.
+  final serializedJobs = <String>[];
+  final busyChanges = <bool>[];
+
+  OverlayController build() =>
       OverlayController(
         recorder: recorder,
         transcriber: transcriber,
@@ -68,7 +72,11 @@ void main() {
         vadModelPath: 'unused.onnx',
         audioDir: Directory('${tempDir.path}/overlay'),
         host: host,
-        idleUnloadAfter: idle,
+        serialize: <T>(Future<T> Function() action) {
+          serializedJobs.add('job');
+          return action();
+        },
+        onBusyChanged: busyChanges.add,
       );
 
   setUp(() async {
@@ -81,6 +89,8 @@ void main() {
     recorder = FakeRecorderService();
     transcriber = FakeTranscriber();
     host = _FakeHost();
+    serializedJobs.clear();
+    busyChanges.clear();
     controller = build();
   });
 
@@ -167,23 +177,24 @@ void main() {
     expect(host.results, hasLength(1));
   });
 
-  test('unloads the model after the idle time', () async {
-    controller.dispose();
-    controller = build(idle: const Duration(milliseconds: 20));
+  test('loads and transcribes through the app\'s queue', () async {
     await controller.startSession('s1');
     await controller.stopSession('s1');
-    expect(transcriber.unloadCalls, 0);
-    await Future<void>.delayed(const Duration(milliseconds: 60));
-    expect(transcriber.unloadCalls, 1);
+    // ensureModel + transcribeFile, both serialized with the app's work.
+    expect(serializedJobs, hasLength(2));
   });
 
-  test('an unload request during a session waits for its end', () async {
+  test('tells the app while it is busy', () async {
     await controller.startSession('s1');
-    await controller.unloadModel();
-    expect(transcriber.unloadCalls, 0);
+    expect(busyChanges, [true]);
     await controller.stopSession('s1');
-    expect(transcriber.unloadCalls, 1);
-    expect(host.results, hasLength(1));
+    expect(busyChanges, [true, false]);
+  });
+
+  test('busy ends also when the session fails', () async {
+    settings.selectedModelId = 'parakeet-tdt-0.6b-v3-int8';
+    await controller.startSession('s1');
+    expect(busyChanges, [true, false]);
   });
 
   test('picks up settings the app changed meanwhile', () async {

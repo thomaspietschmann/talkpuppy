@@ -197,6 +197,17 @@ class AppLocalizationsBg extends AppLocalizations {
       'За да показва бутона върху другите приложения и да вмъква текста на мястото на курсора, Talkpuppy има нужда от своята услуга за достъпност. Тя чете само полето, в което пишеш, и само за да вмъкне текста. Не чете нищо друго от екрана, не запазва нищо от други приложения и не изпраща нищо никъде.\n\nНа следващия екран отвори „Talkpuppy“ и го включи.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Включи само превключвателя на Talkpuppy и остави „Пряк път“ изключен: бутонът се появява сам.';
+
+  @override
+  String get shortcutHint =>
+      '„Пряк път“ за Talkpuppy е включен, затова Android закача иконата на приложението към ръба на екрана. Не ти трябва: плаващият бутон се появява сам. Изключи „Пряк път“ в настройките за достъпност на Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Отвори настройките на Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Отвори настройките за достъпност';
 
   @override
@@ -249,6 +260,10 @@ class AppLocalizationsBg extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Няма достъп до микрофона. Разреши го в настройките на телефона.';
+
+  @override
+  String get errorMicBusy =>
+      'Микрофонът в момента е зает, например от телефонен разговор. Опитай отново след разговора.';
 
   @override
   String errorRecorderStart(String detail) {

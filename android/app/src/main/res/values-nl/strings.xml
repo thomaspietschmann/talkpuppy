@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Talkpuppy zwevende opnameknop</string>
+    <string name="overlay_service_label">Talkpuppy dicteren</string>
     <string name="overlay_service_summary">Dicteer in elk tekstveld</string>
-    <string name="overlay_service_description">Toont een opnameknop boven andere apps. Zet de cursor in een tekstveld, tik op de knop, spreek, tik opnieuw: Talkpuppy transcribeert op je telefoon en voegt de tekst bij de cursor in. De service leest alleen het veld waarin je typt, en alleen om de tekst in te voegen. Verder leest hij niets op het scherm, slaat hij niets uit andere apps op en stuurt hij nergens iets naartoe.</string>
+    <string name="overlay_service_description">Toont een opnameknop boven andere apps. Zet de cursor in een tekstveld, tik op de knop, spreek, tik opnieuw: Talkpuppy transcribeert op je telefoon en voegt de tekst bij de cursor in. De service leest alleen het veld waarin je typt, en alleen om de tekst in te voegen. Verder leest hij niets op het scherm, slaat hij niets uit andere apps op en stuurt hij nergens iets naartoe. Zet alleen de schakelaar hierboven aan; de snelkoppeling is niet nodig.</string>
     <string name="overlay_button_record">Dicteren starten</string>
     <string name="overlay_button_stop">Dicteren stoppen</string>
     <string name="overlay_notification_channel">Dicteren</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Geen spraakmodel geïnstalleerd. Open Talkpuppy en download er een.</string>
     <string name="overlay_error_model_load">Het spraakmodel kon niet worden geladen.</string>
     <string name="overlay_error_transcription">Transcriptie mislukt.</string>
+    <string name="overlay_error_startup">Talkpuppy kon de opname niet starten. Probeer het opnieuw.</string>
 </resources>

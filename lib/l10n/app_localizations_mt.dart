@@ -198,6 +198,17 @@ class AppLocalizationsMt extends AppLocalizations {
       'Biex juri l-buttuna fuq apps oħra u jdaħħal it-test fejn hemm il-cursor, Talkpuppy jeħtieġ is-servizz tal-aċċessibbiltà tiegħu. Jaqra biss il-qasam fejn qed tikteb, u biss biex idaħħal it-test. Ma jaqra xejn iżjed fuq l-iskrin, ma jaħżen xejn minn apps oħra u ma jibgħat xejn imkien.\n\nFl-iskrin li jmiss, iftaħ “Talkpuppy” u ixgħlu.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Ixgħel biss is-swiċċ ta\' Talkpuppy u ħalli “Shortcut” mitfi: il-buttuna tidher waħedha.';
+
+  @override
+  String get shortcutHint =>
+      'Ix-“Shortcut” ta\' Talkpuppy huwa mixgħul, għalhekk Android iwaħħal l-ikona tal-app mat-tarf tal-iskrin. M\'għandekx bżonnu: il-buttuna li tgħum tidher waħedha. Itfi x-“Shortcut” fis-settings tal-aċċessibbiltà ta\' Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Iftaħ is-settings ta\' Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Iftaħ is-settings tal-aċċessibbiltà';
 
   @override
@@ -251,6 +262,10 @@ class AppLocalizationsMt extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'M\'hemmx aċċess għall-mikrofonu. Jekk jogħġbok ippermettih fis-settings tat-telefown tiegħek.';
+
+  @override
+  String get errorMicBusy =>
+      'Il-mikrofonu qed jintuża bħalissa, pereżempju minn telefonata. Erġa\' pprova wara t-telefonata.';
 
   @override
   String errorRecorderStart(String detail) {

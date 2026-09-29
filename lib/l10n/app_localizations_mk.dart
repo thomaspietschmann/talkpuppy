@@ -198,6 +198,17 @@ class AppLocalizationsMk extends AppLocalizations {
       'За да го прикаже копчето над другите апликации и да го внесе текстот на местото на курсорот, на Talkpuppy му е потребна неговата услуга за пристапност. Го чита само полето во кое пишуваш, и тоа само за да го внесе текстот. Не чита ништо друго на екранот, не зачувува ништо од други апликации и не испраќа ништо никаде.\n\nНа следниот екран отвори „Talkpuppy“ и вклучи го.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Вклучи го само прекинувачот за Talkpuppy и остави ја „Кратенка“ исклучена: копчето се појавува само.';
+
+  @override
+  String get shortcutHint =>
+      '„Кратенка“ за Talkpuppy е вклучена, затоа Android ја закачува иконата на апликацијата на работ од екранот. Не ти треба: лебдечкото копче се појавува само. Исклучи ја „Кратенка“ во поставките за пристапност на Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Отвори ги поставките на Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Отвори ги поставките за пристапност';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsMk extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Нема пристап до микрофонот. Дозволи го во поставките на телефонот.';
+
+  @override
+  String get errorMicBusy =>
+      'Микрофонот моментално е зафатен, на пример од телефонски повик. Обиди се повторно по разговорот.';
 
   @override
   String errorRecorderStart(String detail) {

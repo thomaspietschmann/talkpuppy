@@ -272,7 +272,7 @@ class ModelManager extends ChangeNotifier {
 
     // Integrity is covered by the hash, but don't let a redirect downgrade
     // the transfer to plain HTTP either.
-    if (response.realUri.scheme != 'https') {
+    if (!isHttpsAfterRedirects(response.requestOptions.uri, response.realUri)) {
       throw ModelDownloadException(DownloadErrorKind.notModelFile);
     }
 
@@ -320,6 +320,14 @@ class ModelManager extends ChangeNotifier {
     }
     await partFile.rename(target.path);
   }
+
+  /// Whether the transfer ended up on https. [realUri] is the last
+  /// redirect's Location as sent, which may be relative (Hugging Face
+  /// answers small files with `307 /api/resolve-cache/…`), so it's resolved
+  /// against the request first.
+  @visibleForTesting
+  static bool isHttpsAfterRedirects(Uri requested, Uri realUri) =>
+      requested.resolveUri(realUri).scheme == 'https';
 
   /// Hashes a (possibly several hundred MB) file off the UI isolate.
   static Future<String> _sha256Of(String path) {

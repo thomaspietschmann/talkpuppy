@@ -198,6 +198,17 @@ class AppLocalizationsRo extends AppLocalizations {
       'Pentru a afișa butonul deasupra altor aplicații și a insera textul la cursor, Talkpuppy are nevoie de serviciul său de accesibilitate. Citește doar câmpul în care scrii și doar pentru a insera textul. Nu citește nimic altceva de pe ecran, nu salvează nimic din alte aplicații și nu trimite nimic nicăieri.\n\nPe ecranul următor, deschide „Talkpuppy” și activează-l.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Activează doar comutatorul Talkpuppy și lasă „Comandă rapidă” dezactivată: butonul apare singur.';
+
+  @override
+  String get shortcutHint =>
+      '„Comandă rapidă” pentru Talkpuppy este activată, de aceea Android fixează pictograma aplicației la marginea ecranului. Nu ai nevoie de ea: butonul plutitor apare singur. Dezactivează „Comandă rapidă” în setările de accesibilitate ale Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Deschide setările Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Deschide setările de accesibilitate';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Nu există acces la microfon. Permite-l în setările telefonului.';
+
+  @override
+  String get errorMicBusy =>
+      'Microfonul este ocupat acum, de exemplu de un apel. Încearcă din nou după apel.';
 
   @override
   String errorRecorderStart(String detail) {

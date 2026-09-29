@@ -1,0 +1,24 @@
+# Record → stop → a transcript (or "no text" in a silent environment)
+# and the copy button. The runner plays speech through the Mac's speaker.
+appId: de.pietschie.talkpuppy
+---
+- launchApp
+# Disabled until the model is loaded after the start.
+- extendedWaitUntil:
+    visible:
+      id: "record_button"
+      enabled: true
+    timeout: 30000
+- tapOn:
+    id: "record_button"
+- extendedWaitUntil:
+    visible: "Stop"
+    timeout: 10000
+- runScript: ../lib/wait.js
+- tapOn: "Stop"
+- extendedWaitUntil:
+    visible:
+      id: "copy_button"
+    timeout: 60000
+- assertVisible:
+    id: "transcript_text"

@@ -198,6 +198,17 @@ class AppLocalizationsHu extends AppLocalizations {
       'Ahhoz, hogy a gomb más alkalmazások felett megjelenhessen, és a szöveg a kurzor helyére kerüljön, a Talkpuppynak szüksége van a kisegítő szolgáltatására. Csak azt a mezőt olvassa, amelybe éppen gépelsz, és csak azért, hogy beillessze a szöveget. Semmi mást nem olvas a képernyőn, semmit nem ment más alkalmazásokból, és semmit nem küld sehová.\n\nA következő képernyőn nyisd meg a „Talkpuppy” elemet, és kapcsold be.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Csak a Talkpuppy kapcsolóját kapcsold be, a „Gyorsparancs” maradjon kikapcsolva: a gomb magától megjelenik.';
+
+  @override
+  String get shortcutHint =>
+      'A Talkpuppy „Gyorsparancs” funkciója be van kapcsolva, ezért az Android a képernyő szélére tűzi az alkalmazás ikonját. Nincs rá szükséged: a lebegő gomb magától megjelenik. Kapcsold ki a „Gyorsparancs” lehetőséget a Talkpuppy kisegítő lehetőségeinek beállításaiban.';
+
+  @override
+  String get shortcutHintAction => 'Talkpuppy-beállítások megnyitása';
+
+  @override
   String get overlayOpenAccessibility => 'Kisegítő lehetőségek megnyitása';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Nincs hozzáférés a mikrofonhoz. Engedélyezd a telefon beállításaiban.';
+
+  @override
+  String get errorMicBusy =>
+      'A mikrofon most foglalt, például egy telefonhívás miatt. Próbáld újra a hívás után.';
 
   @override
   String errorRecorderStart(String detail) {

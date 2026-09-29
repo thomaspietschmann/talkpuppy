@@ -198,6 +198,17 @@ class AppLocalizationsSv extends AppLocalizations {
       'För att visa knappen ovanpå andra appar och infoga texten vid markören behöver Talkpuppy sin tillgänglighetstjänst. Den läser bara fältet du skriver i, och bara för att infoga texten. Den läser inget annat på skärmen, sparar inget från andra appar och skickar inget någonstans.\n\nÖppna ”Talkpuppy” på nästa skärm och aktivera den.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Aktivera bara Talkpuppy-reglaget och låt ”Genväg” vara av: knappen visas av sig själv.';
+
+  @override
+  String get shortcutHint =>
+      '”Genväg” för Talkpuppy är på, så Android fäster appikonen vid skärmkanten. Du behöver den inte: den flytande knappen visas av sig själv. Stäng av ”Genväg” i tillgänglighetsinställningarna för Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Öppna Talkpuppy-inställningar';
+
+  @override
   String get overlayOpenAccessibility => 'Öppna tillgänglighetsinställningar';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Ingen åtkomst till mikrofonen. Tillåt det i telefonens inställningar.';
+
+  @override
+  String get errorMicBusy =>
+      'Mikrofonen används just nu, till exempel av ett samtal. Försök igen efter samtalet.';
 
   @override
   String errorRecorderStart(String detail) {

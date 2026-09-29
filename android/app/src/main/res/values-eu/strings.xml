@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Talkpuppy-ren grabatzeko botoi flotagarria</string>
+    <string name="overlay_service_label">Talkpuppy diktaketa</string>
     <string name="overlay_service_summary">Diktatu edozein testu-eremutan</string>
-    <string name="overlay_service_description">Grabatzeko botoi bat erakusten du beste aplikazioen gainean. Jarri kurtsorea testu-eremu batean, sakatu botoia, hitz egin, sakatu berriro: Talkpuppy-k zure telefonoan transkribatzen du eta testua kurtsorearen lekuan txertatzen du. Zerbitzuak idazten ari zaren eremua soilik irakurtzen du, eta testua txertatzeko soilik. Ez du pantailan beste ezer irakurtzen, ez du beste aplikazioetako ezer gordetzen eta ez du ezer inora bidaltzen.</string>
+    <string name="overlay_service_description">Grabatzeko botoi bat erakusten du beste aplikazioen gainean. Jarri kurtsorea testu-eremu batean, sakatu botoia, hitz egin, sakatu berriro: Talkpuppy-k zure telefonoan transkribatzen du eta testua kurtsorearen lekuan txertatzen du. Zerbitzuak idazten ari zaren eremua soilik irakurtzen du, eta testua txertatzeko soilik. Ez du pantailan beste ezer irakurtzen, ez du beste aplikazioetako ezer gordetzen eta ez du ezer inora bidaltzen. Aktibatu goiko etengailua soilik; lasterbidea ez da beharrezkoa.</string>
     <string name="overlay_button_record">Hasi diktatzen</string>
     <string name="overlay_button_stop">Gelditu diktaketa</string>
     <string name="overlay_notification_channel">Diktaketa</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Ez dago hizketa-eredurik instalatuta. Ireki Talkpuppy eta deskargatu bat.</string>
     <string name="overlay_error_model_load">Ezin izan da kargatu hizketa-eredua.</string>
     <string name="overlay_error_transcription">Transkripzioak huts egin du.</string>
+    <string name="overlay_error_startup">Talkpuppy-k ezin izan du grabaketa hasi. Saiatu berriro.</string>
 </resources>

@@ -198,6 +198,17 @@ class AppLocalizationsFi extends AppLocalizations {
       'Jotta painike voi näkyä muiden sovellusten päällä ja teksti voidaan lisätä kohdistimen kohtaan, Talkpuppy tarvitsee esteettömyyspalvelunsa. Se lukee vain kenttää, johon kirjoitat, ja vain tekstin lisäämiseksi. Se ei lue näytöltä mitään muuta, ei tallenna mitään muista sovelluksista eikä lähetä mitään minnekään.\n\nAvaa seuraavassa näkymässä ”Talkpuppy” ja ota se käyttöön.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Ota käyttöön vain Talkpuppyn kytkin ja jätä ”Pikanäppäin” pois päältä: painike tulee näkyviin itsestään.';
+
+  @override
+  String get shortcutHint =>
+      'Talkpuppyn ”Pikanäppäin” on päällä, joten Android kiinnittää sovelluksen kuvakkeen näytön reunaan. Et tarvitse sitä: kelluva painike tulee näkyviin itsestään. Laita ”Pikanäppäin” pois päältä Talkpuppyn esteettömyysasetuksista.';
+
+  @override
+  String get shortcutHintAction => 'Avaa Talkpuppyn asetukset';
+
+  @override
   String get overlayOpenAccessibility => 'Avaa esteettömyysasetukset';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsFi extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Ei pääsyä mikrofoniin. Salli se puhelimen asetuksista.';
+
+  @override
+  String get errorMicBusy =>
+      'Mikrofoni on juuri nyt käytössä, esimerkiksi puhelun takia. Yritä uudelleen puhelun jälkeen.';
 
   @override
   String errorRecorderStart(String detail) {

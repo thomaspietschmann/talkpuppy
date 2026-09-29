@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Talkpuppyn kelluva tallennuspainike</string>
+    <string name="overlay_service_label">Talkpuppy-sanelu</string>
     <string name="overlay_service_summary">Sanele mihin tahansa tekstikenttään</string>
-    <string name="overlay_service_description">Näyttää tallennuspainikkeen muiden sovellusten päällä. Vie kohdistin tekstikenttään, napauta painiketta, puhu, napauta uudelleen: Talkpuppy litteroi puhelimessasi ja lisää tekstin kohdistimen kohtaan. Palvelu lukee vain kenttää, johon kirjoitat, ja vain tekstin lisäämiseksi. Se ei lue näytöltä mitään muuta, ei tallenna mitään muista sovelluksista eikä lähetä mitään minnekään.</string>
+    <string name="overlay_service_description">Näyttää tallennuspainikkeen muiden sovellusten päällä. Vie kohdistin tekstikenttään, napauta painiketta, puhu, napauta uudelleen: Talkpuppy litteroi puhelimessasi ja lisää tekstin kohdistimen kohtaan. Palvelu lukee vain kenttää, johon kirjoitat, ja vain tekstin lisäämiseksi. Se ei lue näytöltä mitään muuta, ei tallenna mitään muista sovelluksista eikä lähetä mitään minnekään. Ota käyttöön vain yllä oleva kytkin; pikanäppäintä ei tarvita.</string>
     <string name="overlay_button_record">Aloita sanelu</string>
     <string name="overlay_button_stop">Lopeta sanelu</string>
     <string name="overlay_notification_channel">Sanelu</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Puhemallia ei ole asennettu. Avaa Talkpuppy ja lataa malli.</string>
     <string name="overlay_error_model_load">Puhemallin lataaminen epäonnistui.</string>
     <string name="overlay_error_transcription">Litterointi epäonnistui.</string>
+    <string name="overlay_error_startup">Talkpuppy ei voinut aloittaa tallennusta. Yritä uudelleen.</string>
 </resources>

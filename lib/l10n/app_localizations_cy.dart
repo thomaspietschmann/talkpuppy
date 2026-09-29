@@ -197,6 +197,17 @@ class AppLocalizationsCy extends AppLocalizations {
       'I ddangos y botwm dros apiau eraill a rhoi\'r testun wrth y cyrchwr, mae Talkpuppy angen ei wasanaeth hygyrchedd. Dim ond y maes rwyt ti\'n teipio ynddo y mae\'n ei ddarllen, a dim ond i roi\'r testun ynddo. Nid yw\'n darllen dim byd arall ar y sgrin, nid yw\'n cadw dim o apiau eraill ac nid yw\'n anfon dim i unman.\n\nAr y sgrin nesaf, agora “Talkpuppy” a\'i droi ymlaen.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Tro switsh Talkpuppy ymlaen yn unig a gad “Llwybr byr” i ffwrdd: mae\'r botwm yn ymddangos ar ei ben ei hun.';
+
+  @override
+  String get shortcutHint =>
+      'Mae “Llwybr byr” Talkpuppy ymlaen, felly mae Android yn pinio eicon yr ap i ymyl y sgrin. Does dim ei angen arnat ti: mae\'r botwm arnofiol yn ymddangos ar ei ben ei hun. Tro “Llwybr byr” i ffwrdd yng ngosodiadau hygyrchedd Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Agor gosodiadau Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Agor gosodiadau hygyrchedd';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsCy extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Dim mynediad i\'r meicroffon. Rho ganiatâd yng ngosodiadau dy ffôn.';
+
+  @override
+  String get errorMicBusy =>
+      'Mae\'r meicroffon yn cael ei ddefnyddio ar hyn o bryd, er enghraifft gan alwad ffôn. Rho gynnig arall arni ar ôl yr alwad.';
 
   @override
   String errorRecorderStart(String detail) {

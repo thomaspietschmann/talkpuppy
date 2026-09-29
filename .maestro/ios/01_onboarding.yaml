@@ -1,0 +1,24 @@
+# Fresh install → model → microphone permission → home. iOS has no
+# floating button, so its "minimize" link must not be there.
+appId: de.pietschie.talkpuppy
+---
+- launchApp:
+    clearState: true
+    permissions:
+      all: unset
+- scrollUntilVisible:
+    element:
+      id: "model_download_whisper-tiny-int8"
+    direction: DOWN
+- tapOn:
+    id: "model_download_whisper-tiny-int8"
+- extendedWaitUntil:
+    visible: "Allow"
+    timeout: 240000
+- tapOn: "Allow"
+- extendedWaitUntil:
+    visible:
+      id: "record_button"
+    timeout: 30000
+- assertNotVisible:
+    id: "minimize_to_overlay_button"

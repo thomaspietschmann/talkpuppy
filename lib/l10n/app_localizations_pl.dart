@@ -197,6 +197,17 @@ class AppLocalizationsPl extends AppLocalizations {
       'Aby wyświetlać przycisk nad innymi aplikacjami i wstawiać tekst w miejscu kursora, Talkpuppy potrzebuje swojej usługi ułatwień dostępu. Odczytuje tylko pole, w którym właśnie piszesz, i tylko po to, żeby wstawić tekst. Nie odczytuje niczego innego na ekranie, nie zapisuje niczego z innych aplikacji i nigdzie niczego nie wysyła.\n\nNa następnym ekranie otwórz „Talkpuppy” i włącz.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Włącz tylko przełącznik Talkpuppy i zostaw „Skrót” wyłączony: przycisk pojawi się sam.';
+
+  @override
+  String get shortcutHint =>
+      '„Skrót” do Talkpuppy jest włączony, dlatego Android przypina ikonę aplikacji do krawędzi ekranu. Nie potrzebujesz go: pływający przycisk pojawia się sam. Wyłącz „Skrót” w ustawieniach ułatwień dostępu Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Otwórz ustawienia Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Otwórz ustawienia ułatwień dostępu';
 
   @override
@@ -249,6 +260,10 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Brak dostępu do mikrofonu. Zezwól na niego w ustawieniach telefonu.';
+
+  @override
+  String get errorMicBusy =>
+      'Mikrofon jest teraz zajęty, na przykład przez rozmowę telefoniczną. Spróbuj ponownie po rozmowie.';
 
   @override
   String errorRecorderStart(String detail) {

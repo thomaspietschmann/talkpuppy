@@ -9,7 +9,8 @@ import '../services/model_manager.dart';
 import '../services/recorder_service.dart';
 import '../services/settings_service.dart';
 import '../services/transcriber_service.dart';
-import '../state/app_controller.dart' show kMinClipDuration;
+import '../state/app_controller.dart'
+    show kMinClipDuration, kRecorderStartTimeout;
 
 /// Why an overlay session failed; the native side shows a matching message.
 enum OverlayErrorKind { noModel, modelLoad, recorderStart, recorderStop, transcription }
@@ -31,10 +32,10 @@ abstract class OverlayHost {
 }
 
 /// Runs one dictation at a time for the Android floating button, in the
-/// overlay's own Flutter engine. The native side owns the UI and the
-/// foreground service (which must be running before [startSession] is
-/// called, or Android hands out silence); this class only records and
-/// transcribes.
+/// app's engine and with the app's transcriber (and so its loaded model).
+/// The native side owns the button and the foreground service (which must
+/// be running before [startSession] is called, or Android hands out
+/// silence); this class only records and transcribes.
 ///
 /// Unlike [AppController] there is no history or clipboard handling here:
 /// the text goes back to the native side, which delivers it.
@@ -47,7 +48,8 @@ class OverlayController {
     required this.vadModelPath,
     required this.audioDir,
     required this.host,
-    this.idleUnloadAfter = const Duration(minutes: 3),
+    required this.serialize,
+    this.onBusyChanged,
   });
 
   final RecorderService recorder;
@@ -62,19 +64,20 @@ class OverlayController {
 
   final OverlayHost host;
 
-  /// How long the model stays loaded after a session, so quick follow-up
-  /// dictations don't wait for it again.
-  final Duration idleUnloadAfter;
+  /// Runs transcriber work in the app's queue ([AppController.serialized]),
+  /// so the app and the button never interleave "load model, transcribe".
+  final Future<T> Function<T>(Future<T> Function() action) serialize;
+
+  /// Told when a dictation starts and ends; the app blocks its own
+  /// recording (and model deletion) meanwhile.
+  final void Function(bool busy)? onBusyChanged;
 
   String? _sessionId;
   String? _wavPath;
   Future<Object?>? _modelLoad;
   bool _stopping = false;
-  bool _modelLoaded = false;
-  bool _unloadRequested = false;
   StreamSubscription<double>? _ampSub;
   StreamSubscription<void>? _interruptSub;
-  Timer? _idleUnloadTimer;
 
   bool get isBusy => _sessionId != null;
 
@@ -83,9 +86,9 @@ class OverlayController {
       // A stale session the native side gave up on; drop it.
       await _discard();
     }
-    _idleUnloadTimer?.cancel();
     _sessionId = sessionId;
     _stopping = false;
+    onBusyChanged?.call(true);
 
     // The app may have changed the model or language since last time.
     await settings.reload();
@@ -106,7 +109,17 @@ class OverlayController {
     );
     _wavPath = wavPath;
     try {
-      await recorder.start(wavPath);
+      await recorder
+          .start(wavPath)
+          .timeout(
+            kRecorderStartTimeout,
+            onTimeout: () {
+              // Not awaited: a plugin that hangs on start may hang on
+              // cancel too.
+              unawaited(recorder.cancel().catchError((Object _) {}));
+              throw TimeoutException('microphone did not start');
+            },
+          );
     } catch (e) {
       _fail(sessionId, OverlayErrorKind.recorderStart, '$e');
       await _discard();
@@ -152,7 +165,7 @@ class OverlayController {
       }
       final TranscriptionResult result;
       try {
-        result = await transcriber.transcribeFile(wavPath);
+        result = await serialize(() => transcriber.transcribeFile(wavPath));
       } catch (e) {
         _fail(sessionId, OverlayErrorKind.transcription, '$e');
         return;
@@ -176,17 +189,6 @@ class OverlayController {
     await _discard();
   }
 
-  /// Frees the model, e.g. because the app came to the foreground and
-  /// wants its own. Deferred until a running session is done.
-  Future<void> unloadModel() async {
-    _idleUnloadTimer?.cancel();
-    if (isBusy) {
-      _unloadRequested = true;
-      return;
-    }
-    await _unload();
-  }
-
   /// The app's selected model, if it's installed. Checked on disk each
   /// time: the app may have downloaded or deleted models since this engine
   /// started.
@@ -204,13 +206,15 @@ class OverlayController {
       final language = model.canForceLanguage(settings.defaultLanguage)
           ? settings.defaultLanguage
           : 'auto';
-      await transcriber.ensureModel(
-        model: model,
-        modelDir: modelManager.modelDir(model),
-        vadModelPath: vadModelPath,
-        forcedLanguage: language,
+      // Usually a no-op: the app has the same model loaded already.
+      await serialize(
+        () => transcriber.ensureModel(
+          model: model,
+          modelDir: modelManager.modelDir(model),
+          vadModelPath: vadModelPath,
+          forcedLanguage: language,
+        ),
       );
-      _modelLoaded = true;
       return null;
     } catch (e) {
       return e;
@@ -238,13 +242,13 @@ class OverlayController {
     await _finish();
   }
 
-  /// Ends the session: removes the audio and schedules the model unload.
+  /// Ends the session and removes the audio.
   Future<void> _finish() async {
     final wavPath = _wavPath;
     _wavPath = null;
     _sessionId = null;
     _stopping = false;
-    // Wait for a load still in flight, so an unload can't race it.
+    // Don't leave a load running unobserved.
     await _modelLoad;
     _modelLoad = null;
     if (wavPath != null) {
@@ -254,27 +258,10 @@ class OverlayController {
         // Already gone.
       }
     }
-    if (_unloadRequested) {
-      await _unload();
-    } else if (_modelLoaded) {
-      _idleUnloadTimer = Timer(idleUnloadAfter, _unload);
-    }
-  }
-
-  Future<void> _unload() async {
-    _unloadRequested = false;
-    _idleUnloadTimer?.cancel();
-    if (!_modelLoaded) return;
-    _modelLoaded = false;
-    try {
-      await transcriber.unloadModel();
-    } catch (_) {
-      // Best effort; the next session reloads either way.
-    }
+    onBusyChanged?.call(false);
   }
 
   void dispose() {
-    _idleUnloadTimer?.cancel();
     _ampSub?.cancel();
     _interruptSub?.cancel();
   }

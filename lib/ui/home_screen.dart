@@ -54,13 +54,28 @@ class _HomeContentState extends State<_HomeContent> {
   OverlayLauncher? _overlayLauncher;
   AppLifecycleListener? _lifecycle;
 
+  /// The system accessibility "Shortcut" for our service is on (see
+  /// [_ShortcutHint]).
+  bool _shortcutOn = false;
+
+  Future<void> _checkShortcut() async {
+    final on = await OverlaySetupService.isShortcutEnabled();
+    if (mounted && on != _shortcutOn) setState(() => _shortcutOn = on);
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (OverlaySetupService.isSupported && _overlayLauncher == null) {
       final launcher = OverlayLauncher(ControllerScope.of(context).settings);
       _overlayLauncher = launcher;
-      _lifecycle = AppLifecycleListener(onResume: launcher.onResumed);
+      _lifecycle = AppLifecycleListener(
+        onResume: () {
+          launcher.onResumed();
+          _checkShortcut();
+        },
+      );
+      _checkShortcut();
     }
   }
 
@@ -131,6 +146,7 @@ class _HomeContentState extends State<_HomeContent> {
                   child: ListView(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
                     children: [
+                      if (_shortcutOn) const _ShortcutHint(),
                       if (controller.error != null)
                         _ErrorBanner(
                           message: appErrorText(
@@ -239,6 +255,51 @@ class _ModelChip extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           avatar: const Icon(Icons.model_training, size: 18),
+        ),
+      ),
+    );
+  }
+}
+
+/// Android pins our app icon to the screen edge when the user turns on the
+/// system accessibility "Shortcut" for Talkpuppy. It looks like the
+/// floating button but isn't, and apps can't hide the option; so point the
+/// user to the switch.
+class _ShortcutHint extends StatelessWidget {
+  const _ShortcutHint();
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Card(
+      color: scheme.secondaryContainer,
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(Icons.info_outline, color: scheme.onSecondaryContainer),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    context.l10n.shortcutHint,
+                    style: TextStyle(color: scheme.onSecondaryContainer),
+                  ),
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: OverlaySetupService.openServiceSettings,
+                child: Text(context.l10n.shortcutHintAction),
+              ),
+            ),
+          ],
         ),
       ),
     );

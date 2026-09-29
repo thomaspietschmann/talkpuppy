@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Talkpuppy plutajuće dugme za snimanje</string>
+    <string name="overlay_service_label">Talkpuppy diktiranje</string>
     <string name="overlay_service_summary">Diktiraj u bilo koje tekstualno polje</string>
-    <string name="overlay_service_description">Prikazuje dugme za snimanje iznad drugih aplikacija. Postavi kursor u tekstualno polje, dodirni dugme, govori, ponovo dodirni: Talkpuppy transkribuje na tvom telefonu i umeće tekst na mjesto kursora. Usluga čita samo polje u kojem upravo pišeš, i to samo da umetne tekst. Ne čita ništa drugo na ekranu, ne sprema ništa iz drugih aplikacija i ništa nikome ne šalje.</string>
+    <string name="overlay_service_description">Prikazuje dugme za snimanje iznad drugih aplikacija. Postavi kursor u tekstualno polje, dodirni dugme, govori, ponovo dodirni: Talkpuppy transkribuje na tvom telefonu i umeće tekst na mjesto kursora. Usluga čita samo polje u kojem upravo pišeš, i to samo da umetne tekst. Ne čita ništa drugo na ekranu, ne sprema ništa iz drugih aplikacija i ništa nikome ne šalje. Uključi samo prekidač iznad; prečica nije potrebna.</string>
     <string name="overlay_button_record">Pokreni diktiranje</string>
     <string name="overlay_button_stop">Zaustavi diktiranje</string>
     <string name="overlay_notification_channel">Diktiranje</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Nije instaliran nijedan govorni model. Otvori Talkpuppy i preuzmi jedan.</string>
     <string name="overlay_error_model_load">Govorni model nije moguće učitati.</string>
     <string name="overlay_error_transcription">Transkripcija nije uspjela.</string>
+    <string name="overlay_error_startup">Talkpuppy nije mogao pokrenuti snimanje. Pokušaj ponovo.</string>
 </resources>

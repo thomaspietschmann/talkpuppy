@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Плавающая кнопка записи Talkpuppy</string>
+    <string name="overlay_service_label">Диктовка Talkpuppy</string>
     <string name="overlay_service_summary">Диктуй в любое текстовое поле</string>
-    <string name="overlay_service_description">Показывает кнопку записи поверх других приложений. Поставь курсор в текстовое поле, нажми кнопку, говори, нажми ещё раз: Talkpuppy расшифровывает речь на твоём телефоне и вставляет текст в место курсора. Служба читает только поле, в котором ты печатаешь, и только для того, чтобы вставить текст. Больше она ничего не читает на экране, ничего не сохраняет из других приложений и никуда ничего не отправляет.</string>
+    <string name="overlay_service_description">Показывает кнопку записи поверх других приложений. Поставь курсор в текстовое поле, нажми кнопку, говори, нажми ещё раз: Talkpuppy расшифровывает речь на твоём телефоне и вставляет текст в место курсора. Служба читает только поле, в котором ты печатаешь, и только для того, чтобы вставить текст. Больше она ничего не читает на экране, ничего не сохраняет из других приложений и никуда ничего не отправляет. Включи только переключатель выше; быстрое включение не нужно.</string>
     <string name="overlay_button_record">Начать диктовку</string>
     <string name="overlay_button_stop">Остановить диктовку</string>
     <string name="overlay_notification_channel">Диктовка</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Речевая модель не установлена. Открой Talkpuppy и скачай её.</string>
     <string name="overlay_error_model_load">Не удалось загрузить речевую модель.</string>
     <string name="overlay_error_transcription">Не удалось выполнить расшифровку.</string>
+    <string name="overlay_error_startup">Talkpuppy не удалось начать запись. Попробуй ещё раз.</string>
 </resources>

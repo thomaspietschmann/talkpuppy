@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Talkpuppy flytande inspelningsknapp</string>
+    <string name="overlay_service_label">Talkpuppy diktering</string>
     <string name="overlay_service_summary">Diktera i valfritt textfält</string>
-    <string name="overlay_service_description">Visar en inspelningsknapp ovanpå andra appar. Placera markören i ett textfält, tryck på knappen, prata, tryck igen: Talkpuppy transkriberar på din telefon och infogar texten vid markören. Tjänsten läser bara fältet du skriver i, och bara för att infoga texten. Den läser inget annat på skärmen, sparar inget från andra appar och skickar inget någonstans.</string>
+    <string name="overlay_service_description">Visar en inspelningsknapp ovanpå andra appar. Placera markören i ett textfält, tryck på knappen, prata, tryck igen: Talkpuppy transkriberar på din telefon och infogar texten vid markören. Tjänsten läser bara fältet du skriver i, och bara för att infoga texten. Den läser inget annat på skärmen, sparar inget från andra appar och skickar inget någonstans. Aktivera bara reglaget ovan; genvägen behövs inte.</string>
     <string name="overlay_button_record">Starta diktering</string>
     <string name="overlay_button_stop">Stoppa diktering</string>
     <string name="overlay_notification_channel">Diktering</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Ingen talmodell installerad. Öppna Talkpuppy och ladda ned en.</string>
     <string name="overlay_error_model_load">Talmodellen kunde inte läsas in.</string>
     <string name="overlay_error_transcription">Transkriberingen misslyckades.</string>
+    <string name="overlay_error_startup">Talkpuppy kunde inte starta inspelningen. Försök igen.</string>
 </resources>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Talkpuppy hõljuv salvestusnupp</string>
+    <string name="overlay_service_label">Talkpuppy dikteerimine</string>
     <string name="overlay_service_summary">Dikteeri mis tahes tekstivälja</string>
-    <string name="overlay_service_description">Kuvab salvestusnupu teiste rakenduste peal. Pane kursor tekstiväljale, puuduta nuppu, räägi, puuduta uuesti: Talkpuppy transkribeerib sinu telefonis ja sisestab teksti kursori kohale. Teenus loeb ainult välja, kuhu sa parajasti kirjutad, ja ainult teksti sisestamiseks. See ei loe ekraanilt midagi muud, ei salvesta midagi teistest rakendustest ega saada midagi kuhugi.</string>
+    <string name="overlay_service_description">Kuvab salvestusnupu teiste rakenduste peal. Pane kursor tekstiväljale, puuduta nuppu, räägi, puuduta uuesti: Talkpuppy transkribeerib sinu telefonis ja sisestab teksti kursori kohale. Teenus loeb ainult välja, kuhu sa parajasti kirjutad, ja ainult teksti sisestamiseks. See ei loe ekraanilt midagi muud, ei salvesta midagi teistest rakendustest ega saada midagi kuhugi. Lülita sisse ainult ülemine lüliti; otseteed pole vaja.</string>
     <string name="overlay_button_record">Alusta dikteerimist</string>
     <string name="overlay_button_stop">Lõpeta dikteerimine</string>
     <string name="overlay_notification_channel">Dikteerimine</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Ühtegi kõnemudelit pole installitud. Ava Talkpuppy ja laadi üks alla.</string>
     <string name="overlay_error_model_load">Kõnemudelit ei õnnestunud laadida.</string>
     <string name="overlay_error_transcription">Transkribeerimine ebaõnnestus.</string>
+    <string name="overlay_error_startup">Talkpuppy ei saanud salvestamist alustada. Proovi uuesti.</string>
 </resources>

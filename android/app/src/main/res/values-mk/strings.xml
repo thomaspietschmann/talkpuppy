@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Лебдечко копче за снимање на Talkpuppy</string>
+    <string name="overlay_service_label">Диктирање Talkpuppy</string>
     <string name="overlay_service_summary">Диктирај во кое било текстуално поле</string>
-    <string name="overlay_service_description">Прикажува копче за снимање над другите апликации. Стави го курсорот во текстуално поле, допри го копчето, зборувај, допри повторно: Talkpuppy транскрибира на твојот телефон и го внесува текстот на местото на курсорот. Услугата го чита само полето во кое пишуваш, и тоа само за да го внесе текстот. Не чита ништо друго на екранот, не зачувува ништо од други апликации и не испраќа ништо никаде.</string>
+    <string name="overlay_service_description">Прикажува копче за снимање над другите апликации. Стави го курсорот во текстуално поле, допри го копчето, зборувај, допри повторно: Talkpuppy транскрибира на твојот телефон и го внесува текстот на местото на курсорот. Услугата го чита само полето во кое пишуваш, и тоа само за да го внесе текстот. Не чита ништо друго на екранот, не зачувува ништо од други апликации и не испраќа ништо никаде. Вклучи го само прекинувачот горе; кратенката не е потребна.</string>
     <string name="overlay_button_record">Започни диктирање</string>
     <string name="overlay_button_stop">Запри диктирање</string>
     <string name="overlay_notification_channel">Диктирање</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Нема инсталиран говорен модел. Отвори го Talkpuppy и преземи еден.</string>
     <string name="overlay_error_model_load">Говорниот модел не можеше да се вчита.</string>
     <string name="overlay_error_transcription">Транскрипцијата не успеа.</string>
+    <string name="overlay_error_startup">Talkpuppy не можеше да го започне снимањето. Обиди се повторно.</string>
 </resources>

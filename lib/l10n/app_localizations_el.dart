@@ -198,6 +198,17 @@ class AppLocalizationsEl extends AppLocalizations {
       'Για να εμφανίζει το κουμπί πάνω από άλλες εφαρμογές και να εισάγει το κείμενο στη θέση του κέρσορα, το Talkpuppy χρειάζεται την υπηρεσία προσβασιμότητάς του. Διαβάζει μόνο το πεδίο όπου πληκτρολογείς και μόνο για να εισάγει το κείμενο. Δεν διαβάζει τίποτα άλλο στην οθόνη, δεν αποθηκεύει τίποτα από άλλες εφαρμογές και δεν στέλνει τίποτα πουθενά.\n\nΣτην επόμενη οθόνη, άνοιξε το «Talkpuppy» και ενεργοποίησέ το.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Ενεργοποίησε μόνο τον διακόπτη του Talkpuppy και άφησε τη «Συντόμευση» απενεργοποιημένη: το κουμπί εμφανίζεται από μόνο του.';
+
+  @override
+  String get shortcutHint =>
+      'Η «Συντόμευση» του Talkpuppy είναι ενεργή, γι\' αυτό το Android καρφιτσώνει το εικονίδιο της εφαρμογής στην άκρη της οθόνης. Δεν τη χρειάζεσαι: το αιωρούμενο κουμπί εμφανίζεται από μόνο του. Απενεργοποίησε τη «Συντόμευση» στις ρυθμίσεις προσβασιμότητας του Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Άνοιγμα ρυθμίσεων Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Άνοιγμα ρυθμίσεων προσβασιμότητας';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsEl extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Δεν υπάρχει πρόσβαση στο μικρόφωνο. Επίτρεψέ την στις ρυθμίσεις του κινητού σου.';
+
+  @override
+  String get errorMicBusy =>
+      'Το μικρόφωνο χρησιμοποιείται αυτή τη στιγμή, για παράδειγμα από μια κλήση. Δοκίμασε ξανά μετά την κλήση.';
 
   @override
   String errorRecorderStart(String detail) {

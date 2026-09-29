@@ -198,6 +198,17 @@ class AppLocalizationsGa extends AppLocalizations {
       'Chun an cnaipe a thaispeáint os cionn aipeanna eile agus an téacs a chur isteach ag an gcúrsóir, teastaíonn a sheirbhís inrochtaineachta ó Talkpuppy. Ní léann sé ach an réimse ina bhfuil tú ag clóscríobh, agus sin amháin chun an téacs a chur isteach. Ní léann sé aon rud eile ar an scáileán, ní shábhálann sé aon rud ó aipeanna eile agus ní sheolann sé aon rud áit ar bith.\n\nAr an gcéad scáileán eile, oscail “Talkpuppy” agus cuir ar siúl é.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Cuir ar siúl lasc Talkpuppy amháin agus fág “Aicearra” múchta: taispeánfar an cnaipe leis féin.';
+
+  @override
+  String get shortcutHint =>
+      'Tá “Aicearra” Talkpuppy ar siúl, mar sin greamaíonn Android deilbhín na haipe d\'imeall an scáileáin. Níl sé de dhíth ort: taispeántar an cnaipe ar snámh leis féin. Múch “Aicearra” i socruithe inrochtaineachta Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Oscail socruithe Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Oscail socruithe inrochtaineachta';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsGa extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Níl rochtain ar an micreafón. Ceadaigh é i socruithe an fhóin.';
+
+  @override
+  String get errorMicBusy =>
+      'Tá an micreafón in úsáid faoi láthair, mar shampla ag glao gutháin. Bain triail eile as tar éis an ghlao.';
 
   @override
   String errorRecorderStart(String detail) {

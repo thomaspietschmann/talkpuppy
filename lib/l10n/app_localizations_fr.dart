@@ -198,6 +198,17 @@ class AppLocalizationsFr extends AppLocalizations {
       'Pour afficher le bouton par-dessus les autres applis et insérer le texte au niveau du curseur, Talkpuppy a besoin de son service d\'accessibilité. Il ne lit que le champ où tu écris, et uniquement pour y insérer le texte. Il ne lit rien d\'autre à l\'écran, n\'enregistre rien des autres applis et n\'envoie rien nulle part.\n\nSur l\'écran suivant, ouvre « Talkpuppy » et active-le.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Active uniquement l\'interrupteur Talkpuppy et laisse « Raccourci » désactivé : le bouton apparaît tout seul.';
+
+  @override
+  String get shortcutHint =>
+      'Le « Raccourci » de Talkpuppy est activé, c\'est pourquoi Android épingle l\'icône de l\'appli au bord de l\'écran. Tu n\'en as pas besoin : le bouton flottant apparaît tout seul. Désactive le « Raccourci » dans les paramètres d\'accessibilité de Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Ouvrir les paramètres de Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility =>
       'Ouvrir les paramètres d\'accessibilité';
 
@@ -252,6 +263,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Pas d\'accès au micro. Autorise-le dans les paramètres de ton téléphone.';
+
+  @override
+  String get errorMicBusy =>
+      'Le micro est utilisé en ce moment, par exemple par un appel. Réessaie après l’appel.';
 
   @override
   String errorRecorderStart(String detail) {

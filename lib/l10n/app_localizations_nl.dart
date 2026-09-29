@@ -198,6 +198,17 @@ class AppLocalizationsNl extends AppLocalizations {
       'Om de knop boven andere apps te tonen en de tekst bij de cursor in te voegen, heeft Talkpuppy zijn toegankelijkheidsservice nodig. Die leest alleen het veld waarin je typt, en alleen om de tekst in te voegen. Verder leest hij niets op het scherm, slaat hij niets uit andere apps op en stuurt hij nergens iets naartoe.\n\nOpen in het volgende scherm ‘Talkpuppy’ en zet het aan.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Zet alleen de Talkpuppy-schakelaar aan en laat ‘Snelkoppeling’ uit: de knop verschijnt vanzelf.';
+
+  @override
+  String get shortcutHint =>
+      'De ‘Snelkoppeling’ voor Talkpuppy staat aan, daarom zet Android het app-icoon vast aan de rand van het scherm. Die heb je niet nodig: de zwevende knop verschijnt vanzelf. Zet ‘Snelkoppeling’ uit in de toegankelijkheidsinstellingen van Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Talkpuppy-instellingen openen';
+
+  @override
   String get overlayOpenAccessibility => 'Toegankelijkheidsinstellingen openen';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Geen toegang tot de microfoon. Sta dit toe in de instellingen van je telefoon.';
+
+  @override
+  String get errorMicBusy =>
+      'De microfoon is nu in gebruik, bijvoorbeeld door een telefoongesprek. Probeer het na het gesprek opnieuw.';
 
   @override
   String errorRecorderStart(String detail) {

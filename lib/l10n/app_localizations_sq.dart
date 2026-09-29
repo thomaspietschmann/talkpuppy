@@ -198,6 +198,17 @@ class AppLocalizationsSq extends AppLocalizations {
       'Për të shfaqur butonin mbi aplikacionet e tjera dhe për të futur tekstin te kursori, Talkpuppy ka nevojë për shërbimin e vet të qasshmërisë. Lexon vetëm fushën ku po shkruan, dhe vetëm për të futur tekstin. Nuk lexon asgjë tjetër në ekran, nuk ruan asgjë nga aplikacionet e tjera dhe nuk dërgon asgjë askund.\n\nNë ekranin tjetër, hap “Talkpuppy” dhe aktivizoje.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Aktivizo vetëm çelësin e Talkpuppy dhe lëre “Shkurtorja” joaktive: butoni shfaqet vetë.';
+
+  @override
+  String get shortcutHint =>
+      '“Shkurtorja” e Talkpuppy është aktive, prandaj Android e fikson ikonën e aplikacionit në skajin e ekranit. Nuk të duhet: butoni lundrues shfaqet vetë. Çaktivizo “Shkurtorja” te cilësimet e qasshmërisë së Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Hap cilësimet e Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Hap cilësimet e qasshmërisë';
 
   @override
@@ -252,6 +263,10 @@ class AppLocalizationsSq extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Nuk ka qasje te mikrofoni. Lejoje te cilësimet e telefonit.';
+
+  @override
+  String get errorMicBusy =>
+      'Mikrofoni është në përdorim tani, për shembull nga një telefonatë. Provo përsëri pas telefonatës.';
 
   @override
   String errorRecorderStart(String detail) {

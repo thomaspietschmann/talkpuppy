@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Talkpuppy peldošā ierakstīšanas poga</string>
+    <string name="overlay_service_label">Talkpuppy diktēšana</string>
     <string name="overlay_service_summary">Diktē jebkurā teksta laukā</string>
-    <string name="overlay_service_description">Rāda ierakstīšanas pogu virs citām lietotnēm. Novieto kursoru teksta laukā, pieskaries pogai, runā, pieskaries vēlreiz: Talkpuppy transkribē tavā tālrunī un ievieto tekstu kursora vietā. Pakalpojums lasa tikai lauku, kurā tu raksti, un tikai teksta ievietošanai. Tas ekrānā nelasa neko citu, nesaglabā neko no citām lietotnēm un nekur neko nesūta.</string>
+    <string name="overlay_service_description">Rāda ierakstīšanas pogu virs citām lietotnēm. Novieto kursoru teksta laukā, pieskaries pogai, runā, pieskaries vēlreiz: Talkpuppy transkribē tavā tālrunī un ievieto tekstu kursora vietā. Pakalpojums lasa tikai lauku, kurā tu raksti, un tikai teksta ievietošanai. Tas ekrānā nelasa neko citu, nesaglabā neko no citām lietotnēm un nekur neko nesūta. Ieslēdz tikai slēdzi augšā; saīsne nav vajadzīga.</string>
     <string name="overlay_button_record">Sākt diktēšanu</string>
     <string name="overlay_button_stop">Beigt diktēšanu</string>
     <string name="overlay_notification_channel">Diktēšana</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Nav instalēts neviens runas modelis. Atver Talkpuppy un lejupielādē kādu.</string>
     <string name="overlay_error_model_load">Runas modeli neizdevās ielādēt.</string>
     <string name="overlay_error_transcription">Transkripcija neizdevās.</string>
+    <string name="overlay_error_startup">Talkpuppy nevarēja sākt ierakstu. Mēģini vēlreiz.</string>
 </resources>

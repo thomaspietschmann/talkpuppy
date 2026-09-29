@@ -198,6 +198,17 @@ class AppLocalizationsIs extends AppLocalizations {
       'Til að birta hnappinn ofan á öðrum forritum og setja textann inn við bendilinn þarf Talkpuppy aðgengisþjónustuna sína. Hún les aðeins reitinn sem þú ert að skrifa í, og aðeins til að setja textann inn. Hún les ekkert annað á skjánum, vistar ekkert úr öðrum forritum og sendir ekkert neitt.\n\nOpnaðu „Talkpuppy“ á næsta skjá og kveiktu á því.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Kveiktu aðeins á rofa Talkpuppy og hafðu slökkt á „Flýtileið“: hnappurinn birtist sjálfkrafa.';
+
+  @override
+  String get shortcutHint =>
+      'Kveikt er á „Flýtileið“ fyrir Talkpuppy og því festir Android forritstáknið við skjábrúnina. Þú þarft hana ekki: fljótandi hnappurinn birtist sjálfkrafa. Slökktu á „Flýtileið“ í aðgengisstillingum Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Opna stillingar Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Opna aðgengisstillingar';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsIs extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Enginn aðgangur að hljóðnema. Leyfðu hann í stillingum símans.';
+
+  @override
+  String get errorMicBusy =>
+      'Hljóðneminn er í notkun núna, til dæmis vegna símtals. Reyndu aftur eftir símtalið.';
 
   @override
   String errorRecorderStart(String detail) {

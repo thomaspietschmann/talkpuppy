@@ -197,6 +197,17 @@ class AppLocalizationsSr extends AppLocalizations {
       'Да би дугме могло да се прикаже изнад других апликација и да би се текст уметнуо на место курсора, апликација Talkpuppy мора да користи своју услугу приступачности. Чита само поље у које управо куцаш, и то само да унесе текст. Не чита ништа друго на екрану, не чува ништа из других апликација и ништа никуда не шаље.\n\nНа следећем екрану отвори „Talkpuppy“ и укључи га.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Укључи само прекидач за Talkpuppy и остави „Пречица“ искључену: дугме се појављује само.';
+
+  @override
+  String get shortcutHint =>
+      '„Пречица“ за Talkpuppy је укључена, па Android качи икону апликације на ивицу екрана. Не треба ти: плутајуће дугме се појављује само. Искључи „Пречица“ у подешавањима приступачности за Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Отвори подешавања за Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Отвори подешавања приступачности';
 
   @override
@@ -249,6 +260,10 @@ class AppLocalizationsSr extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Нема приступа микрофону. Дозволи га у подешавањима телефона.';
+
+  @override
+  String get errorMicBusy =>
+      'Микрофон је тренутно заузет, на пример телефонским позивом. Покушај поново после разговора.';
 
   @override
   String errorRecorderStart(String detail) {

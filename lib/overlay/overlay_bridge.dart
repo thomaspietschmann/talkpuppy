@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 
 import 'overlay_controller.dart';
 
-/// The overlay engine's side of the `talkpuppy/overlay` channel. The
+/// The app's side of the `talkpuppy/overlay` channel. The
 /// Kotlin accessibility service sends commands; this reports session
 /// progress back. Every message carries the session id, so results of a
 /// session the native side already gave up on are ignored there.
@@ -13,12 +13,20 @@ class OverlayBridge implements OverlayHost {
   final MethodChannel _channel;
   OverlayController? _controller;
 
-  /// Starts handling commands for [controller] and tells the native side
-  /// that the engine is ready.
+  /// Starts handling commands for [controller] and tells the native side,
+  /// if it's listening, that we're ready. Usually it isn't (the
+  /// accessibility service is off, or starts later and asks with `hello`);
+  /// that must never keep the app from starting.
   Future<void> attach(OverlayController controller) async {
     _controller = controller;
     _channel.setMethodCallHandler(_handle);
-    await _channel.invokeMethod<void>('ready');
+    try {
+      await _channel.invokeMethod<void>('ready');
+    } on MissingPluginException {
+      // Nobody listening yet.
+    } on PlatformException {
+      // Same.
+    }
   }
 
   Future<Object?> _handle(MethodCall call) async {
@@ -35,8 +43,9 @@ class OverlayBridge implements OverlayHost {
         controller.stopSession(sessionId);
       case 'cancelSession':
         await controller.cancelSession(sessionId);
-      case 'unloadModel':
-        await controller.unloadModel();
+      case 'hello':
+        // The native side attached after we sent 'ready'.
+        return true;
       default:
         throw MissingPluginException('overlay: ${call.method}');
     }
@@ -65,6 +74,17 @@ class OverlayBridge implements OverlayHost {
     'error',
     {'sessionId': sessionId, 'kind': kind.name, 'detail': detail},
   );
+
+  /// The engine couldn't set itself up (settings, VAD model, transcriber
+  /// isolate). The native side reports it and starts a fresh engine on the
+  /// next tap.
+  Future<void> reportStartupFailure(Object error) async {
+    try {
+      await _channel.invokeMethod<void>('startupFailed', {'detail': '$error'});
+    } catch (_) {
+      // Nothing listening either.
+    }
+  }
 
   void _send(String method, Map<String, Object?> args) {
     _channel.invokeMethod<void>(method, args).catchError((Object _) {

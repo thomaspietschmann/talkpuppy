@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Плаваюча кнопка запису Talkpuppy</string>
+    <string name="overlay_service_label">Диктування Talkpuppy</string>
     <string name="overlay_service_summary">Диктуй у будь-яке текстове поле</string>
-    <string name="overlay_service_description">Показує кнопку запису поверх інших додатків. Постав курсор у текстове поле, торкнись кнопки, говори, торкнись ще раз: Talkpuppy транскрибує на твоєму телефоні й вставляє текст у місце курсора. Сервіс читає лише поле, в якому ти пишеш, і лише для того, щоб вставити текст. Більше він нічого не читає на екрані, нічого не зберігає з інших додатків і нікуди нічого не надсилає.</string>
+    <string name="overlay_service_description">Показує кнопку запису поверх інших додатків. Постав курсор у текстове поле, торкнись кнопки, говори, торкнись ще раз: Talkpuppy транскрибує на твоєму телефоні й вставляє текст у місце курсора. Сервіс читає лише поле, в якому ти пишеш, і лише для того, щоб вставити текст. Більше він нічого не читає на екрані, нічого не зберігає з інших додатків і нікуди нічого не надсилає. Увімкни лише перемикач угорі; швидкий доступ не потрібен.</string>
     <string name="overlay_button_record">Почати диктування</string>
     <string name="overlay_button_stop">Зупинити диктування</string>
     <string name="overlay_notification_channel">Диктування</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Мовну модель не встановлено. Відкрий Talkpuppy й завантаж її.</string>
     <string name="overlay_error_model_load">Не вдалося завантажити мовну модель.</string>
     <string name="overlay_error_transcription">Не вдалося виконати транскрипцію.</string>
+    <string name="overlay_error_startup">Talkpuppy не вдалося почати запис. Спробуй ще раз.</string>
 </resources>

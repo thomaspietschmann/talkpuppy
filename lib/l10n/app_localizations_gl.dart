@@ -198,6 +198,17 @@ class AppLocalizationsGl extends AppLocalizations {
       'Para mostrar o botón sobre outras apps e inserir o texto no cursor, Talkpuppy necesita o seu servizo de accesibilidade. Só le o campo no que estás escribindo, e só para inserir o texto. Non le nada máis da pantalla, non garda nada doutras apps e non envía nada a ningures.\n\nNa seguinte pantalla, abre «Talkpuppy» e actívao.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Activa só o interruptor de Talkpuppy e deixa «Atallo» desactivado: o botón aparece só.';
+
+  @override
+  String get shortcutHint =>
+      'O «Atallo» de Talkpuppy está activado, por iso Android fixa a icona da app no bordo da pantalla. Non o necesitas: o botón flotante aparece só. Desactiva o «Atallo» na configuración de accesibilidade de Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Abrir a configuración de Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility =>
       'Abrir a configuración de accesibilidade';
 
@@ -252,6 +263,10 @@ class AppLocalizationsGl extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Non hai acceso ao micrófono. Permíteo na configuración do teu móbil.';
+
+  @override
+  String get errorMicBusy =>
+      'O micrófono está en uso agora, por exemplo por unha chamada. Téntao de novo despois da chamada.';
 
   @override
   String errorRecorderStart(String detail) {

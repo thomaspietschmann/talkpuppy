@@ -198,6 +198,17 @@ class AppLocalizationsBe extends AppLocalizations {
       'Каб паказваць кнопку паверх іншых праграм і ўстаўляць тэкст у месца курсора, Talkpuppy патрэбна яго служба спецыяльных магчымасцей. Яна чытае толькі поле, у якім ты пішаш, і толькі для таго, каб уставіць тэкст. Больш яна нічога не чытае на экране, нічога не захоўвае з іншых праграм і нікуды нічога не адпраўляе.\n\nНа наступным экране адкрый «Talkpuppy» і ўключы яго.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Уключы толькі перамыкач Talkpuppy і пакінь «Хуткі доступ» выключаным: кнопка з\'явіцца сама.';
+
+  @override
+  String get shortcutHint =>
+      '«Хуткі доступ» для Talkpuppy уключаны, таму Android замацоўвае значок праграмы на краі экрана. Ён табе не патрэбны: плаваючая кнопка з\'яўляецца сама. Выключы «Хуткі доступ» у наладах спецыяльных магчымасцей Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Адкрыць налады Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Адкрыць спецыяльныя магчымасці';
 
   @override
@@ -251,6 +262,10 @@ class AppLocalizationsBe extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Няма доступу да мікрафона. Дазволь яго ў наладах тэлефона.';
+
+  @override
+  String get errorMicBusy =>
+      'Мікрафон зараз заняты, напрыклад тэлефонным званком. Паспрабуй яшчэ раз пасля размовы.';
 
   @override
   String errorRecorderStart(String detail) {

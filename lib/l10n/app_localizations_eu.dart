@@ -198,6 +198,17 @@ class AppLocalizationsEu extends AppLocalizations {
       'Botoia beste aplikazioen gainean erakusteko eta testua kurtsorearen lekuan txertatzeko, Talkpuppy-k bere erabilerraztasun-zerbitzua behar du. Idazten ari zaren eremua soilik irakurtzen du, eta testua txertatzeko soilik. Ez du pantailan beste ezer irakurtzen, ez du beste aplikazioetako ezer gordetzen eta ez du ezer inora bidaltzen.\n\nHurrengo pantailan, ireki «Talkpuppy» eta aktibatu.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Aktibatu Talkpuppy-ren etengailua soilik eta utzi «Lasterbidea» desaktibatuta: botoia berez agertzen da.';
+
+  @override
+  String get shortcutHint =>
+      'Talkpuppy-ren «Lasterbidea» aktibatuta dago; horregatik, Android-ek aplikazioaren ikonoa pantailaren ertzean finkatzen du. Ez duzu behar: botoi flotagarria berez agertzen da. Desaktibatu «Lasterbidea» Talkpuppy-ren erabilerraztasun-ezarpenetan.';
+
+  @override
+  String get shortcutHintAction => 'Ireki Talkpuppy-ren ezarpenak';
+
+  @override
   String get overlayOpenAccessibility => 'Ireki erabilerraztasun-ezarpenak';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsEu extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Ez dago mikrofonorako sarbiderik. Eman baimena telefonoaren ezarpenetan.';
+
+  @override
+  String get errorMicBusy =>
+      'Mikrofonoa erabiltzen ari dira orain, adibidez dei batek. Saiatu berriro deiaren ondoren.';
 
   @override
   String errorRecorderStart(String detail) {

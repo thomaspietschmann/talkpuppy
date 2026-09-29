@@ -2,6 +2,10 @@
 /// a localized message (see `l10n/l10n_text.dart`).
 enum AppErrorKind {
   micPermission,
+
+  /// Another app holds the microphone, typically a phone call (iOS refuses
+  /// to activate a recording session then).
+  micBusy,
   recorderStart,
   recorderStop,
   transcription,

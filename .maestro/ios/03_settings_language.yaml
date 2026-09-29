@@ -1,0 +1,15 @@
+# Settings: switch the UI to German and back.
+appId: de.pietschie.talkpuppy
+---
+- launchApp
+- tapOn:
+    id: "settings_button"
+- tapOn: "(?s)App language.*"
+- scrollUntilVisible:
+    element: "Deutsch"
+    direction: DOWN
+- tapOn: "Deutsch"
+- assertVisible: "(?s)App-Sprache.*"
+- tapOn: "(?s)App-Sprache.*"
+- tapOn: "System default|Systemstandard"
+- assertVisible: "(?s)App language.*"

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Plavajoči gumb za snemanje Talkpuppy</string>
+    <string name="overlay_service_label">Narekovanje Talkpuppy</string>
     <string name="overlay_service_summary">Narekuj v katero koli besedilno polje</string>
-    <string name="overlay_service_description">Prikaže gumb za snemanje nad drugimi aplikacijami. Postavi kazalec v besedilno polje, dotakni se gumba, govori, dotakni se znova: Talkpuppy prepiše govor na tvojem telefonu in vstavi besedilo na mesto kazalca. Storitev bere samo polje, v katero ravno tipkaš, in to samo zato, da vstavi besedilo. Ničesar drugega na zaslonu ne bere, ničesar iz drugih aplikacij ne shranjuje in ničesar nikamor ne pošilja.</string>
+    <string name="overlay_service_description">Prikaže gumb za snemanje nad drugimi aplikacijami. Postavi kazalec v besedilno polje, dotakni se gumba, govori, dotakni se znova: Talkpuppy prepiše govor na tvojem telefonu in vstavi besedilo na mesto kazalca. Storitev bere samo polje, v katero ravno tipkaš, in to samo zato, da vstavi besedilo. Ničesar drugega na zaslonu ne bere, ničesar iz drugih aplikacij ne shranjuje in ničesar nikamor ne pošilja. Vklopi samo stikalo zgoraj; bližnjica ni potrebna.</string>
     <string name="overlay_button_record">Začni narekovanje</string>
     <string name="overlay_button_stop">Ustavi narekovanje</string>
     <string name="overlay_notification_channel">Narekovanje</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Noben govorni model ni nameščen. Odpri Talkpuppy in prenesi enega.</string>
     <string name="overlay_error_model_load">Govornega modela ni bilo mogoče naložiti.</string>
     <string name="overlay_error_transcription">Prepis ni uspel.</string>
+    <string name="overlay_error_startup">Talkpuppy ni mogel začeti snemanja. Poskusi znova.</string>
 </resources>

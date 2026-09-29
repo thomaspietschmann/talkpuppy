@@ -198,6 +198,17 @@ class AppLocalizationsCa extends AppLocalizations {
       'Per mostrar el botó sobre altres aplicacions i inserir el text al cursor, Talkpuppy necessita el seu servei d\'accessibilitat. Només llegeix el camp on escrius, i només per inserir-hi el text. No llegeix res més de la pantalla, no desa res d\'altres aplicacions i no envia res enlloc.\n\nA la pantalla següent, obre «Talkpuppy» i activa\'l.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Activa només l\'interruptor de Talkpuppy i deixa «Drecera» desactivada: el botó apareix sol.';
+
+  @override
+  String get shortcutHint =>
+      'La «Drecera» de Talkpuppy està activada, per això Android fixa la icona de l\'aplicació a la vora de la pantalla. No la necessites: el botó flotant apareix sol. Desactiva la «Drecera» a la configuració d\'accessibilitat de Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Obre la configuració de Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility =>
       'Obre la configuració d\'accessibilitat';
 
@@ -252,6 +263,10 @@ class AppLocalizationsCa extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'No hi ha accés al micròfon. Permet-lo a la configuració del mòbil.';
+
+  @override
+  String get errorMicBusy =>
+      'El micròfon ara està ocupat, per exemple per una trucada. Torna-ho a provar després de la trucada.';
 
   @override
   String errorRecorderStart(String detail) {

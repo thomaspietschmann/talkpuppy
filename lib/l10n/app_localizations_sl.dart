@@ -197,6 +197,17 @@ class AppLocalizationsSl extends AppLocalizations {
       'Da lahko Talkpuppy prikaže gumb nad drugimi aplikacijami in vstavi besedilo na mesto kazalca, potrebuje svojo storitev za dostopnost. Bere samo polje, v katero ravno tipkaš, in to samo zato, da vstavi besedilo. Ničesar drugega na zaslonu ne bere, ničesar iz drugih aplikacij ne shranjuje in ničesar nikamor ne pošilja.\n\nNa naslednjem zaslonu odpri »Talkpuppy« in ga vklopi.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Vklopi samo stikalo Talkpuppy in pusti »Bližnjica« izklopljeno: gumb se prikaže sam.';
+
+  @override
+  String get shortcutHint =>
+      '»Bližnjica« za Talkpuppy je vklopljena, zato Android pripne ikono aplikacije ob rob zaslona. Ne potrebuješ je: plavajoči gumb se prikaže sam. Izklopi »Bližnjica« v nastavitvah dostopnosti za Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Odpri nastavitve Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Odpri nastavitve dostopnosti';
 
   @override
@@ -249,6 +260,10 @@ class AppLocalizationsSl extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Ni dostopa do mikrofona. Dovoli ga v nastavitvah telefona.';
+
+  @override
+  String get errorMicBusy =>
+      'Mikrofon je trenutno zaseden, na primer zaradi klica. Poskusi znova po klicu.';
 
   @override
   String errorRecorderStart(String detail) {

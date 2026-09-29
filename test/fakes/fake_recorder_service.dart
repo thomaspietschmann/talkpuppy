@@ -14,6 +14,9 @@ class FakeRecorderService implements RecorderService {
   bool recording = false;
   void Function()? onStart;
 
+  /// When set, [start] waits for this (a microphone that never comes up).
+  Completer<void>? startGate;
+
   /// The live-audio callback of the running recording, if any.
   void Function(Float32List samples)? onSamples;
 
@@ -38,6 +41,8 @@ class FakeRecorderService implements RecorderService {
     void Function(Float32List samples)? onSamples,
   }) async {
     onStart?.call();
+    final gate = startGate;
+    if (gate != null) await gate.future;
     this.onSamples = onSamples;
     lastStartedPath = path;
     recording = true;

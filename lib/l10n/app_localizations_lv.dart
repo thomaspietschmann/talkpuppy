@@ -198,6 +198,17 @@ class AppLocalizationsLv extends AppLocalizations {
       'Lai poga varētu parādīties virs citām lietotnēm un teksts tiktu ievietots kursora vietā, Talkpuppy ir nepieciešams tās pieejamības pakalpojums. Tas lasa tikai lauku, kurā tu raksti, un tikai teksta ievietošanai. Tas ekrānā nelasa neko citu, nesaglabā neko no citām lietotnēm un nekur neko nesūta.\n\nNākamajā ekrānā atver “Talkpuppy” un ieslēdz to.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Ieslēdz tikai Talkpuppy slēdzi un atstāj “Saīsne” izslēgtu: poga parādās pati.';
+
+  @override
+  String get shortcutHint =>
+      'Talkpuppy “Saīsne” ir ieslēgta, tāpēc Android piesprauž lietotnes ikonu ekrāna malai. Tev tā nav vajadzīga: peldošā poga parādās pati. Izslēdz “Saīsne” Talkpuppy pieejamības iestatījumos.';
+
+  @override
+  String get shortcutHintAction => 'Atvērt Talkpuppy iestatījumus';
+
+  @override
   String get overlayOpenAccessibility => 'Atvērt pieejamības iestatījumus';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsLv extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Nav piekļuves mikrofonam. Atļauj to tālruņa iestatījumos.';
+
+  @override
+  String get errorMicBusy =>
+      'Mikrofons pašlaik ir aizņemts, piemēram, ar zvanu. Mēģini vēlreiz pēc zvana.';
 
   @override
   String errorRecorderStart(String detail) {

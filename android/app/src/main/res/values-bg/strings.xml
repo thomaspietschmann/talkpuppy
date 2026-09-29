@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Плаващ бутон за запис на Talkpuppy</string>
+    <string name="overlay_service_label">Диктовка Talkpuppy</string>
     <string name="overlay_service_summary">Диктувай във всяко текстово поле</string>
-    <string name="overlay_service_description">Показва бутон за запис върху другите приложения. Постави курсора в текстово поле, докосни бутона, говори, докосни отново: Talkpuppy транскрибира на телефона ти и вмъква текста на мястото на курсора. Услугата чете само полето, в което пишеш, и само за да вмъкне текста. Не чете нищо друго от екрана, не запазва нищо от други приложения и не изпраща нищо никъде.</string>
+    <string name="overlay_service_description">Показва бутон за запис върху другите приложения. Постави курсора в текстово поле, докосни бутона, говори, докосни отново: Talkpuppy транскрибира на телефона ти и вмъква текста на мястото на курсора. Услугата чете само полето, в което пишеш, и само за да вмъкне текста. Не чете нищо друго от екрана, не запазва нищо от други приложения и не изпраща нищо никъде. Включи само превключвателя отгоре; прекият път не е нужен.</string>
     <string name="overlay_button_record">Започни диктовка</string>
     <string name="overlay_button_stop">Спри диктовката</string>
     <string name="overlay_notification_channel">Диктовка</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Няма инсталиран говорен модел. Отвори Talkpuppy и изтегли един.</string>
     <string name="overlay_error_model_load">Говорният модел не можа да се зареди.</string>
     <string name="overlay_error_transcription">Транскрипцията не бе успешна.</string>
+    <string name="overlay_error_startup">Talkpuppy не успя да започне записа. Опитай отново.</string>
 </resources>

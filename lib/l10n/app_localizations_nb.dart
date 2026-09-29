@@ -198,6 +198,17 @@ class AppLocalizationsNb extends AppLocalizations {
       'For å vise knappen over andre apper og sette inn teksten ved markøren trenger Talkpuppy tilgjengelighetstjenesten sin. Den leser bare feltet du skriver i, og bare for å sette inn teksten. Den leser ikke noe annet på skjermen, lagrer ingenting fra andre apper og sender ingenting noe sted.\n\nÅpne «Talkpuppy» på neste skjerm, og slå den på.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Slå bare på Talkpuppy-bryteren og la «Snarvei» være av: Knappen vises av seg selv.';
+
+  @override
+  String get shortcutHint =>
+      '«Snarvei» for Talkpuppy er på, så Android fester appikonet til kanten av skjermen. Den trenger du ikke: Den flytende knappen vises av seg selv. Slå av «Snarvei» i tilgjengelighetsinnstillingene for Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Åpne Talkpuppy-innstillinger';
+
+  @override
   String get overlayOpenAccessibility => 'Åpne tilgjengelighetsinnstillinger';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsNb extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Ingen tilgang til mikrofonen. Gi tilgang i telefonens innstillinger.';
+
+  @override
+  String get errorMicBusy =>
+      'Mikrofonen er i bruk akkurat nå, for eksempel av en telefonsamtale. Prøv igjen etter samtalen.';
 
   @override
   String errorRecorderStart(String detail) {

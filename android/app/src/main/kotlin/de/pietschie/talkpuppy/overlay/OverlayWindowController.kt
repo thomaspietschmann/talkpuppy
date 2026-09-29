@@ -20,6 +20,13 @@ class OverlayWindowController(
     private val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
     private val size = (OverlayButtonView.SIZE_DP * context.resources.displayMetrics.density).toInt()
+
+    /**
+     * Gap to the screen edge. Right at the edge, system handles take the
+     * touches: Samsung's Edge Panel handle (right edge, mid height) and the
+     * back gesture area.
+     */
+    private val edgeMargin = (EDGE_MARGIN_DP * context.resources.displayMetrics.density).toInt()
     private val params = WindowManager.LayoutParams(
         size,
         size,
@@ -53,6 +60,17 @@ class OverlayWindowController(
         }
     }
 
+    /**
+     * After a rotation (or a foldable unfolding) the old pixel position may
+     * be off screen: place the button again from the saved side and height
+     * fraction.
+     */
+    fun reposition() {
+        if (!added) return
+        restorePosition()
+        windowManager.updateViewLayout(button, params)
+    }
+
     fun moveBy(dx: Float, dy: Float) {
         if (!added) return
         params.x += dx.toInt()
@@ -68,7 +86,7 @@ class OverlayWindowController(
         if (!added) return
         val (width, height) = screenSize()
         val right = params.x + size / 2 > width / 2
-        params.x = if (right) width - size else 0
+        params.x = if (right) width - size - edgeMargin else edgeMargin
         params.y = params.y.coerceIn(0, (height - size).coerceAtLeast(0))
         windowManager.updateViewLayout(button, params)
         prefs.edit()
@@ -80,8 +98,10 @@ class OverlayWindowController(
     private fun restorePosition() {
         val (width, height) = screenSize()
         val right = prefs.getBoolean(KEY_RIGHT, true)
-        params.x = if (right) width - size else 0
-        params.y = (prefs.getFloat(KEY_Y, 0.55f) * height).toInt()
+        params.x = if (right) width - size - edgeMargin else edgeMargin
+        // Default below the middle: Samsung's Edge Panel handle sits at mid
+        // height on the right.
+        params.y = (prefs.getFloat(KEY_Y, DEFAULT_Y) * height).toInt()
             .coerceIn(0, (height - size).coerceAtLeast(0))
     }
 
@@ -99,5 +119,7 @@ class OverlayWindowController(
         private const val PREFS = "talkpuppy_overlay"
         private const val KEY_RIGHT = "right"
         private const val KEY_Y = "y"
+        private const val DEFAULT_Y = 0.68f
+        private const val EDGE_MARGIN_DP = 20
     }
 }

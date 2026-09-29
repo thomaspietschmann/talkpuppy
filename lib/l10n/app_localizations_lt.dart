@@ -197,6 +197,17 @@ class AppLocalizationsLt extends AppLocalizations {
       'Kad mygtukas galėtų būti rodomas virš kitų programų, o tekstas būtų įterpiamas žymeklio vietoje, Talkpuppy reikia savo pritaikymo neįgaliesiems paslaugos. Ji skaito tik lauką, kuriame rašai, ir tik tam, kad įterptų tekstą. Ji neskaito nieko kito ekrane, nieko neišsaugo iš kitų programų ir niekur nieko nesiunčia.\n\nKitame ekrane atidaryk „Talkpuppy“ ir įjunk.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Įjunk tik Talkpuppy jungiklį, o „Spartųjį klavišą“ palik išjungtą: mygtukas atsiras pats.';
+
+  @override
+  String get shortcutHint =>
+      'Talkpuppy „Spartusis klavišas“ įjungtas, todėl Android prisega programos piktogramą prie ekrano krašto. Jo tau nereikia: slankusis mygtukas atsiranda pats. Išjunk „Spartųjį klavišą“ Talkpuppy pritaikymo neįgaliesiems nustatymuose.';
+
+  @override
+  String get shortcutHintAction => 'Atidaryti Talkpuppy nustatymus';
+
+  @override
   String get overlayOpenAccessibility =>
       'Atidaryti pritaikymo neįgaliesiems nustatymus';
 
@@ -250,6 +261,10 @@ class AppLocalizationsLt extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Nėra prieigos prie mikrofono. Leisk ją telefono nustatymuose.';
+
+  @override
+  String get errorMicBusy =>
+      'Mikrofonas šiuo metu užimtas, pavyzdžiui, skambučio. Bandyk dar kartą po skambučio.';
 
   @override
   String errorRecorderStart(String detail) {

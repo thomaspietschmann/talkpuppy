@@ -20,6 +20,20 @@ class OverlaySetupService {
     }
   }
 
+  /// Whether the user turned on the system "Shortcut" for our accessibility
+  /// service, which pins a confusing app icon to the screen edge.
+  static Future<bool> isShortcutEnabled() async {
+    if (!isSupported) return false;
+    try {
+      return await _channel.invokeMethod<bool>('isShortcutEnabled') ?? false;
+    } on MissingPluginException {
+      return false;
+    }
+  }
+
+  /// Talkpuppy's page in the accessibility settings (falls back to the list).
+  static Future<void> openServiceSettings() => _call('openServiceSettings');
+
   static Future<void> openAccessibilitySettings() =>
       _call('openAccessibilitySettings');
 
@@ -27,10 +41,6 @@ class OverlaySetupService {
   /// show. Recording works without it too.
   static Future<void> requestNotificationPermission() =>
       _call('requestNotificationPermission');
-
-  /// Completes once no overlay dictation is running, so the app doesn't
-  /// load its model while the overlay still holds one.
-  static Future<void> waitUntilOverlayIdle() => _call('waitUntilOverlayIdle');
 
   /// Sends the app to the background, where the floating button takes over.
   static Future<void> minimizeApp() => _call('minimizeApp');

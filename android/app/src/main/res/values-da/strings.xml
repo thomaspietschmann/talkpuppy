@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Talkpuppy svævende optageknap</string>
+    <string name="overlay_service_label">Talkpuppy diktering</string>
     <string name="overlay_service_summary">Dikter i ethvert tekstfelt</string>
-    <string name="overlay_service_description">Viser en optageknap oven på andre apps. Sæt markøren i et tekstfelt, tryk på knappen, tal, tryk igen: Talkpuppy transskriberer på din telefon og indsætter teksten ved markøren. Tjenesten læser kun det felt, du skriver i, og kun for at indsætte teksten. Den læser ikke andet på skærmen, gemmer intet fra andre apps og sender intet nogen steder hen.</string>
+    <string name="overlay_service_description">Viser en optageknap oven på andre apps. Sæt markøren i et tekstfelt, tryk på knappen, tal, tryk igen: Talkpuppy transskriberer på din telefon og indsætter teksten ved markøren. Tjenesten læser kun det felt, du skriver i, og kun for at indsætte teksten. Den læser ikke andet på skærmen, gemmer intet fra andre apps og sender intet nogen steder hen. Slå kun kontakten ovenfor til; genvejen er ikke nødvendig.</string>
     <string name="overlay_button_record">Start diktat</string>
     <string name="overlay_button_stop">Stop diktat</string>
     <string name="overlay_notification_channel">Diktat</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Ingen talemodel installeret. Åbn Talkpuppy, og download en.</string>
     <string name="overlay_error_model_load">Talemodellen kunne ikke indlæses.</string>
     <string name="overlay_error_transcription">Transskriptionen mislykkedes.</string>
+    <string name="overlay_error_startup">Talkpuppy kunne ikke starte optagelsen. Prøv igen.</string>
 </resources>

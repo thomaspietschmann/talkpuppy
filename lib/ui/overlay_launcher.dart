@@ -7,8 +7,8 @@ import '../services/settings_service.dart';
 /// "Minimize and show overlay" (Android): turns the floating button on and
 /// sends the app to the background. The first time, the accessibility
 /// service has to be enabled in the system settings; after the user comes
-/// back with it on, the app minimizes on its own. Reopening the app closes
-/// the overlay again (see main.dart).
+/// back with it on, the app minimizes on its own. While the app is open the
+/// button stays, greyed out; the ✕ closes it.
 class OverlayLauncher {
   OverlayLauncher(this.settings);
 
@@ -32,7 +32,8 @@ class OverlayLauncher {
         title: Text(context.l10n.overlaySetupTitle),
         content: SingleChildScrollView(
           child: Text(
-            '${context.l10n.overlaySetupBody}\n\n${context.l10n.overlayRestrictedHint}',
+            '${context.l10n.overlaySetupBody}\n\n${context.l10n.overlaySetupShortcut}\n\n'
+            '${context.l10n.overlayRestrictedHint}',
           ),
         ),
         actions: [

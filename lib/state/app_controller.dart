@@ -20,6 +20,11 @@ import 'app_error.dart';
 /// Discards a clip shorter than this — almost certainly an accidental tap.
 const Duration kMinClipDuration = Duration(milliseconds: 500);
 
+/// Starting the microphone normally takes well under a second. If it
+/// hangs (the audio session never activates), give up instead of leaving
+/// the record button disabled forever.
+const Duration kRecorderStartTimeout = Duration(seconds: 10);
+
 /// How long the microphone keeps running after stop is tapped with a
 /// streaming model. Its live preview lags behind the voice, so people tend
 /// to tap while still finishing the last word; the tail keeps that word
@@ -42,6 +47,7 @@ class AppController extends ChangeNotifier {
     required this.vadModelPath,
     this.useWakelock = true,
     this.stopTail = kStopTail,
+    this.recorderStartTimeout = kRecorderStartTimeout,
   });
 
   final RecorderService recorder;
@@ -56,6 +62,9 @@ class AppController extends ChangeNotifier {
 
   /// See [kStopTail]; zero in tests.
   final Duration stopTail;
+
+  /// See [kRecorderStartTimeout].
+  final Duration recorderStartTimeout;
 
   RecordingPhase phase = RecordingPhase.idle;
   /// The current error, if [phase] is [RecordingPhase.error].
@@ -98,6 +107,10 @@ class AppController extends ChangeNotifier {
   /// clip would be decoded with the wrong model/language.
   Future<void> _transcriberQueue = Future.value();
 
+  /// Runs [action] in the transcriber queue. Public for the Android
+  /// floating button, which uses the same transcriber.
+  Future<T> serialized<T>(Future<T> Function() action) => _serialized(action);
+
   Future<T> _serialized<T>(Future<T> Function() action) {
     final result = _transcriberQueue.then((_) => action());
     _transcriberQueue = result.then((_) {}, onError: (_) {});
@@ -116,7 +129,18 @@ class AppController extends ChangeNotifier {
   /// True while a recording or transcription is in flight. History edits
   /// (delete, retranscribe) are refused then, so they can't yank the state
   /// out from under a live microphone.
+  /// Set while the Android floating button dictates (with our recorder
+  /// idle but the transcriber and model in use).
+  bool get overlayBusy => _overlayBusy;
+  bool _overlayBusy = false;
+  set overlayBusy(bool value) {
+    if (_overlayBusy == value) return;
+    _overlayBusy = value;
+    notifyListeners();
+  }
+
   bool get isBusy =>
+      _overlayBusy ||
       _starting ||
       phase == RecordingPhase.recording ||
       phase == RecordingPhase.transcribing;
@@ -127,6 +151,7 @@ class AppController extends ChangeNotifier {
 
   bool get canRecord =>
       modelReady &&
+      !_overlayBusy &&
       !_starting &&
       (phase == RecordingPhase.idle ||
           phase == RecordingPhase.done ||
@@ -201,10 +226,17 @@ class AppController extends ChangeNotifier {
         throw const _ErrorOf(AppError(AppErrorKind.micPermission));
       }
       _live = await _startLiveSession();
-      await recorder.start(
-        _pendingWavPath!,
-        onSamples: _live ? transcriber.feedLive : null,
-      );
+      await recorder
+          .start(_pendingWavPath!, onSamples: _live ? transcriber.feedLive : null)
+          .timeout(
+            recorderStartTimeout,
+            onTimeout: () {
+              // Not awaited: a plugin that hangs on start may hang on
+              // cancel too.
+              unawaited(recorder.cancel().catchError((Object _) {}));
+              throw TimeoutException('microphone did not start');
+            },
+          );
     } catch (e) {
       await _dropLiveSession();
       final path = _pendingWavPath;
@@ -214,7 +246,12 @@ class AppController extends ChangeNotifier {
       _fail(
         e is _ErrorOf
             ? e.error
-            : AppError(AppErrorKind.recorderStart, detail: '$e'),
+            : AppError(
+                isMicrophoneBusyError(e)
+                    ? AppErrorKind.micBusy
+                    : AppErrorKind.recorderStart,
+                detail: '$e',
+              ),
       );
       return;
     }
@@ -505,15 +542,6 @@ class AppController extends ChangeNotifier {
     unawaited(ensureCurrentModelLoaded());
   }
 
-  /// Frees the loaded model while the app is in the background, so the
-  /// Android floating button (its own engine) can load one without two
-  /// models sitting in memory. The next recording or
-  /// [ensureCurrentModelLoaded] loads it again.
-  Future<void> releaseModel() => _serialized(() async {
-    if (isBusy) return;
-    await transcriber.unloadModel();
-  });
-
   /// Deletes recordings older than [maxAge]. Runs at startup and whenever
   /// the app comes back to the foreground, since a resident process may
   /// otherwise keep old audio for days. Skipped while a recording or
@@ -590,6 +618,21 @@ class AppController extends ChangeNotifier {
     _interruptSub?.cancel();
     super.dispose();
   }
+}
+
+/// Whether a recorder start failed because the microphone is taken (a
+/// phone call): iOS reports "setActive: Session activation failed" /
+/// insufficient priority, Android's AudioRecord doesn't initialize.
+@visibleForTesting
+bool isMicrophoneBusyError(Object error) {
+  // A start that never finishes: something else holds the microphone.
+  if (error is TimeoutException) return true;
+  final text = '$error'.toLowerCase();
+  return text.contains('session activation failed') ||
+      text.contains('insufficientpriority') ||
+      text.contains('insufficient priority') ||
+      text.contains('cannotinterruptothers') ||
+      text.contains('uninitialized audiorecord');
 }
 
 /// Carries an [AppError] through a `throw` inside the controller.

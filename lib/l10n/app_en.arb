@@ -115,6 +115,9 @@
   "minimizeToOverlay": "Minimize and show overlay",
   "overlaySetupTitle": "Turn on the accessibility service",
   "overlaySetupBody": "To show the button over other apps and insert the text at the cursor, Talkpuppy needs its accessibility service. It only reads the text field you're typing in, and only to insert the text. It doesn't read anything else on the screen, stores nothing from other apps and sends nothing anywhere.\n\nIn the next screen, open “Talkpuppy” and turn it on.",
+  "overlaySetupShortcut": "Turn on only the Talkpuppy switch and leave “Shortcut” off: the button appears by itself.",
+  "shortcutHint": "The Talkpuppy “Shortcut” is on, so Android pins the app icon to the edge of the screen. You don't need it: the floating button appears by itself. Turn off “Shortcut” in the Talkpuppy accessibility settings.",
+  "shortcutHintAction": "Open Talkpuppy settings",
   "overlayOpenAccessibility": "Open accessibility settings",
   "overlayRestrictedHint": "Switch greyed out? Open App info → ⋮ → “Allow restricted settings”, then try again.",
   "defaultLanguageTitle": "Default language for new recordings",
@@ -131,6 +134,7 @@
   "deleteAllConfirmTitle": "Delete all recordings?",
   "deleteAllConfirmBody": "All transcripts and recordings will be permanently deleted.",
   "errorMicPermission": "No microphone access. Please allow it in your phone's settings.",
+  "errorMicBusy": "The microphone is in use right now, for example by a phone call. Please try again after the call.",
   "errorRecorderStart": "Couldn't start recording ({detail}).",
   "@errorRecorderStart": {
     "placeholders": {

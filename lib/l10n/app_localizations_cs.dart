@@ -197,6 +197,17 @@ class AppLocalizationsCs extends AppLocalizations {
       'Aby se tlačítko mohlo zobrazit nad ostatními aplikacemi a text se vložil na místo kurzoru, potřebuje Talkpuppy svou službu přístupnosti. Čte jen pole, do kterého právě píšeš, a jen proto, aby do něj vložil text. Nic jiného na obrazovce nečte, nic z jiných aplikací neukládá a nikam nic neposílá.\n\nNa další obrazovce otevři „Talkpuppy“ a zapni ho.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Zapni jen přepínač Talkpuppy a „Zkratku“ nech vypnutou: tlačítko se objeví samo.';
+
+  @override
+  String get shortcutHint =>
+      '„Zkratka“ pro Talkpuppy je zapnutá, proto Android připíná ikonu aplikace k okraji obrazovky. Nepotřebuješ ji: plovoucí tlačítko se objeví samo. Vypni „Zkratku“ v nastavení přístupnosti Talkpuppy.';
+
+  @override
+  String get shortcutHintAction => 'Otevřít nastavení Talkpuppy';
+
+  @override
   String get overlayOpenAccessibility => 'Otevřít nastavení přístupnosti';
 
   @override
@@ -249,6 +260,10 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Chybí přístup k mikrofonu. Povol ho prosím v nastavení telefonu.';
+
+  @override
+  String get errorMicBusy =>
+      'Mikrofon je právě obsazený, například telefonním hovorem. Zkus to znovu po hovoru.';
 
   @override
   String errorRecorderStart(String detail) {

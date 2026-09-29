@@ -198,6 +198,17 @@ class AppLocalizationsEt extends AppLocalizations {
       'Et kuvada nuppu teiste rakenduste peal ja sisestada tekst kursori kohale, vajab Talkpuppy oma juurdepääsetavuse teenust. See loeb ainult välja, kuhu sa parajasti kirjutad, ja ainult teksti sisestamiseks. See ei loe ekraanilt midagi muud, ei salvesta midagi teistest rakendustest ega saada midagi kuhugi.\n\nAva järgmisel ekraanil „Talkpuppy“ ja lülita see sisse.';
 
   @override
+  String get overlaySetupShortcut =>
+      'Lülita sisse ainult Talkpuppy lüliti ja jäta „Otsetee“ välja: nupp ilmub ise.';
+
+  @override
+  String get shortcutHint =>
+      'Talkpuppy „Otsetee“ on sees, seetõttu kinnitab Android rakenduse ikooni ekraani servale. Seda pole sul vaja: hõljuv nupp ilmub ise. Lülita „Otsetee“ Talkpuppy juurdepääsetavuse seadetes välja.';
+
+  @override
+  String get shortcutHintAction => 'Ava Talkpuppy seaded';
+
+  @override
   String get overlayOpenAccessibility => 'Ava juurdepääsetavuse seaded';
 
   @override
@@ -250,6 +261,10 @@ class AppLocalizationsEt extends AppLocalizations {
   @override
   String get errorMicPermission =>
       'Mikrofonile puudub juurdepääs. Luba see telefoni seadetes.';
+
+  @override
+  String get errorMicBusy =>
+      'Mikrofon on praegu kasutusel, näiteks telefonikõne tõttu. Proovi pärast kõnet uuesti.';
 
   @override
   String errorRecorderStart(String detail) {

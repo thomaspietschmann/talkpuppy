@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Talkpuppy lebegő felvétel gomb</string>
+    <string name="overlay_service_label">Talkpuppy diktálás</string>
     <string name="overlay_service_summary">Diktálj bármelyik szövegmezőbe</string>
-    <string name="overlay_service_description">Felvétel gombot jelenít meg más alkalmazások felett. Tedd a kurzort egy szövegmezőbe, koppints a gombra, beszélj, koppints újra: a Talkpuppy a telefonodon írja át a beszédet, és a kurzor helyére illeszti a szöveget. A szolgáltatás csak azt a mezőt olvassa, amelybe éppen gépelsz, és csak azért, hogy beillessze a szöveget. Semmi mást nem olvas a képernyőn, semmit nem ment más alkalmazásokból, és semmit nem küld sehová.</string>
+    <string name="overlay_service_description">Felvétel gombot jelenít meg más alkalmazások felett. Tedd a kurzort egy szövegmezőbe, koppints a gombra, beszélj, koppints újra: a Talkpuppy a telefonodon írja át a beszédet, és a kurzor helyére illeszti a szöveget. A szolgáltatás csak azt a mezőt olvassa, amelybe éppen gépelsz, és csak azért, hogy beillessze a szöveget. Semmi mást nem olvas a képernyőn, semmit nem ment más alkalmazásokból, és semmit nem küld sehová. Csak a fenti kapcsolót kapcsold be; a gyorsparancsra nincs szükség.</string>
     <string name="overlay_button_record">Diktálás indítása</string>
     <string name="overlay_button_stop">Diktálás leállítása</string>
     <string name="overlay_notification_channel">Diktálás</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Nincs telepítve beszédmodell. Nyisd meg a Talkpuppyt, és tölts le egyet.</string>
     <string name="overlay_error_model_load">A beszédmodellt nem sikerült betölteni.</string>
     <string name="overlay_error_transcription">Az átírás nem sikerült.</string>
+    <string name="overlay_error_startup">A Talkpuppy nem tudta elindítani a felvételt. Próbáld újra.</string>
 </resources>

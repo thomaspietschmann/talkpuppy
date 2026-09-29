@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Pulsante di registrazione flottante di Talkpuppy</string>
+    <string name="overlay_service_label">Dettatura Talkpuppy</string>
     <string name="overlay_service_summary">Detta in qualsiasi campo di testo</string>
-    <string name="overlay_service_description">Mostra un pulsante di registrazione sopra le altre app. Metti il cursore in un campo di testo, tocca il pulsante, parla, tocca di nuovo: Talkpuppy trascrive sul tuo telefono e inserisce il testo nel punto del cursore. Il servizio legge solo il campo in cui stai scrivendo, e solo per inserire il testo. Non legge nient\'altro sullo schermo, non salva nulla dalle altre app e non invia nulla da nessuna parte.</string>
+    <string name="overlay_service_description">Mostra un pulsante di registrazione sopra le altre app. Metti il cursore in un campo di testo, tocca il pulsante, parla, tocca di nuovo: Talkpuppy trascrive sul tuo telefono e inserisce il testo nel punto del cursore. Il servizio legge solo il campo in cui stai scrivendo, e solo per inserire il testo. Non legge nient\'altro sullo schermo, non salva nulla dalle altre app e non invia nulla da nessuna parte. Attiva solo l\'interruttore qui sopra; la scorciatoia non serve.</string>
     <string name="overlay_button_record">Avvia dettatura</string>
     <string name="overlay_button_stop">Interrompi dettatura</string>
     <string name="overlay_notification_channel">Dettatura</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Nessun modello vocale installato. Apri Talkpuppy e scaricane uno.</string>
     <string name="overlay_error_model_load">Impossibile caricare il modello vocale.</string>
     <string name="overlay_error_transcription">Trascrizione non riuscita.</string>
+    <string name="overlay_error_startup">Talkpuppy non è riuscito ad avviare la registrazione. Riprova.</string>
 </resources>

@@ -10,6 +10,7 @@ import 'package:talkpuppy/services/history_store.dart';
 import 'package:talkpuppy/services/model_manager.dart';
 import 'package:talkpuppy/services/settings_service.dart';
 import 'package:talkpuppy/state/app_controller.dart';
+import 'package:talkpuppy/state/app_error.dart';
 
 import '../fakes/fake_recorder_service.dart';
 import '../fakes/fake_transcriber.dart';
@@ -625,5 +626,48 @@ void main() {
     recorder.interrupt();
     await pumpEventQueue();
     expect(historyStore.recordings, hasLength(1));
+  });
+
+  test('no recording while the floating button dictates', () async {
+    controller.overlayBusy = true;
+    expect(controller.canRecord, isFalse);
+    expect(controller.isBusy, isTrue);
+    await controller.startNewRecording();
+    expect(recorder.recording, isFalse);
+    controller.overlayBusy = false;
+    expect(controller.canRecord, isTrue);
+  });
+
+  test('a phone call holding the microphone is reported as such', () {
+    expect(
+      isMicrophoneBusyError(
+        'PlatformException(record, Failed to start recording, setActive: Session activation failed, null)',
+      ),
+      isTrue,
+    );
+    expect(isMicrophoneBusyError('PlatformException(record, other, null)'), isFalse);
+  });
+
+  test('a microphone that never starts gives up with an error', () async {
+    final hanging = AppController(
+      recorder: recorder,
+      transcriber: transcriber,
+      historyStore: historyStore,
+      settings: settings,
+      modelManager: modelManager,
+      vadModelPath: 'unused-in-tests.onnx',
+      useWakelock: false,
+      stopTail: Duration.zero,
+      recorderStartTimeout: const Duration(milliseconds: 50),
+    );
+    await hanging.init();
+    recorder.startGate = Completer<void>();
+    await hanging.startNewRecording();
+    expect(hanging.phase, RecordingPhase.error);
+    expect(hanging.error?.kind, AppErrorKind.micBusy);
+    // Not stuck: the button can be used again.
+    hanging.dismissError();
+    expect(hanging.canRecord, isTrue);
+    hanging.dispose();
   });
 }

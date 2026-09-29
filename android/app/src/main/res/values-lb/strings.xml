@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="overlay_service_label">Talkpuppy schwiewende Opnam-Knäppchen</string>
+    <string name="overlay_service_label">Talkpuppy Diktat</string>
     <string name="overlay_service_summary">An all Textfeld diktéieren</string>
-    <string name="overlay_service_description">Weist en Opnam-Knäppchen iwwer aneren Apps. Cursor an en Textfeld setzen, Knäppchen tippen, schwätzen, nach eng Kéier tippen: Talkpuppy transkribéiert op dengem Handy a fügt den Text beim Cursor an. Den Déngscht liest nëmmen d\'Feld, an deem s du grad tipps, an nëmmen, fir den Text anzefügen. Soss liest en näischt um Bildschierm, späichert näischt vun aneren Apps a schéckt näischt iergendwouhin.</string>
+    <string name="overlay_service_description">Weist en Opnam-Knäppchen iwwer aneren Apps. Cursor an en Textfeld setzen, Knäppchen tippen, schwätzen, nach eng Kéier tippen: Talkpuppy transkribéiert op dengem Handy a fügt den Text beim Cursor an. Den Déngscht liest nëmmen d\'Feld, an deem s du grad tipps, an nëmmen, fir den Text anzefügen. Soss liest en näischt um Bildschierm, späichert näischt vun aneren Apps a schéckt näischt iergendwouhin. Schalt just de Schalter uewen an; d\'Ofkiirzung brauchs de net.</string>
     <string name="overlay_button_record">Diktat starten</string>
     <string name="overlay_button_stop">Diktat ofschléissen</string>
     <string name="overlay_notification_channel">Diktat</string>
@@ -16,4 +16,5 @@
     <string name="overlay_error_no_model">Kee Sproochmodell installéiert. Maach Talkpuppy op a luet eent erof.</string>
     <string name="overlay_error_model_load">D\'Sproochmodell konnt net geluede ginn.</string>
     <string name="overlay_error_transcription">D\'Transkriptioun ass feelgeschloen.</string>
+    <string name="overlay_error_startup">Talkpuppy konnt d\'Opnam net starten. Probéier nach eng Kéier.</string>
 </resources>
