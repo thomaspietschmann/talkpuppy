@@ -1,7 +1,8 @@
 /// Which sherpa-onnx recognizer family a model belongs to. This decides how
-/// [ModelSpec] is turned into an `OfflineRecognizerConfig` in the
-/// transcriber service.
-enum ModelEngine { whisper, nemoTransducer }
+/// [ModelSpec] is turned into a recognizer config in the transcriber
+/// service: the first two are offline (whole clip after recording), the
+/// last one is a streaming model that can show text while recording.
+enum ModelEngine { whisper, nemoTransducer, nemoStreaming }
 
 /// One file that has to be downloaded for a model to become usable.
 ///
@@ -58,8 +59,8 @@ class ModelSpec {
   /// model can detect the spoken language on its own.
   final List<String> languages;
 
-  /// Whether a specific language can be forced (only whisper supports this
-  /// in this app; the NeMo transducer models are auto-detect only).
+  /// Whether a specific language can be forced (whisper and the streaming
+  /// Nemotron model; Parakeet is auto-detect only).
   final bool supportsForcedLanguage;
 
   /// Rough device RAM recommendation, used to pick a sensible default in
@@ -69,4 +70,11 @@ class ModelSpec {
   int get totalSizeBytes => files.fold(0, (sum, f) => sum + f.sizeBytes);
 
   bool get supportsAutoLanguageDetection => languages.contains('auto');
+
+  /// Streaming models transcribe while recording (live preview).
+  bool get isStreaming => engine == ModelEngine.nemoStreaming;
+
+  /// Whether [language] (an ISO-639-1 code) can be forced with this model.
+  bool canForceLanguage(String language) =>
+      supportsForcedLanguage && languages.contains(language);
 }

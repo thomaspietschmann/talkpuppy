@@ -127,19 +127,29 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Çok hızlı ve çok doğru, 25 Avrupa dili, dili otomatik algılar. En az 6 GB RAM\'e sahip telefonlar için önerilir.';
+      'Çok doğru ve hızlı. Metin, kaydı durdurduğunda görünür. 25 Avrupa dili, otomatik algılanır; dil sabitlenemez. Büyük indirme, en az 6 GB RAM\'e sahip telefonlar için.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Hız ve doğruluk arasında dengeli, 99 dil, dil sabitlenebilir. En az 4 GB RAM\'e sahip telefonlar için.';
+      'En çok dil (99), otomatik algılanır veya sabitlenir. İyi doğruluk, ancak Parakeet\'ten daha yavaş; sessizlikte veya gürültüde ara sıra kelime uydurabilir. En az 4 GB RAM\'e sahip telefonlar için.';
 
   @override
   String get modelDescWhisperBase =>
-      'Eski telefonlar için hafif, 99 dil, dil sabitlenebilir. En az 3 GB RAM\'e sahip telefonlar için.';
+      'Eski telefonlar için küçük indirme. 99 dil, otomatik algılanır veya sabitlenir. Whisper Small\'dan belirgin şekilde daha az doğru. En az 3 GB RAM\'e sahip telefonlar için.';
 
   @override
   String get modelDescWhisperTiny =>
-      'En küçük ve en hızlı indirilen. 99 dil, dil sabitlenebilir. Neredeyse her telefonda çalışır.';
+      'En küçük ve en hızlı, neredeyse her telefonda çalışır. 99 dil, otomatik algılanır veya sabitlenir. En az doğru olanı, kısa ve net söylenmiş notlar için en iyisi.';
+
+  @override
+  String get modelDescNemotron =>
+      'Canlı önizleme: metin sen konuşurken görünür ve durduğun anda hazırdır. 28 dil, otomatik algılanır veya sabitlenir. Genellikle Parakeet\'ten biraz daha az doğru. Büyük indirme, en az 6 GB RAM\'e sahip telefonlar için.';
+
+  @override
+  String get livePreviewLabel => 'Canlı önizleme';
+
+  @override
+  String get livePreviewListening => 'Dinleniyor…';
 
   @override
   String get languageLabel => 'Dil';
@@ -151,7 +161,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get modelLabel => 'Model';
 
   @override
-  String get whisperRequired => 'Sabit bir dil için Whisper modeli gerekir.';
+  String get whisperRequired =>
+      'Sabit bir dil için Whisper veya Nemotron modeli gerekir.';
 
   @override
   String get downloadWhisperSmall => 'Whisper Small\'u indir';
@@ -180,7 +191,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Yalnızca Whisper modelleri bunu kullanır; Parakeet dili her zaman otomatik algılar.';
+      'Whisper ve Nemotron bunu kullanır; Parakeet dili her zaman otomatik algılar.';
 
   @override
   String get licensesTitle => 'Lisanslar';
@@ -190,7 +201,23 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) ve Whisper (OpenAI, MIT) ile konuşma tanıma.';
+      'sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) ve Whisper (OpenAI, MIT) ile konuşma tanıma.';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy, açık kaynaklı yazılımlar ve açık lisanslı konuşma modelleri üzerine kuruludur.';
+
+  @override
+  String get licensesSpeechModels => 'Konuşma modelleri';
+
+  @override
+  String get licensesSoftware => 'Yazılım';
+
+  @override
+  String get licensesPackages => 'Flutter ve diğer açık kaynaklı paketler';
+
+  @override
+  String get licensesShowAll => 'Tüm lisans metinlerini göster';
 
   @override
   String get deleteAllTitle => 'Tüm kayıtları sil';

@@ -128,19 +128,29 @@ class AppLocalizationsMt extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Mgħaġġel ħafna u preċiż ħafna, 25 lingwa Ewropea, jagħraf il-lingwa awtomatikament. Rakkomandat għal telefowns b\'mill-inqas 6 GB ta\' RAM.';
+      'Preċiż ħafna u mgħaġġel. It-test jidher malli twaqqaf ir-reġistrazzjoni. 25 lingwa Ewropea, magħrufa awtomatikament; il-lingwa ma tistax tiġi ffissata. Download kbir, għal telefowns b\'mill-inqas 6 GB ta\' RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Bilanċ bejn il-veloċità u l-preċiżjoni, 99 lingwa, il-lingwa tista\' tiġi ffissata. Għal telefowns b\'mill-inqas 4 GB ta\' RAM.';
+      'L-aktar lingwi (99), magħrufa awtomatikament jew iffissati. Preċiżjoni tajba, iżda aktar bil-mod minn Parakeet, u fis-skiet jew fil-ħoss xi drabi jista\' jivvinta kliem. Għal telefowns b\'mill-inqas 4 GB ta\' RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Ħafif għal telefowns eqdem, 99 lingwa, il-lingwa tista\' tiġi ffissata. Għal telefowns b\'mill-inqas 3 GB ta\' RAM.';
+      'Download żgħir għal telefowns eqdem. 99 lingwa, magħrufa awtomatikament jew iffissati. Notevolment inqas preċiż minn Whisper Small. Għal telefowns b\'mill-inqas 3 GB ta\' RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Minimu u l-aktar mgħaġġel biex jitniżżel. 99 lingwa, il-lingwa tista\' tiġi ffissata. Jaħdem fuq prattikament kull telefown.';
+      'L-iżgħar u l-aktar mgħaġġel, jaħdem fuq prattikament kull telefown. 99 lingwa, magħrufa awtomatikament jew iffissati. L-inqas preċiż, l-aħjar għal noti qosra mitkellma b\'mod ċar.';
+
+  @override
+  String get modelDescNemotron =>
+      'Previżjoni diretta: it-test jidher waqt li titkellem u jkun lest malli tieqaf. 28 lingwa, magħrufa awtomatikament jew iffissati. Normalment ftit inqas preċiż minn Parakeet. Download kbir, għal telefowns b\'mill-inqas 6 GB ta\' RAM.';
+
+  @override
+  String get livePreviewLabel => 'Previżjoni diretta';
+
+  @override
+  String get livePreviewListening => 'Qed jisma\'…';
 
   @override
   String get languageLabel => 'Lingwa';
@@ -152,7 +162,8 @@ class AppLocalizationsMt extends AppLocalizations {
   String get modelLabel => 'Mudell';
 
   @override
-  String get whisperRequired => 'Lingwa fissa teħtieġ mudell Whisper.';
+  String get whisperRequired =>
+      'Lingwa fissa teħtieġ mudell Whisper jew Nemotron.';
 
   @override
   String get downloadWhisperSmall => 'Niżżel Whisper Small';
@@ -182,7 +193,7 @@ class AppLocalizationsMt extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Jużawha biss il-mudelli Whisper; Parakeet dejjem jagħraf il-lingwa awtomatikament.';
+      'Jużawha Whisper u Nemotron; Parakeet dejjem jagħraf il-lingwa awtomatikament.';
 
   @override
   String get licensesTitle => 'Liċenzji';
@@ -192,7 +203,23 @@ class AppLocalizationsMt extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Rikonoxximent tad-diskors b\'sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) u Whisper (OpenAI, MIT).';
+      'Rikonoxximent tad-diskors b\'sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) u Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy huwa mibni fuq software open source u mudelli tad-diskors b\'liċenzji miftuħa.';
+
+  @override
+  String get licensesSpeechModels => 'Mudelli tad-diskors';
+
+  @override
+  String get licensesSoftware => 'Software';
+
+  @override
+  String get licensesPackages => 'Flutter u pakketti open source oħra';
+
+  @override
+  String get licensesShowAll => 'Uri t-testi kollha tal-liċenzji';
 
   @override
   String get deleteAllTitle => 'Ħassar ir-reġistrazzjonijiet kollha';

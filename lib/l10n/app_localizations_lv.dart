@@ -128,19 +128,29 @@ class AppLocalizationsLv extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Ļoti ātrs un ļoti precīzs, 25 Eiropas valodas, valodu nosaka automātiski. Ieteicams tālruņiem ar vismaz 6 GB RAM.';
+      'Ļoti precīzs un ātrs. Teksts parādās, kad aptur ierakstu. 25 Eiropas valodas, nosaka automātiski; valodu nevar fiksēt. Liela lejupielāde, tālruņiem ar vismaz 6 GB RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Līdzsvars starp ātrumu un precizitāti, 99 valodas, valodu var fiksēt. Tālruņiem ar vismaz 4 GB RAM.';
+      'Visvairāk valodu (99), nosaka automātiski vai var fiksēt. Laba precizitāte, bet lēnāks par Parakeet, un klusumā vai troksnī dažreiz var izdomāt vārdus. Tālruņiem ar vismaz 4 GB RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Viegls modelis vecākiem tālruņiem, 99 valodas, valodu var fiksēt. Tālruņiem ar vismaz 3 GB RAM.';
+      'Neliela lejupielāde vecākiem tālruņiem. 99 valodas, nosaka automātiski vai var fiksēt. Manāmi mazāk precīzs nekā Whisper Small. Tālruņiem ar vismaz 3 GB RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Minimāls un visātrāk lejupielādējams. 99 valodas, valodu var fiksēt. Darbojas praktiski jebkurā tālrunī.';
+      'Mazākais un ātrākais, darbojas praktiski jebkurā tālrunī. 99 valodas, nosaka automātiski vai var fiksēt. Vismazāk precīzs, vislabāk piemērots īsām, skaidri izrunātām piezīmēm.';
+
+  @override
+  String get modelDescNemotron =>
+      'Tiešraides priekšskatījums: teksts parādās jau runājot un ir gatavs, tiklīdz beidz. 28 valodas, nosaka automātiski vai var fiksēt. Parasti nedaudz mazāk precīzs nekā Parakeet. Liela lejupielāde, tālruņiem ar vismaz 6 GB RAM.';
+
+  @override
+  String get livePreviewLabel => 'Tiešraides priekšskatījums';
+
+  @override
+  String get livePreviewListening => 'Klausās…';
 
   @override
   String get languageLabel => 'Valoda';
@@ -152,7 +162,8 @@ class AppLocalizationsLv extends AppLocalizations {
   String get modelLabel => 'Modelis';
 
   @override
-  String get whisperRequired => 'Fiksētai valodai vajadzīgs Whisper modelis.';
+  String get whisperRequired =>
+      'Fiksētai valodai vajadzīgs Whisper vai Nemotron modelis.';
 
   @override
   String get downloadWhisperSmall => 'Lejupielādēt Whisper Small';
@@ -181,7 +192,7 @@ class AppLocalizationsLv extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Izmanto tikai Whisper modeļi; Parakeet vienmēr nosaka valodu automātiski.';
+      'Izmanto Whisper un Nemotron; Parakeet vienmēr nosaka valodu automātiski.';
 
   @override
   String get licensesTitle => 'Licences';
@@ -191,7 +202,23 @@ class AppLocalizationsLv extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Runas atpazīšana ar sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) un Whisper (OpenAI, MIT).';
+      'Runas atpazīšana ar sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) un Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy balstās uz atvērtā koda programmatūru un runas modeļiem ar atvērtām licencēm.';
+
+  @override
+  String get licensesSpeechModels => 'Runas modeļi';
+
+  @override
+  String get licensesSoftware => 'Programmatūra';
+
+  @override
+  String get licensesPackages => 'Flutter un citas atvērtā koda pakotnes';
+
+  @override
+  String get licensesShowAll => 'Rādīt visus licenču tekstus';
 
   @override
   String get deleteAllTitle => 'Dzēst visus ierakstus';

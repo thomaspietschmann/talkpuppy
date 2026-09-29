@@ -128,19 +128,29 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Mjög hratt og mjög nákvæmt, 25 evrópsk tungumál, greinir tungumálið sjálfkrafa. Mælt með fyrir síma með minnst 6 GB RAM.';
+      'Mjög nákvæmt og hratt. Textinn birtist þegar þú stöðvar upptökuna. 25 evrópsk tungumál, greind sjálfkrafa; ekki er hægt að festa tungumálið. Stórt niðurhal, fyrir síma með minnst 6 GB RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Jafnvægi milli hraða og nákvæmni, 99 tungumál, hægt að festa tungumálið. Fyrir síma með minnst 4 GB RAM.';
+      'Flest tungumál (99), greind sjálfkrafa eða fest. Góð nákvæmni, en hægara en Parakeet, og í þögn eða hávaða getur það stöku sinnum búið til orð. Fyrir síma með minnst 4 GB RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Létt líkan fyrir eldri síma, 99 tungumál, hægt að festa tungumálið. Fyrir síma með minnst 3 GB RAM.';
+      'Lítið niðurhal fyrir eldri síma. 99 tungumál, greind sjálfkrafa eða fest. Greinilega ónákvæmara en Whisper Small. Fyrir síma með minnst 3 GB RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Minnst og fljótlegast að sækja. 99 tungumál, hægt að festa tungumálið. Keyrir á nánast hvaða síma sem er.';
+      'Minnst og hraðast, keyrir á nánast hvaða síma sem er. 99 tungumál, greind sjálfkrafa eða fest. Ónákvæmast, best fyrir stuttar, skýrt talaðar glósur.';
+
+  @override
+  String get modelDescNemotron =>
+      'Bein forskoðun: textinn birtist á meðan þú talar og er tilbúinn um leið og þú hættir. 28 tungumál, greind sjálfkrafa eða fest. Yfirleitt aðeins ónákvæmara en Parakeet. Stórt niðurhal, fyrir síma með minnst 6 GB RAM.';
+
+  @override
+  String get livePreviewLabel => 'Bein forskoðun';
+
+  @override
+  String get livePreviewListening => 'Hlustar…';
 
   @override
   String get languageLabel => 'Tungumál';
@@ -152,7 +162,8 @@ class AppLocalizationsIs extends AppLocalizations {
   String get modelLabel => 'Líkan';
 
   @override
-  String get whisperRequired => 'Fast tungumál krefst Whisper-líkans.';
+  String get whisperRequired =>
+      'Fast tungumál krefst Whisper- eða Nemotron-líkans.';
 
   @override
   String get downloadWhisperSmall => 'Sækja Whisper Small';
@@ -181,7 +192,7 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Aðeins Whisper-líkön nota þetta; Parakeet greinir tungumálið alltaf sjálfkrafa.';
+      'Whisper og Nemotron nota þetta; Parakeet greinir tungumálið alltaf sjálfkrafa.';
 
   @override
   String get licensesTitle => 'Leyfi';
@@ -191,7 +202,23 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Talgreining með sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) og Whisper (OpenAI, MIT).';
+      'Talgreining með sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) og Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy byggir á opnum hugbúnaði og talmálslíkönum með opnum leyfum.';
+
+  @override
+  String get licensesSpeechModels => 'Talmálslíkön';
+
+  @override
+  String get licensesSoftware => 'Hugbúnaður';
+
+  @override
+  String get licensesPackages => 'Flutter og aðrir opnir hugbúnaðarpakkar';
+
+  @override
+  String get licensesShowAll => 'Sýna alla leyfistexta';
 
   @override
   String get deleteAllTitle => 'Eyða öllum upptökum';

@@ -128,19 +128,29 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Mycket snabb och mycket exakt, 25 europeiska språk, känner igen språket automatiskt. Rekommenderas för telefoner med minst 6 GB RAM.';
+      'Mycket exakt och snabb. Texten visas när du stoppar inspelningen. 25 europeiska språk, känns igen automatiskt; språket kan inte låsas. Stor nedladdning, för telefoner med minst 6 GB RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'En balans mellan snabbhet och noggrannhet, 99 språk, språket kan låsas. För telefoner med minst 4 GB RAM.';
+      'Flest språk (99), känns igen automatiskt eller låses. God noggrannhet, men långsammare än Parakeet, och vid tystnad eller brus kan den ibland hitta på ord. För telefoner med minst 4 GB RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Lättviktig för äldre telefoner, 99 språk, språket kan låsas. För telefoner med minst 3 GB RAM.';
+      'Liten nedladdning för äldre telefoner. 99 språk, känns igen automatiskt eller låses. Märkbart mindre exakt än Whisper Small. För telefoner med minst 3 GB RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Minimal och snabbast att ladda ner. 99 språk, språket kan låsas. Fungerar på i stort sett alla telefoner.';
+      'Minst och snabbast, fungerar på i stort sett alla telefoner. 99 språk, känns igen automatiskt eller låses. Minst exakt, bäst för korta, tydligt talade anteckningar.';
+
+  @override
+  String get modelDescNemotron =>
+      'Liveförhandsvisning: texten visas medan du pratar och är klar så fort du slutar. 28 språk, känns igen automatiskt eller låses. Oftast lite mindre exakt än Parakeet. Stor nedladdning, för telefoner med minst 6 GB RAM.';
+
+  @override
+  String get livePreviewLabel => 'Liveförhandsvisning';
+
+  @override
+  String get livePreviewListening => 'Lyssnar…';
 
   @override
   String get languageLabel => 'Språk';
@@ -152,7 +162,8 @@ class AppLocalizationsSv extends AppLocalizations {
   String get modelLabel => 'Modell';
 
   @override
-  String get whisperRequired => 'Ett låst språk kräver en Whisper-modell.';
+  String get whisperRequired =>
+      'Ett låst språk kräver en Whisper- eller Nemotron-modell.';
 
   @override
   String get downloadWhisperSmall => 'Ladda ner Whisper Small';
@@ -181,7 +192,7 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Används bara av Whisper-modeller; Parakeet känner alltid igen språket automatiskt.';
+      'Används av Whisper och Nemotron; Parakeet känner alltid igen språket automatiskt.';
 
   @override
   String get licensesTitle => 'Licenser';
@@ -191,7 +202,23 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Taligenkänning med sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) och Whisper (OpenAI, MIT).';
+      'Taligenkänning med sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) och Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy bygger på programvara med öppen källkod och talmodeller med öppna licenser.';
+
+  @override
+  String get licensesSpeechModels => 'Talmodeller';
+
+  @override
+  String get licensesSoftware => 'Programvara';
+
+  @override
+  String get licensesPackages => 'Flutter och andra paket med öppen källkod';
+
+  @override
+  String get licensesShowAll => 'Visa alla licenstexter';
 
   @override
   String get deleteAllTitle => 'Radera alla inspelningar';

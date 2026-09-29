@@ -49,6 +49,40 @@ const List<String> kParakeetLanguages = [
   'uk',
 ];
 
+/// The languages nvidia/nemotron-3.5-asr-streaming-0.6b is rated
+/// "transcription-ready" or "broad-coverage" for. Its "adaptation-ready"
+/// locales (el, lt, lv, mt, sl, he, th, nn) are left out on purpose.
+const List<String> kNemotronLanguages = [
+  'ar',
+  'bg',
+  'cs',
+  'da',
+  'de',
+  'en',
+  'es',
+  'et',
+  'fi',
+  'fr',
+  'hi',
+  'hr',
+  'hu',
+  'it',
+  'ja',
+  'ko',
+  'nb',
+  'nl',
+  'pl',
+  'pt',
+  'ro',
+  'ru',
+  'sk',
+  'sv',
+  'tr',
+  'uk',
+  'vi',
+  'zh',
+];
+
 const _hfCsukuangfj = 'https://huggingface.co/csukuangfj';
 
 /// All models the app can download and use, ordered roughly from
@@ -58,7 +92,8 @@ final List<ModelSpec> kModelCatalog = [
     id: 'parakeet-tdt-0.6b-v3-int8',
     displayName: 'Parakeet TDT 0.6B v3',
     engine: ModelEngine.nemoTransducer,
-    baseUrl: '$_hfCsukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/'
+    baseUrl:
+        '$_hfCsukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/'
         'resolve/2bda32ec70b097a55adaa07d9a7173915b43cc78/',
     files: const [
       ModelFileSpec(
@@ -94,10 +129,55 @@ final List<ModelSpec> kModelCatalog = [
     recommendedRamGb: 6,
   ),
   ModelSpec(
+    id: 'nemotron-3.5-streaming-0.6b-1120ms-int8',
+    displayName: 'Nemotron 3.5 Streaming',
+    engine: ModelEngine.nemoStreaming,
+    // The 1120 ms chunk export: the most accurate of the five, and still
+    // fast enough for a live preview.
+    baseUrl:
+        'https://huggingface.co/csukuangfj2/'
+        'sherpa-onnx-nemotron-3.5-asr-streaming-0.6b-1120ms-int8-2026-06-11/'
+        'resolve/cba1c96ca5ef0e8393b50584ae153a79145dc492/',
+    files: const [
+      ModelFileSpec(
+        remoteName: 'encoder.int8.onnx',
+        localName: 'encoder.int8.onnx',
+        sizeBytes: 657601521,
+        sha256:
+            '2fff2166acaa535bd969fb223c1f0783d71029f143cb298bc54c2afe85abf772',
+      ),
+      ModelFileSpec(
+        remoteName: 'decoder.int8.onnx',
+        localName: 'decoder.int8.onnx',
+        sizeBytes: 14978075,
+        sha256:
+            '19f9c98fc6d0a2c33a65a43b36fdb2e914c26c0aa9764be3aebc502a1e982fb0',
+      ),
+      ModelFileSpec(
+        remoteName: 'joiner.int8.onnx',
+        localName: 'joiner.int8.onnx',
+        sizeBytes: 9504438,
+        sha256:
+            '4101c7c679a0bc30483794b27a059e34e79232aa2068d78d51231a22c8b0d7ce',
+      ),
+      ModelFileSpec(
+        remoteName: 'tokens.txt',
+        localName: 'tokens.txt',
+        sizeBytes: 131440,
+        sha256:
+            '729cc103155bafa785f9cd45746cd41cabe97eab7182fc04d594129587958f8a',
+      ),
+    ],
+    languages: ['auto', ...kNemotronLanguages],
+    supportsForcedLanguage: true,
+    recommendedRamGb: 6,
+  ),
+  ModelSpec(
     id: 'whisper-small-int8',
     displayName: 'Whisper Small',
     engine: ModelEngine.whisper,
-    baseUrl: '$_hfCsukuangfj/sherpa-onnx-whisper-small/resolve/8f3c18b358db4d1f2fc1eae49d75cd20989e4309/',
+    baseUrl:
+        '$_hfCsukuangfj/sherpa-onnx-whisper-small/resolve/8f3c18b358db4d1f2fc1eae49d75cd20989e4309/',
     files: const [
       ModelFileSpec(
         remoteName: 'small-encoder.int8.onnx',
@@ -129,7 +209,8 @@ final List<ModelSpec> kModelCatalog = [
     id: 'whisper-base-int8',
     displayName: 'Whisper Base',
     engine: ModelEngine.whisper,
-    baseUrl: '$_hfCsukuangfj/sherpa-onnx-whisper-base/resolve/bb53ee204431c90d314c1cc08d28d23e5b7927cc/',
+    baseUrl:
+        '$_hfCsukuangfj/sherpa-onnx-whisper-base/resolve/bb53ee204431c90d314c1cc08d28d23e5b7927cc/',
     files: const [
       ModelFileSpec(
         remoteName: 'base-encoder.int8.onnx',
@@ -161,7 +242,8 @@ final List<ModelSpec> kModelCatalog = [
     id: 'whisper-tiny-int8',
     displayName: 'Whisper Tiny',
     engine: ModelEngine.whisper,
-    baseUrl: '$_hfCsukuangfj/sherpa-onnx-whisper-tiny/resolve/65176e2deb88badc814a94058666cadccc29b61c/',
+    baseUrl:
+        '$_hfCsukuangfj/sherpa-onnx-whisper-tiny/resolve/65176e2deb88badc814a94058666cadccc29b61c/',
     files: const [
       ModelFileSpec(
         remoteName: 'tiny-encoder.int8.onnx',
@@ -191,5 +273,7 @@ final List<ModelSpec> kModelCatalog = [
   ),
 ];
 
-ModelSpec modelById(String id) =>
-    kModelCatalog.firstWhere((m) => m.id == id, orElse: () => kModelCatalog.last);
+ModelSpec modelById(String id) => kModelCatalog.firstWhere(
+  (m) => m.id == id,
+  orElse: () => kModelCatalog.last,
+);

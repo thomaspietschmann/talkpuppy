@@ -128,19 +128,29 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Veľmi rýchly a veľmi presný, 25 európskych jazykov, jazyk rozpozná automaticky. Odporúčaný pre telefóny s aspoň 6 GB RAM.';
+      'Veľmi presný a rýchly. Text sa zobrazí, keď nahrávanie ukončíš. 25 európskych jazykov, rozpoznávaných automaticky; jazyk sa nedá pevne nastaviť. Veľké sťahovanie, pre telefóny s aspoň 6 GB RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Vyvážený pomer rýchlosti a presnosti, 99 jazykov, jazyk sa dá pevne nastaviť. Pre telefóny s aspoň 4 GB RAM.';
+      'Najviac jazykov (99), rozpoznávaných automaticky alebo pevne nastavených. Dobrá presnosť, ale pomalší ako Parakeet a pri tichu alebo šume si občas môže vymýšľať slová. Pre telefóny s aspoň 4 GB RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Nenáročný pre staršie telefóny, 99 jazykov, jazyk sa dá pevne nastaviť. Pre telefóny s aspoň 3 GB RAM.';
+      'Malé sťahovanie pre staršie telefóny. 99 jazykov, rozpoznávaných automaticky alebo pevne nastavených. Citeľne menej presný ako Whisper Small. Pre telefóny s aspoň 3 GB RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Najmenší a najrýchlejšie stiahnutý. 99 jazykov, jazyk sa dá pevne nastaviť. Pobeží prakticky na každom telefóne.';
+      'Najmenší a najrýchlejší, pobeží prakticky na každom telefóne. 99 jazykov, rozpoznávaných automaticky alebo pevne nastavených. Najmenej presný, najlepší na krátke, zreteľne nahovorené poznámky.';
+
+  @override
+  String get modelDescNemotron =>
+      'Živý náhľad: text sa zobrazuje už počas rozprávania a je hotový, hneď ako prestaneš. 28 jazykov, rozpoznávaných automaticky alebo pevne nastavených. Zvyčajne o niečo menej presný ako Parakeet. Veľké sťahovanie, pre telefóny s aspoň 6 GB RAM.';
+
+  @override
+  String get livePreviewLabel => 'Živý náhľad';
+
+  @override
+  String get livePreviewListening => 'Počúvam…';
 
   @override
   String get languageLabel => 'Jazyk';
@@ -152,7 +162,8 @@ class AppLocalizationsSk extends AppLocalizations {
   String get modelLabel => 'Model';
 
   @override
-  String get whisperRequired => 'Pevne nastavený jazyk vyžaduje model Whisper.';
+  String get whisperRequired =>
+      'Pevne nastavený jazyk vyžaduje model Whisper alebo Nemotron.';
 
   @override
   String get downloadWhisperSmall => 'Stiahnuť Whisper Small';
@@ -180,7 +191,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Používajú ho iba modely Whisper; Parakeet jazyk vždy rozpozná automaticky.';
+      'Používajú ho modely Whisper a Nemotron; Parakeet jazyk vždy rozpozná automaticky.';
 
   @override
   String get licensesTitle => 'Licencie';
@@ -190,7 +201,23 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Rozpoznávanie reči pomocou sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) a Whisper (OpenAI, MIT).';
+      'Rozpoznávanie reči pomocou sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) a Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy stojí na open-source softvéri a rečových modeloch s otvorenými licenciami.';
+
+  @override
+  String get licensesSpeechModels => 'Rečové modely';
+
+  @override
+  String get licensesSoftware => 'Softvér';
+
+  @override
+  String get licensesPackages => 'Flutter a ďalšie open-source balíčky';
+
+  @override
+  String get licensesShowAll => 'Zobraziť všetky licenčné texty';
 
   @override
   String get deleteAllTitle => 'Odstrániť všetky nahrávky';

@@ -128,19 +128,29 @@ class AppLocalizationsGa extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'An-tapa agus an-chruinn, 25 teanga Eorpach, aithníonn sí an teanga go huathoibríoch. Molta d\'fhóin a bhfuil 6 GB RAM ar a laghad acu.';
+      'An-chruinn agus tapa. Taispeántar an téacs nuair a stopann tú an taifeadadh. 25 teanga Eorpach, aithnítear go huathoibríoch iad; ní féidir an teanga a shocrú. Íoslódáil mhór, d\'fhóin a bhfuil 6 GB RAM ar a laghad acu.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Cothromaíocht idir luas agus cruinneas, 99 teanga, is féidir an teanga a shocrú. D\'fhóin a bhfuil 4 GB RAM ar a laghad acu.';
+      'An líon is mó teangacha (99), aithnítear go huathoibríoch iad nó socraítear iad. Cruinneas maith, ach níos moille ná Parakeet, agus le ciúnas nó torann d\'fhéadfadh sí focail a chumadh ó am go chéile. D\'fhóin a bhfuil 4 GB RAM ar a laghad acu.';
 
   @override
   String get modelDescWhisperBase =>
-      'Éadrom d\'fhóin níos sine, 99 teanga, is féidir an teanga a shocrú. D\'fhóin a bhfuil 3 GB RAM ar a laghad acu.';
+      'Íoslódáil bheag d\'fhóin níos sine. 99 teanga, aithnítear go huathoibríoch iad nó socraítear iad. Níos lú cruinnis go suntasach ná Whisper Small. D\'fhóin a bhfuil 3 GB RAM ar a laghad acu.';
 
   @override
   String get modelDescWhisperTiny =>
-      'An ceann is lú agus is tapúla le híoslódáil. 99 teanga, is féidir an teanga a shocrú. Ritheann sí ar bheagnach aon fhón.';
+      'An ceann is lú agus is tapúla, ritheann sí ar bheagnach aon fhón. 99 teanga, aithnítear go huathoibríoch iad nó socraítear iad. An ceann is lú cruinnis, is fearr do nótaí gearra a labhraítear go soiléir.';
+
+  @override
+  String get modelDescNemotron =>
+      'Réamhamharc beo: taispeántar an téacs fad is atá tú ag caint agus bíonn sé réidh a luaithe a stopann tú. 28 teanga, aithnítear go huathoibríoch iad nó socraítear iad. De ghnáth beagán níos lú cruinnis ná Parakeet. Íoslódáil mhór, d\'fhóin a bhfuil 6 GB RAM ar a laghad acu.';
+
+  @override
+  String get livePreviewLabel => 'Réamhamharc beo';
+
+  @override
+  String get livePreviewListening => 'Ag éisteacht…';
 
   @override
   String get languageLabel => 'Teanga';
@@ -153,7 +163,7 @@ class AppLocalizationsGa extends AppLocalizations {
 
   @override
   String get whisperRequired =>
-      'Tá samhail Whisper ag teastáil le haghaidh teanga shocraithe.';
+      'Tá samhail Whisper nó Nemotron ag teastáil le haghaidh teanga shocraithe.';
 
   @override
   String get downloadWhisperSmall => 'Íoslódáil Whisper Small';
@@ -182,7 +192,7 @@ class AppLocalizationsGa extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Ní úsáideann ach samhlacha Whisper é seo; aithníonn Parakeet an teanga go huathoibríoch i gcónaí.';
+      'Úsáideann Whisper agus Nemotron é seo; aithníonn Parakeet an teanga go huathoibríoch i gcónaí.';
 
   @override
   String get licensesTitle => 'Ceadúnais';
@@ -192,7 +202,23 @@ class AppLocalizationsGa extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Aithint cainte le sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) agus Whisper (OpenAI, MIT).';
+      'Aithint cainte le sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) agus Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Tá Talkpuppy tógtha ar bhogearraí foinse oscailte agus ar shamhlacha cainte faoi cheadúnais oscailte.';
+
+  @override
+  String get licensesSpeechModels => 'Samhlacha cainte';
+
+  @override
+  String get licensesSoftware => 'Bogearraí';
+
+  @override
+  String get licensesPackages => 'Flutter agus pacáistí foinse oscailte eile';
+
+  @override
+  String get licensesShowAll => 'Taispeáin téacsanna uile na gceadúnas';
 
   @override
   String get deleteAllTitle => 'Scrios gach taifead';

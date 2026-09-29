@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:talkpuppy/services/recorder_service.dart';
 
@@ -13,6 +14,9 @@ class FakeRecorderService implements RecorderService {
   bool recording = false;
   void Function()? onStart;
 
+  /// The live-audio callback of the running recording, if any.
+  void Function(Float32List samples)? onSamples;
+
   final _amplitudeController = StreamController<double>.broadcast();
 
   @override
@@ -22,8 +26,12 @@ class FakeRecorderService implements RecorderService {
   Future<bool> hasPermission() async => permissionGranted;
 
   @override
-  Future<void> start(String path) async {
+  Future<void> start(
+    String path, {
+    void Function(Float32List samples)? onSamples,
+  }) async {
     onStart?.call();
+    this.onSamples = onSamples;
     lastStartedPath = path;
     recording = true;
     await File(path).writeAsBytes([0, 1, 2, 3]);

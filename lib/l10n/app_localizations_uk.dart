@@ -127,19 +127,29 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Дуже швидка й дуже точна, 25 європейських мов, визначає мову автоматично. Рекомендовано для телефонів із щонайменше 6 GB RAM.';
+      'Дуже точна й швидка. Текст з\'являється, щойно ти зупиниш запис. 25 європейських мов, визначаються автоматично; мову не можна зафіксувати. Великий обсяг завантаження, для телефонів із щонайменше 6 GB RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Баланс між швидкістю й точністю, 99 мов, мову можна зафіксувати. Для телефонів із щонайменше 4 GB RAM.';
+      'Найбільше мов (99), визначаються автоматично або фіксуються. Добра точність, але повільніша за Parakeet, а в тиші чи шумі іноді може вигадувати слова. Для телефонів із щонайменше 4 GB RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Легка модель для старіших телефонів, 99 мов, мову можна зафіксувати. Для телефонів із щонайменше 3 GB RAM.';
+      'Невеликий обсяг завантаження для старіших телефонів. 99 мов, визначаються автоматично або фіксуються. Помітно менш точна, ніж Whisper Small. Для телефонів із щонайменше 3 GB RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Мінімальна й найшвидша для завантаження. 99 мов, мову можна зафіксувати. Працює практично на будь-якому телефоні.';
+      'Найменша й найшвидша, працює практично на будь-якому телефоні. 99 мов, визначаються автоматично або фіксуються. Найменш точна, найкраще підходить для коротких, чітко промовлених нотаток.';
+
+  @override
+  String get modelDescNemotron =>
+      'Живий перегляд: текст з\'являється вже під час мовлення і готовий, щойно ти закінчиш. 28 мов, визначаються автоматично або фіксуються. Зазвичай трохи менш точна, ніж Parakeet. Великий обсяг завантаження, для телефонів із щонайменше 6 GB RAM.';
+
+  @override
+  String get livePreviewLabel => 'Живий перегляд';
+
+  @override
+  String get livePreviewListening => 'Слухаю…';
 
   @override
   String get languageLabel => 'Мова';
@@ -151,7 +161,8 @@ class AppLocalizationsUk extends AppLocalizations {
   String get modelLabel => 'Модель';
 
   @override
-  String get whisperRequired => 'Для фіксованої мови потрібна модель Whisper.';
+  String get whisperRequired =>
+      'Для фіксованої мови потрібна модель Whisper або Nemotron.';
 
   @override
   String get downloadWhisperSmall => 'Завантажити Whisper Small';
@@ -180,7 +191,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Використовується лише моделями Whisper; Parakeet завжди визначає мову автоматично.';
+      'Використовується моделями Whisper і Nemotron; Parakeet завжди визначає мову автоматично.';
 
   @override
   String get licensesTitle => 'Ліцензії';
@@ -190,7 +201,23 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Розпізнавання мовлення за допомогою sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) і Whisper (OpenAI, MIT).';
+      'Розпізнавання мовлення за допомогою sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) і Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy побудовано на ПЗ з відкритим кодом і мовних моделях з відкритими ліцензіями.';
+
+  @override
+  String get licensesSpeechModels => 'Мовні моделі';
+
+  @override
+  String get licensesSoftware => 'Програмне забезпечення';
+
+  @override
+  String get licensesPackages => 'Flutter та інші пакети з відкритим кодом';
+
+  @override
+  String get licensesShowAll => 'Показати всі тексти ліцензій';
 
   @override
   String get deleteAllTitle => 'Видалити всі записи';

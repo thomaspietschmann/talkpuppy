@@ -91,17 +91,20 @@
       }
     }
   },
-  "modelDescParakeet": "Very fast and very accurate, 25 European languages, detects the language automatically. Recommended for phones with at least 6 GB of RAM.",
-  "modelDescWhisperSmall": "Balanced between speed and accuracy, 99 languages, language can be fixed. For phones with at least 4 GB of RAM.",
-  "modelDescWhisperBase": "Lightweight for older phones, 99 languages, language can be fixed. For phones with at least 3 GB of RAM.",
-  "modelDescWhisperTiny": "Minimal and fastest to download. 99 languages, language can be fixed. Runs on practically any phone.",
+  "modelDescParakeet": "Very accurate and fast. The text appears once you stop recording. 25 European languages, detected automatically; the language can't be fixed. Large download, for phones with at least 6 GB of RAM.",
+  "modelDescWhisperSmall": "The most languages (99), detected automatically or fixed. Good accuracy, but slower than Parakeet, and on silence or noise it can occasionally make up words. For phones with at least 4 GB of RAM.",
+  "modelDescWhisperBase": "Small download for older phones. 99 languages, detected automatically or fixed. Noticeably less accurate than Whisper Small. For phones with at least 3 GB of RAM.",
+  "modelDescWhisperTiny": "Smallest and fastest, runs on practically any phone. 99 languages, detected automatically or fixed. Least accurate, best for short, clearly spoken notes.",
+  "modelDescNemotron": "Live preview: the text appears while you speak and is ready as soon as you stop. 28 languages, detected automatically or fixed. Usually a little less accurate than Parakeet. Large download, for phones with at least 6 GB of RAM.",
+  "livePreviewLabel": "Live preview",
+  "livePreviewListening": "Listening…",
   "languageLabel": "Language",
   "auto": "Auto",
   "@auto": {
     "description": "Automatic language detection option."
   },
   "modelLabel": "Model",
-  "whisperRequired": "A fixed language needs a Whisper model.",
+  "whisperRequired": "A fixed language needs a Whisper or Nemotron model.",
   "downloadWhisperSmall": "Download Whisper Small",
   "settingsTitle": "Settings",
   "appLanguageTitle": "App language",
@@ -110,10 +113,15 @@
   "autoCopySubtitle": "Put the text on the clipboard right after transcription",
   "hapticsTitle": "Haptic feedback",
   "defaultLanguageTitle": "Default language for new recordings",
-  "defaultLanguageHint": "Only Whisper models use this; Parakeet always detects the language automatically.",
+  "defaultLanguageHint": "Used by Whisper and Nemotron; Parakeet always detects the language automatically.",
   "licensesTitle": "Licenses",
   "licensesSubtitle": "Software and models used",
-  "licensesLegalese": "Speech recognition with sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) and Whisper (OpenAI, MIT).",
+  "licensesLegalese": "Speech recognition with sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) and Whisper (OpenAI, MIT).",
+  "licensesIntro": "Talkpuppy is built on open-source software and openly licensed speech models.",
+  "licensesSpeechModels": "Speech models",
+  "licensesSoftware": "Software",
+  "licensesPackages": "Flutter and other open-source packages",
+  "licensesShowAll": "Show all license texts",
   "deleteAllTitle": "Delete all recordings",
   "deleteAllConfirmTitle": "Delete all recordings?",
   "deleteAllConfirmBody": "All transcripts and recordings will be permanently deleted.",
@@ -188,6 +196,15 @@
         "type": "String"
       }
     }
+  },
+  "@modelDescNemotron": {
+    "description": "Nemotron supports ar, bg, cs, da, de, en, es, et, fi, fr, hi, hr, hu, it, ja, ko, nb, nl, pl, pt, ro, ru, sk, sv, tr, uk, vi, zh. Don't claim support for other languages."
+  },
+  "@livePreviewLabel": {
+    "description": "Heading of the card that shows the text recognized so far while still recording."
+  },
+  "@livePreviewListening": {
+    "description": "Placeholder in the live preview card before any words are recognized."
   },
   "@modelDescParakeet": {
     "description": "Parakeet supports bg, hr, cs, da, nl, en, et, fi, fr, de, el, hu, it, lv, lt, mt, pl, pt, ro, sk, sl, es, sv, ru, uk. Don't claim support for other languages."

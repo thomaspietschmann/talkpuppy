@@ -5,8 +5,9 @@ import 'package:flutter/foundation.dart';
 /// Flutter collects automatically.
 ///
 /// - Silero VAD is bundled in the app (MIT: notice must be included).
-/// - Parakeet (CC BY 4.0: attribution required) and Whisper (MIT) are
-///   downloaded at runtime; they're listed so users see what they run.
+/// - Parakeet (CC BY 4.0: attribution required), Nemotron (OpenMDW 1.1)
+///   and Whisper (MIT) are downloaded at runtime; they're listed so users
+///   see what they run.
 void registerModelLicenses() {
   LicenseRegistry.addLicense(() async* {
     yield LicenseEntryWithLineBreaks(
@@ -27,6 +28,17 @@ void registerModelLicenses() {
       'https://huggingface.co/csukuangfj/'
       'sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8. No further changes were '
       'made to the model.',
+    );
+    yield const LicenseEntryWithLineBreaks(
+      ['Nemotron 3.5 ASR Streaming 0.6B (NVIDIA)'],
+      'Nemotron 3.5 ASR Streaming 0.6B by NVIDIA Corporation\n'
+      'https://huggingface.co/nvidia/nemotron-3.5-asr-streaming-0.6b\n\n'
+      'Licensed under the OpenMDW License Agreement, version 1.1 '
+      '(OpenMDW-1.1): https://openmdw.ai/license/1-1\n\n'
+      'Talkpuppy uses the int8-quantized ONNX conversion (1120 ms chunks) '
+      'published at https://huggingface.co/csukuangfj2/'
+      'sherpa-onnx-nemotron-3.5-asr-streaming-0.6b-1120ms-int8-2026-06-11. '
+      'No further changes were made to the model.',
     );
   });
 }

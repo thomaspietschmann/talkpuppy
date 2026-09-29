@@ -128,19 +128,29 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Nagyon gyors és nagyon pontos, 25 európai nyelv, a nyelvet automatikusan felismeri. Legalább 6 GB RAM-mal rendelkező telefonokhoz ajánlott.';
+      'Nagyon pontos és gyors. A szöveg a felvétel leállítása után jelenik meg. 25 európai nyelv, automatikus felismeréssel; a nyelv nem rögzíthető. Nagy letöltés, legalább 6 GB RAM-mal rendelkező telefonokhoz.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Egyensúly a sebesség és a pontosság között, 99 nyelv, a nyelv rögzíthető. Legalább 4 GB RAM-mal rendelkező telefonokhoz.';
+      'A legtöbb nyelv (99), automatikus felismeréssel vagy rögzítve. Jó pontosság, de lassabb, mint a Parakeet, és csendben vagy zajban néha kitalálhat szavakat. Legalább 4 GB RAM-mal rendelkező telefonokhoz.';
 
   @override
   String get modelDescWhisperBase =>
-      'Könnyű modell régebbi telefonokhoz, 99 nyelv, a nyelv rögzíthető. Legalább 3 GB RAM-mal rendelkező telefonokhoz.';
+      'Kis letöltés régebbi telefonokhoz. 99 nyelv, automatikus felismeréssel vagy rögzítve. Érezhetően pontatlanabb, mint a Whisper Small. Legalább 3 GB RAM-mal rendelkező telefonokhoz.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Minimális és a leggyorsabban letölthető. 99 nyelv, a nyelv rögzíthető. Gyakorlatilag bármilyen telefonon fut.';
+      'A legkisebb és leggyorsabb, gyakorlatilag bármilyen telefonon fut. 99 nyelv, automatikus felismeréssel vagy rögzítve. A legpontatlanabb, rövid, tisztán elmondott jegyzetekhez a legjobb.';
+
+  @override
+  String get modelDescNemotron =>
+      'Élő előnézet: a szöveg már beszéd közben megjelenik, és azonnal kész, amint abbahagyod. 28 nyelv, automatikus felismeréssel vagy rögzítve. Általában kicsit pontatlanabb, mint a Parakeet. Nagy letöltés, legalább 6 GB RAM-mal rendelkező telefonokhoz.';
+
+  @override
+  String get livePreviewLabel => 'Élő előnézet';
+
+  @override
+  String get livePreviewListening => 'Figyel…';
 
   @override
   String get languageLabel => 'Nyelv';
@@ -152,7 +162,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get modelLabel => 'Modell';
 
   @override
-  String get whisperRequired => 'Rögzített nyelvhez Whisper modell kell.';
+  String get whisperRequired =>
+      'Rögzített nyelvhez Whisper vagy Nemotron modell kell.';
 
   @override
   String get downloadWhisperSmall => 'Whisper Small letöltése';
@@ -181,7 +192,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Csak a Whisper modellek használják; a Parakeet mindig automatikusan ismeri fel a nyelvet.';
+      'A Whisper és a Nemotron használja; a Parakeet mindig automatikusan ismeri fel a nyelvet.';
 
   @override
   String get licensesTitle => 'Licencek';
@@ -191,7 +202,23 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Beszédfelismerés: sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) és Whisper (OpenAI, MIT).';
+      'Beszédfelismerés: sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) és Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'A Talkpuppy nyílt forráskódú szoftverekre és nyílt licencű beszédmodellekre épül.';
+
+  @override
+  String get licensesSpeechModels => 'Beszédmodellek';
+
+  @override
+  String get licensesSoftware => 'Szoftverek';
+
+  @override
+  String get licensesPackages => 'Flutter és más nyílt forráskódú csomagok';
+
+  @override
+  String get licensesShowAll => 'Az összes licencszöveg megjelenítése';
 
   @override
   String get deleteAllTitle => 'Összes felvétel törlése';

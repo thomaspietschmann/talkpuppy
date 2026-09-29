@@ -385,26 +385,44 @@ abstract class AppLocalizations {
   /// Parakeet supports bg, hr, cs, da, nl, en, et, fi, fr, de, el, hu, it, lv, lt, mt, pl, pt, ro, sk, sl, es, sv, ru, uk. Don't claim support for other languages.
   ///
   /// In en, this message translates to:
-  /// **'Very fast and very accurate, 25 European languages, detects the language automatically. Recommended for phones with at least 6 GB of RAM.'**
+  /// **'Very accurate and fast. The text appears once you stop recording. 25 European languages, detected automatically; the language can\'t be fixed. Large download, for phones with at least 6 GB of RAM.'**
   String get modelDescParakeet;
 
   /// No description provided for @modelDescWhisperSmall.
   ///
   /// In en, this message translates to:
-  /// **'Balanced between speed and accuracy, 99 languages, language can be fixed. For phones with at least 4 GB of RAM.'**
+  /// **'The most languages (99), detected automatically or fixed. Good accuracy, but slower than Parakeet, and on silence or noise it can occasionally make up words. For phones with at least 4 GB of RAM.'**
   String get modelDescWhisperSmall;
 
   /// No description provided for @modelDescWhisperBase.
   ///
   /// In en, this message translates to:
-  /// **'Lightweight for older phones, 99 languages, language can be fixed. For phones with at least 3 GB of RAM.'**
+  /// **'Small download for older phones. 99 languages, detected automatically or fixed. Noticeably less accurate than Whisper Small. For phones with at least 3 GB of RAM.'**
   String get modelDescWhisperBase;
 
   /// No description provided for @modelDescWhisperTiny.
   ///
   /// In en, this message translates to:
-  /// **'Minimal and fastest to download. 99 languages, language can be fixed. Runs on practically any phone.'**
+  /// **'Smallest and fastest, runs on practically any phone. 99 languages, detected automatically or fixed. Least accurate, best for short, clearly spoken notes.'**
   String get modelDescWhisperTiny;
+
+  /// Nemotron supports ar, bg, cs, da, de, en, es, et, fi, fr, hi, hr, hu, it, ja, ko, nb, nl, pl, pt, ro, ru, sk, sv, tr, uk, vi, zh. Don't claim support for other languages.
+  ///
+  /// In en, this message translates to:
+  /// **'Live preview: the text appears while you speak and is ready as soon as you stop. 28 languages, detected automatically or fixed. Usually a little less accurate than Parakeet. Large download, for phones with at least 6 GB of RAM.'**
+  String get modelDescNemotron;
+
+  /// Heading of the card that shows the text recognized so far while still recording.
+  ///
+  /// In en, this message translates to:
+  /// **'Live preview'**
+  String get livePreviewLabel;
+
+  /// Placeholder in the live preview card before any words are recognized.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening…'**
+  String get livePreviewListening;
 
   /// No description provided for @languageLabel.
   ///
@@ -427,7 +445,7 @@ abstract class AppLocalizations {
   /// No description provided for @whisperRequired.
   ///
   /// In en, this message translates to:
-  /// **'A fixed language needs a Whisper model.'**
+  /// **'A fixed language needs a Whisper or Nemotron model.'**
   String get whisperRequired;
 
   /// No description provided for @downloadWhisperSmall.
@@ -481,7 +499,7 @@ abstract class AppLocalizations {
   /// No description provided for @defaultLanguageHint.
   ///
   /// In en, this message translates to:
-  /// **'Only Whisper models use this; Parakeet always detects the language automatically.'**
+  /// **'Used by Whisper and Nemotron; Parakeet always detects the language automatically.'**
   String get defaultLanguageHint;
 
   /// No description provided for @licensesTitle.
@@ -499,8 +517,38 @@ abstract class AppLocalizations {
   /// No description provided for @licensesLegalese.
   ///
   /// In en, this message translates to:
-  /// **'Speech recognition with sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) and Whisper (OpenAI, MIT).'**
+  /// **'Speech recognition with sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) and Whisper (OpenAI, MIT).'**
   String get licensesLegalese;
+
+  /// No description provided for @licensesIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Talkpuppy is built on open-source software and openly licensed speech models.'**
+  String get licensesIntro;
+
+  /// No description provided for @licensesSpeechModels.
+  ///
+  /// In en, this message translates to:
+  /// **'Speech models'**
+  String get licensesSpeechModels;
+
+  /// No description provided for @licensesSoftware.
+  ///
+  /// In en, this message translates to:
+  /// **'Software'**
+  String get licensesSoftware;
+
+  /// No description provided for @licensesPackages.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter and other open-source packages'**
+  String get licensesPackages;
+
+  /// No description provided for @licensesShowAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all license texts'**
+  String get licensesShowAll;
 
   /// No description provided for @deleteAllTitle.
   ///

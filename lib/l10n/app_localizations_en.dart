@@ -127,19 +127,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Very fast and very accurate, 25 European languages, detects the language automatically. Recommended for phones with at least 6 GB of RAM.';
+      'Very accurate and fast. The text appears once you stop recording. 25 European languages, detected automatically; the language can\'t be fixed. Large download, for phones with at least 6 GB of RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Balanced between speed and accuracy, 99 languages, language can be fixed. For phones with at least 4 GB of RAM.';
+      'The most languages (99), detected automatically or fixed. Good accuracy, but slower than Parakeet, and on silence or noise it can occasionally make up words. For phones with at least 4 GB of RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Lightweight for older phones, 99 languages, language can be fixed. For phones with at least 3 GB of RAM.';
+      'Small download for older phones. 99 languages, detected automatically or fixed. Noticeably less accurate than Whisper Small. For phones with at least 3 GB of RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Minimal and fastest to download. 99 languages, language can be fixed. Runs on practically any phone.';
+      'Smallest and fastest, runs on practically any phone. 99 languages, detected automatically or fixed. Least accurate, best for short, clearly spoken notes.';
+
+  @override
+  String get modelDescNemotron =>
+      'Live preview: the text appears while you speak and is ready as soon as you stop. 28 languages, detected automatically or fixed. Usually a little less accurate than Parakeet. Large download, for phones with at least 6 GB of RAM.';
+
+  @override
+  String get livePreviewLabel => 'Live preview';
+
+  @override
+  String get livePreviewListening => 'Listening…';
 
   @override
   String get languageLabel => 'Language';
@@ -151,7 +161,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get modelLabel => 'Model';
 
   @override
-  String get whisperRequired => 'A fixed language needs a Whisper model.';
+  String get whisperRequired =>
+      'A fixed language needs a Whisper or Nemotron model.';
 
   @override
   String get downloadWhisperSmall => 'Download Whisper Small';
@@ -180,7 +191,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Only Whisper models use this; Parakeet always detects the language automatically.';
+      'Used by Whisper and Nemotron; Parakeet always detects the language automatically.';
 
   @override
   String get licensesTitle => 'Licenses';
@@ -190,7 +201,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Speech recognition with sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) and Whisper (OpenAI, MIT).';
+      'Speech recognition with sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) and Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy is built on open-source software and openly licensed speech models.';
+
+  @override
+  String get licensesSpeechModels => 'Speech models';
+
+  @override
+  String get licensesSoftware => 'Software';
+
+  @override
+  String get licensesPackages => 'Flutter and other open-source packages';
+
+  @override
+  String get licensesShowAll => 'Show all license texts';
 
   @override
   String get deleteAllTitle => 'Delete all recordings';

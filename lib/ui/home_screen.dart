@@ -12,6 +12,7 @@ import 'onboarding_screen.dart';
 import 'retranscribe_sheet.dart';
 import 'settings_sheet.dart';
 import 'widgets/history_list.dart';
+import 'widgets/live_preview_card.dart';
 import 'widgets/brand_mark.dart';
 import 'widgets/record_button.dart';
 import 'widgets/transcript_card.dart';
@@ -123,22 +124,30 @@ class _HomeContentState extends State<_HomeContent> {
                           ),
                           onDismiss: controller.dismissError,
                         ),
-                      TranscriptCard(
-                        recording: controller.activeRecording,
-                        onCopy: controller.activeRecording == null
-                            ? () {}
-                            : () => controller.copyToClipboard(
-                                controller.activeRecording!,
-                              ),
-                        onRetranscribe:
-                            controller.activeRecording == null ||
-                                controller.isBusy
-                            ? null
-                            : () => _openRetranscribe(
-                                context,
-                                controller.activeRecording!,
-                              ),
-                      ),
+                      if (controller.liveText != null)
+                        LivePreviewCard(
+                          text: controller.liveText!,
+                          previousText: controller.isAppendingLive
+                              ? controller.activeRecording?.text ?? ''
+                              : '',
+                        )
+                      else
+                        TranscriptCard(
+                          recording: controller.activeRecording,
+                          onCopy: controller.activeRecording == null
+                              ? () {}
+                              : () => controller.copyToClipboard(
+                                  controller.activeRecording!,
+                                ),
+                          onRetranscribe:
+                              controller.activeRecording == null ||
+                                  controller.isBusy
+                              ? null
+                              : () => _openRetranscribe(
+                                  context,
+                                  controller.activeRecording!,
+                                ),
+                        ),
                       const SizedBox(height: 16),
                       HistoryList(
                         recordings: scope.historyStore.recordings,

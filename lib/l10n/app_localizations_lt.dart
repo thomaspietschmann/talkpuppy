@@ -127,19 +127,29 @@ class AppLocalizationsLt extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Labai greitas ir labai tikslus, 25 Europos kalbos, kalbą atpažįsta automatiškai. Rekomenduojamas telefonams su bent 6 GB RAM.';
+      'Labai tikslus ir greitas. Tekstas pasirodo, kai sustabdai įrašymą. 25 Europos kalbos, atpažįstamos automatiškai; kalbos nustatyti negalima. Didelis atsisiuntimas, telefonams su bent 6 GB RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Greičio ir tikslumo pusiausvyra, 99 kalbos, kalbą galima nustatyti. Telefonams su bent 4 GB RAM.';
+      'Daugiausia kalbų (99), atpažįstamos automatiškai arba nustatomos. Geras tikslumas, bet lėtesnis nei Parakeet, o tyloje ar triukšme kartais gali prigalvoti žodžių. Telefonams su bent 4 GB RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Lengvas modelis senesniems telefonams, 99 kalbos, kalbą galima nustatyti. Telefonams su bent 3 GB RAM.';
+      'Mažas atsisiuntimas senesniems telefonams. 99 kalbos, atpažįstamos automatiškai arba nustatomos. Pastebimai mažiau tikslus nei Whisper Small. Telefonams su bent 3 GB RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Mažiausias ir greičiausiai atsisiunčiamas. 99 kalbos, kalbą galima nustatyti. Veikia beveik bet kuriame telefone.';
+      'Mažiausias ir greičiausias, veikia beveik bet kuriame telefone. 99 kalbos, atpažįstamos automatiškai arba nustatomos. Mažiausiai tikslus, geriausiai tinka trumpoms, aiškiai ištartoms pastaboms.';
+
+  @override
+  String get modelDescNemotron =>
+      'Tiesioginė peržiūra: tekstas rodomas jau kalbant ir yra paruoštas vos tik baigi. 28 kalbos, atpažįstamos automatiškai arba nustatomos. Paprastai šiek tiek mažiau tikslus nei Parakeet. Didelis atsisiuntimas, telefonams su bent 6 GB RAM.';
+
+  @override
+  String get livePreviewLabel => 'Tiesioginė peržiūra';
+
+  @override
+  String get livePreviewListening => 'Klausomasi…';
 
   @override
   String get languageLabel => 'Kalba';
@@ -151,7 +161,8 @@ class AppLocalizationsLt extends AppLocalizations {
   String get modelLabel => 'Modelis';
 
   @override
-  String get whisperRequired => 'Fiksuotai kalbai reikia Whisper modelio.';
+  String get whisperRequired =>
+      'Fiksuotai kalbai reikia Whisper arba Nemotron modelio.';
 
   @override
   String get downloadWhisperSmall => 'Atsisiųsti Whisper Small';
@@ -180,7 +191,7 @@ class AppLocalizationsLt extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Naudoja tik Whisper modeliai; Parakeet visada atpažįsta kalbą automatiškai.';
+      'Naudoja Whisper ir Nemotron; Parakeet visada atpažįsta kalbą automatiškai.';
 
   @override
   String get licensesTitle => 'Licencijos';
@@ -190,7 +201,23 @@ class AppLocalizationsLt extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Kalbos atpažinimas naudojant sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) ir Whisper (OpenAI, MIT).';
+      'Kalbos atpažinimas naudojant sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) ir Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy sukurta naudojant atvirojo kodo programinę įrangą ir atvirai licencijuotus kalbos modelius.';
+
+  @override
+  String get licensesSpeechModels => 'Kalbos modeliai';
+
+  @override
+  String get licensesSoftware => 'Programinė įranga';
+
+  @override
+  String get licensesPackages => 'Flutter ir kiti atvirojo kodo paketai';
+
+  @override
+  String get licensesShowAll => 'Rodyti visus licencijų tekstus';
 
   @override
   String get deleteAllTitle => 'Ištrinti visus įrašus';

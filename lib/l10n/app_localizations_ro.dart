@@ -128,19 +128,29 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Foarte rapid și foarte precis, 25 de limbi europene, detectează limba automat. Recomandat pentru telefoane cu cel puțin 6 GB de RAM.';
+      'Foarte precis și rapid. Textul apare când oprești înregistrarea. 25 de limbi europene, detectate automat; limba nu poate fi fixată. Descărcare mare, pentru telefoane cu cel puțin 6 GB de RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Echilibru între viteză și precizie, 99 de limbi, limba poate fi fixată. Pentru telefoane cu cel puțin 4 GB de RAM.';
+      'Cele mai multe limbi (99), detectate automat sau fixate. Precizie bună, dar mai lent decât Parakeet, iar la liniște sau zgomot poate uneori să inventeze cuvinte. Pentru telefoane cu cel puțin 4 GB de RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Ușor, pentru telefoane mai vechi, 99 de limbi, limba poate fi fixată. Pentru telefoane cu cel puțin 3 GB de RAM.';
+      'Descărcare mică pentru telefoane mai vechi. 99 de limbi, detectate automat sau fixate. Vizibil mai puțin precis decât Whisper Small. Pentru telefoane cu cel puțin 3 GB de RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Minimal și cel mai rapid de descărcat. 99 de limbi, limba poate fi fixată. Merge pe aproape orice telefon.';
+      'Cel mai mic și mai rapid, merge pe aproape orice telefon. 99 de limbi, detectate automat sau fixate. Cel mai puțin precis, potrivit pentru notițe scurte, rostite clar.';
+
+  @override
+  String get modelDescNemotron =>
+      'Previzualizare live: textul apare în timp ce vorbești și e gata imediat ce te oprești. 28 de limbi, detectate automat sau fixate. De obicei puțin mai puțin precis decât Parakeet. Descărcare mare, pentru telefoane cu cel puțin 6 GB de RAM.';
+
+  @override
+  String get livePreviewLabel => 'Previzualizare live';
+
+  @override
+  String get livePreviewListening => 'Ascult…';
 
   @override
   String get languageLabel => 'Limbă';
@@ -153,7 +163,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get whisperRequired =>
-      'Pentru o limbă fixă ai nevoie de un model Whisper.';
+      'Pentru o limbă fixă ai nevoie de un model Whisper sau Nemotron.';
 
   @override
   String get downloadWhisperSmall => 'Descarcă Whisper Small';
@@ -182,7 +192,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Se aplică doar modelelor Whisper; Parakeet detectează mereu limba automat.';
+      'Se aplică modelelor Whisper și Nemotron; Parakeet detectează mereu limba automat.';
 
   @override
   String get licensesTitle => 'Licențe';
@@ -192,7 +202,23 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Recunoaștere vocală cu sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) și Whisper (OpenAI, MIT).';
+      'Recunoaștere vocală cu sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) și Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy se bazează pe software open-source și pe modele de vorbire cu licențe deschise.';
+
+  @override
+  String get licensesSpeechModels => 'Modele de vorbire';
+
+  @override
+  String get licensesSoftware => 'Software';
+
+  @override
+  String get licensesPackages => 'Flutter și alte pachete open-source';
+
+  @override
+  String get licensesShowAll => 'Afișează toate textele licențelor';
 
   @override
   String get deleteAllTitle => 'Șterge toate înregistrările';

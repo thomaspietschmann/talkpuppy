@@ -128,19 +128,29 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Πολύ γρήγορο και πολύ ακριβές, 25 ευρωπαϊκές γλώσσες, αναγνωρίζει αυτόματα τη γλώσσα. Προτείνεται για κινητά με τουλάχιστον 6 GB RAM.';
+      'Πολύ ακριβές και γρήγορο. Το κείμενο εμφανίζεται μόλις σταματήσεις την εγγραφή. 25 ευρωπαϊκές γλώσσες, με αυτόματη αναγνώριση· η γλώσσα δεν μπορεί να οριστεί σταθερά. Μεγάλη λήψη, για κινητά με τουλάχιστον 6 GB RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Ισορροπία μεταξύ ταχύτητας και ακρίβειας, 99 γλώσσες, η γλώσσα μπορεί να οριστεί σταθερά. Για κινητά με τουλάχιστον 4 GB RAM.';
+      'Οι περισσότερες γλώσσες (99), με αυτόματη αναγνώριση ή σταθερή επιλογή. Καλή ακρίβεια, αλλά πιο αργό από το Parakeet, και σε σιωπή ή θόρυβο μπορεί περιστασιακά να επινοήσει λέξεις. Για κινητά με τουλάχιστον 4 GB RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Ελαφρύ για παλαιότερα κινητά, 99 γλώσσες, η γλώσσα μπορεί να οριστεί σταθερά. Για κινητά με τουλάχιστον 3 GB RAM.';
+      'Μικρή λήψη για παλαιότερα κινητά. 99 γλώσσες, με αυτόματη αναγνώριση ή σταθερή επιλογή. Αισθητά λιγότερο ακριβές από το Whisper Small. Για κινητά με τουλάχιστον 3 GB RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Ελάχιστο και με την ταχύτερη λήψη. 99 γλώσσες, η γλώσσα μπορεί να οριστεί σταθερά. Τρέχει σχεδόν σε κάθε κινητό.';
+      'Το μικρότερο και ταχύτερο, τρέχει σχεδόν σε κάθε κινητό. 99 γλώσσες, με αυτόματη αναγνώριση ή σταθερή επιλογή. Το λιγότερο ακριβές, ιδανικό για σύντομες, καθαρά εκφωνημένες σημειώσεις.';
+
+  @override
+  String get modelDescNemotron =>
+      'Ζωντανή προεπισκόπηση: το κείμενο εμφανίζεται καθώς μιλάς και είναι έτοιμο μόλις σταματήσεις. 28 γλώσσες, με αυτόματη αναγνώριση ή σταθερή επιλογή. Συνήθως λίγο λιγότερο ακριβές από το Parakeet. Μεγάλη λήψη, για κινητά με τουλάχιστον 6 GB RAM.';
+
+  @override
+  String get livePreviewLabel => 'Ζωντανή προεπισκόπηση';
+
+  @override
+  String get livePreviewListening => 'Ακούει…';
 
   @override
   String get languageLabel => 'Γλώσσα';
@@ -153,7 +163,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get whisperRequired =>
-      'Για σταθερή γλώσσα χρειάζεται μοντέλο Whisper.';
+      'Για σταθερή γλώσσα χρειάζεται μοντέλο Whisper ή Nemotron.';
 
   @override
   String get downloadWhisperSmall => 'Λήψη Whisper Small';
@@ -182,7 +192,7 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Ισχύει μόνο για μοντέλα Whisper· το Parakeet αναγνωρίζει πάντα αυτόματα τη γλώσσα.';
+      'Ισχύει για τα Whisper και Nemotron· το Parakeet αναγνωρίζει πάντα αυτόματα τη γλώσσα.';
 
   @override
   String get licensesTitle => 'Άδειες χρήσης';
@@ -192,7 +202,23 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Αναγνώριση ομιλίας με sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) και Whisper (OpenAI, MIT).';
+      'Αναγνώριση ομιλίας με sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) και Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Το Talkpuppy βασίζεται σε λογισμικό ανοιχτού κώδικα και σε μοντέλα ομιλίας με ανοιχτές άδειες.';
+
+  @override
+  String get licensesSpeechModels => 'Μοντέλα ομιλίας';
+
+  @override
+  String get licensesSoftware => 'Λογισμικό';
+
+  @override
+  String get licensesPackages => 'Flutter και άλλα πακέτα ανοιχτού κώδικα';
+
+  @override
+  String get licensesShowAll => 'Εμφάνιση όλων των κειμένων αδειών';
 
   @override
   String get deleteAllTitle => 'Διαγραφή όλων των εγγραφών';

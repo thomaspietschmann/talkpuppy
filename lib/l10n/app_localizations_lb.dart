@@ -127,19 +127,29 @@ class AppLocalizationsLb extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Ganz séier a ganz präzis, 25 europäesch Sproochen, erkennt d\'Sprooch automatesch. Recommandéiert fir Handyen mat mindestens 6 GB RAM.';
+      'Ganz präzis a séier. Den Text erschéngt, soubal s de d\'Opnam stopps. 25 europäesch Sproochen, automatesch erkannt; d\'Sprooch ka net festgeluecht ginn. Groussen Download, fir Handyen mat mindestens 6 GB RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Ausgeglach tëscht Vitesse a Präzisioun, 99 Sproochen, d\'Sprooch ka festgeluecht ginn. Fir Handyen mat mindestens 4 GB RAM.';
+      'Déi meescht Sproochen (99), automatesch erkannt oder festgeluecht. Gutt Präzisioun, awer méi lues wéi Parakeet, a bei Rou oder Kaméidi kann et heiansdo Wierder erfannen. Fir Handyen mat mindestens 4 GB RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Liicht fir méi al Handyen, 99 Sproochen, d\'Sprooch ka festgeluecht ginn. Fir Handyen mat mindestens 3 GB RAM.';
+      'Klengen Download fir méi al Handyen. 99 Sproochen, automatesch erkannt oder festgeluecht. Merklech manner präzis wéi Whisper Small. Fir Handyen mat mindestens 3 GB RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Minimal an am séiersten erofgelueden. 99 Sproochen, d\'Sprooch ka festgeluecht ginn. Leeft op praktesch all Handy.';
+      'Am klengsten an am séiersten, leeft op praktesch all Handy. 99 Sproochen, automatesch erkannt oder festgeluecht. Am mannste präzis, am beschte fir kuerz, däitlech geschwate Notizen.';
+
+  @override
+  String get modelDescNemotron =>
+      'Live-Virschau: den Text erschéngt schonn, wärend s de schwätz, an ass fäerdeg, soubal s de ophäls. 28 Sproochen, automatesch erkannt oder festgeluecht. Meeschtens e bësse manner präzis wéi Parakeet. Groussen Download, fir Handyen mat mindestens 6 GB RAM.';
+
+  @override
+  String get livePreviewLabel => 'Live-Virschau';
+
+  @override
+  String get livePreviewListening => 'Lauschtert…';
 
   @override
   String get languageLabel => 'Sprooch';
@@ -152,7 +162,7 @@ class AppLocalizationsLb extends AppLocalizations {
 
   @override
   String get whisperRequired =>
-      'Fir eng fix Sprooch brauchs de e Whisper-Modell.';
+      'Fir eng fix Sprooch brauchs de e Whisper- oder Nemotron-Modell.';
 
   @override
   String get downloadWhisperSmall => 'Whisper Small eroflueden';
@@ -181,7 +191,7 @@ class AppLocalizationsLb extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Gëtt nëmme vu Whisper-Modeller benotzt; Parakeet erkennt d\'Sprooch ëmmer automatesch.';
+      'Gëtt vu Whisper an Nemotron benotzt; Parakeet erkennt d\'Sprooch ëmmer automatesch.';
 
   @override
   String get licensesTitle => 'Lizenzen';
@@ -191,7 +201,23 @@ class AppLocalizationsLb extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Spriecherkennung mat sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) a Whisper (OpenAI, MIT).';
+      'Spriecherkennung mat sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) a Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy baut op Open-Source-Software an op oppe lizenzéiert Sproochmodeller op.';
+
+  @override
+  String get licensesSpeechModels => 'Sproochmodeller';
+
+  @override
+  String get licensesSoftware => 'Software';
+
+  @override
+  String get licensesPackages => 'Flutter an aner Open-Source-Paketen';
+
+  @override
+  String get licensesShowAll => 'All Lizenztexter uweisen';
 
   @override
   String get deleteAllTitle => 'All Opnamen läschen';

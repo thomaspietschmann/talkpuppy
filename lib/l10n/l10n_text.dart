@@ -35,6 +35,7 @@ String downloadErrorText(AppLocalizations l, Object error) {
 String modelDescription(AppLocalizations l, ModelSpec model) =>
     switch (model.id) {
       'parakeet-tdt-0.6b-v3-int8' => l.modelDescParakeet,
+      'nemotron-3.5-streaming-0.6b-1120ms-int8' => l.modelDescNemotron,
       'whisper-small-int8' => l.modelDescWhisperSmall,
       'whisper-base-int8' => l.modelDescWhisperBase,
       _ => l.modelDescWhisperTiny,

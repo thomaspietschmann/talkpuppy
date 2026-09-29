@@ -128,19 +128,29 @@ class AppLocalizationsMk extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Многу брз и многу прецизен, 25 европски јазици, автоматски го препознава јазикот. Препорачан за телефони со најмалку 6 GB RAM.';
+      'Многу прецизен и брз. Текстот се појавува штом ќе ја запреш снимката. 25 европски јазици, автоматски препознаени; јазикот не може да се фиксира. Големо преземање, за телефони со најмалку 6 GB RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Избалансиран меѓу брзина и прецизност, 99 јазици, јазикот може да се фиксира. За телефони со најмалку 4 GB RAM.';
+      'Најмногу јазици (99), автоматски препознаени или фиксирани. Добра прецизност, но побавен од Parakeet, а при тишина или шум понекогаш може да измисли зборови. За телефони со најмалку 4 GB RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Лесен, за постари телефони, 99 јазици, јазикот може да се фиксира. За телефони со најмалку 3 GB RAM.';
+      'Мало преземање за постари телефони. 99 јазици, автоматски препознаени или фиксирани. Забележливо помалку прецизен од Whisper Small. За телефони со најмалку 3 GB RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Најмал и најбрз за преземање. 99 јазици, јазикот може да се фиксира. Работи на речиси секој телефон.';
+      'Најмал и најбрз, работи на речиси секој телефон. 99 јазици, автоматски препознаени или фиксирани. Најмалку прецизен, најдобар за кратки, јасно изговорени белешки.';
+
+  @override
+  String get modelDescNemotron =>
+      'Преглед во живо: текстот се појавува додека зборуваш и е готов штом ќе престанеш. 28 јазици, автоматски препознаени или фиксирани. Обично малку помалку прецизен од Parakeet. Големо преземање, за телефони со најмалку 6 GB RAM.';
+
+  @override
+  String get livePreviewLabel => 'Преглед во живо';
+
+  @override
+  String get livePreviewListening => 'Слуша…';
 
   @override
   String get languageLabel => 'Јазик';
@@ -152,7 +162,8 @@ class AppLocalizationsMk extends AppLocalizations {
   String get modelLabel => 'Модел';
 
   @override
-  String get whisperRequired => 'За фиксен јазик е потребен Whisper модел.';
+  String get whisperRequired =>
+      'За фиксен јазик е потребен Whisper или Nemotron модел.';
 
   @override
   String get downloadWhisperSmall => 'Преземи Whisper Small';
@@ -181,7 +192,7 @@ class AppLocalizationsMk extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Го користат само Whisper моделите; Parakeet секогаш автоматски го препознава јазикот.';
+      'Го користат Whisper и Nemotron моделите; Parakeet секогаш автоматски го препознава јазикот.';
 
   @override
   String get licensesTitle => 'Лиценци';
@@ -191,7 +202,23 @@ class AppLocalizationsMk extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Препознавање говор со sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) и Whisper (OpenAI, MIT).';
+      'Препознавање говор со sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) и Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy е изграден врз софтвер со отворен код и говорни модели со отворени лиценци.';
+
+  @override
+  String get licensesSpeechModels => 'Говорни модели';
+
+  @override
+  String get licensesSoftware => 'Софтвер';
+
+  @override
+  String get licensesPackages => 'Flutter и други пакети со отворен код';
+
+  @override
+  String get licensesShowAll => 'Прикажи ги сите текстови на лиценците';
 
   @override
   String get deleteAllTitle => 'Избриши ги сите снимки';

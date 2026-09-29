@@ -128,19 +128,29 @@ class AppLocalizationsEu extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Oso azkarra eta oso zehatza, Europako 25 hizkuntza, hizkuntza automatikoki hautematen du. Gutxienez 6 GB RAM dituzten telefonoetarako gomendatua.';
+      'Oso zehatza eta azkarra. Testua grabazioa gelditzean agertzen da. Europako 25 hizkuntza, automatikoki hautemanak; hizkuntza ezin da finkatu. Deskarga handia, gutxienez 6 GB RAM dituzten telefonoetarako.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Abiaduraren eta zehaztasunaren arteko oreka, 99 hizkuntza, hizkuntza finka daiteke. Gutxienez 4 GB RAM dituzten telefonoetarako.';
+      'Hizkuntza gehien (99), automatikoki hautemanak edo finkatuak. Zehaztasun ona, baina Parakeet baino motelagoa, eta isiltasunean edo zaratan batzuetan hitzak asma ditzake. Gutxienez 4 GB RAM dituzten telefonoetarako.';
 
   @override
   String get modelDescWhisperBase =>
-      'Arina, telefono zaharretarako, 99 hizkuntza, hizkuntza finka daiteke. Gutxienez 3 GB RAM dituzten telefonoetarako.';
+      'Deskarga txikia telefono zaharretarako. 99 hizkuntza, automatikoki hautemanak edo finkatuak. Whisper Small baino nabarmen zehaztasun txikiagokoa. Gutxienez 3 GB RAM dituzten telefonoetarako.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Txikiena eta azkarren deskargatzen dena. 99 hizkuntza, hizkuntza finka daiteke. Ia edozein telefonotan dabil.';
+      'Txikiena eta azkarrena, ia edozein telefonotan dabil. 99 hizkuntza, automatikoki hautemanak edo finkatuak. Zehaztasun txikienekoa, argi esandako ohar laburretarako egokiena.';
+
+  @override
+  String get modelDescNemotron =>
+      'Zuzeneko aurrebista: testua hitz egin ahala agertzen da eta gelditu bezain laster prest dago. 28 hizkuntza, automatikoki hautemanak edo finkatuak. Normalean Parakeet baino zehaztasun apur bat txikiagokoa. Deskarga handia, gutxienez 6 GB RAM dituzten telefonoetarako.';
+
+  @override
+  String get livePreviewLabel => 'Zuzeneko aurrebista';
+
+  @override
+  String get livePreviewListening => 'Entzuten…';
 
   @override
   String get languageLabel => 'Hizkuntza';
@@ -153,7 +163,7 @@ class AppLocalizationsEu extends AppLocalizations {
 
   @override
   String get whisperRequired =>
-      'Hizkuntza finko baterako Whisper eredu bat behar da.';
+      'Hizkuntza finko baterako Whisper edo Nemotron eredu bat behar da.';
 
   @override
   String get downloadWhisperSmall => 'Deskargatu Whisper Small';
@@ -182,7 +192,7 @@ class AppLocalizationsEu extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Whisper ereduek soilik erabiltzen dute; Parakeet-ek beti hautematen du hizkuntza automatikoki.';
+      'Whisper eta Nemotron ereduek erabiltzen dute; Parakeet-ek beti hautematen du hizkuntza automatikoki.';
 
   @override
   String get licensesTitle => 'Lizentziak';
@@ -192,7 +202,23 @@ class AppLocalizationsEu extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Ahots-ezagutza sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) eta Whisper (OpenAI, MIT) bidez.';
+      'Ahots-ezagutza sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) eta Whisper (OpenAI, MIT) bidez.';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy kode irekiko softwarean eta lizentzia irekiko hizketa-ereduetan oinarritzen da.';
+
+  @override
+  String get licensesSpeechModels => 'Hizketa-ereduak';
+
+  @override
+  String get licensesSoftware => 'Softwarea';
+
+  @override
+  String get licensesPackages => 'Flutter eta kode irekiko beste pakete batzuk';
+
+  @override
+  String get licensesShowAll => 'Erakutsi lizentzia-testu guztiak';
 
   @override
   String get deleteAllTitle => 'Ezabatu grabazio guztiak';

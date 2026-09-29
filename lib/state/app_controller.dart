@@ -19,6 +19,13 @@ import 'app_error.dart';
 /// Discards a clip shorter than this — almost certainly an accidental tap.
 const Duration kMinClipDuration = Duration(milliseconds: 500);
 
+/// How long the microphone keeps running after stop is tapped with a
+/// streaming model. Its live preview lags behind the voice, so people tend
+/// to tap while still finishing the last word; the tail keeps that word
+/// (and the last audio buffers) in the recording. Offline models stop
+/// immediately.
+const Duration kStopTail = Duration(milliseconds: 700);
+
 enum RecordingPhase { idle, recording, transcribing, done, error }
 
 /// Central state machine: orchestrates recorder -> transcriber -> history
@@ -33,6 +40,7 @@ class AppController extends ChangeNotifier {
     required this.modelManager,
     required this.vadModelPath,
     this.useWakelock = true,
+    this.stopTail = kStopTail,
   });
 
   final RecorderService recorder;
@@ -45,11 +53,19 @@ class AppController extends ChangeNotifier {
   /// Keep the screen on while recording. Off in tests (no platform plugin).
   final bool useWakelock;
 
+  /// See [kStopTail]; zero in tests.
+  final Duration stopTail;
+
   RecordingPhase phase = RecordingPhase.idle;
   /// The current error, if [phase] is [RecordingPhase.error].
   AppError? error;
   Recording? activeRecording;
   double amplitude = 0;
+
+  /// What the streaming model has recognized so far in the current
+  /// recording (live preview). Null when no live session is running, e.g.
+  /// with an offline model.
+  String? liveText;
 
   /// When the current recording started, so the UI can show an elapsed
   /// timer. Null unless [phase] is [RecordingPhase.recording].
@@ -65,6 +81,9 @@ class AppController extends ChangeNotifier {
 
   bool _appendMode = false;
   bool _starting = false;
+
+  /// Whether the transcriber runs a live session for the current recording.
+  bool _live = false;
   String? _pendingWavPath;
   StreamSubscription<double>? _ampSub;
   int _idCounter = 0;
@@ -97,6 +116,10 @@ class AppController extends ChangeNotifier {
       _starting ||
       phase == RecordingPhase.recording ||
       phase == RecordingPhase.transcribing;
+
+  /// Whether the live preview continues [activeRecording] (so its text is
+  /// shown in front of the preview) rather than starting a new one.
+  bool get isAppendingLive => liveText != null && _appendMode;
 
   bool get canRecord =>
       modelReady &&
@@ -131,9 +154,10 @@ class AppController extends ChangeNotifier {
         model: model,
         modelDir: modelManager.modelDir(model),
         vadModelPath: vadModelPath,
-        // Only whisper models honor this; nemo transducer models always
-        // auto-detect regardless of what's passed here.
-        forcedLanguage: settings.defaultLanguage,
+        // Models that can't force this language auto-detect instead.
+        forcedLanguage: model.canForceLanguage(settings.defaultLanguage)
+            ? settings.defaultLanguage
+            : 'auto',
       );
       modelReady = true;
       modelError = null;
@@ -167,8 +191,13 @@ class AppController extends ChangeNotifier {
       if (!await recorder.hasPermission()) {
         throw const _ErrorOf(AppError(AppErrorKind.micPermission));
       }
-      await recorder.start(_pendingWavPath!);
+      _live = await _startLiveSession();
+      await recorder.start(
+        _pendingWavPath!,
+        onSamples: _live ? transcriber.feedLive : null,
+      );
     } catch (e) {
+      await _dropLiveSession();
       final path = _pendingWavPath;
       _pendingWavPath = null;
       if (path != null) await _deleteFileIfExists(path);
@@ -195,8 +224,54 @@ class AppController extends ChangeNotifier {
     });
   }
 
+  /// Starts a live session if the selected model is a streaming one.
+  /// Best effort: without it the clip is simply transcribed from the file
+  /// after recording, like with the offline models.
+  Future<bool> _startLiveSession() async {
+    final modelId = settings.selectedModelId;
+    if (modelId == null || !modelById(modelId).isStreaming) return false;
+    try {
+      return await _serialized(() async {
+        await _loadCurrentModel();
+        if (!modelReady) return false;
+        await transcriber.startLive(_onLiveText);
+        liveText = '';
+        return true;
+      });
+    } catch (_) {
+      return false;
+    }
+  }
+
+  void _onLiveText(String text) {
+    if (!_live) return;
+    liveText = text;
+    notifyListeners();
+  }
+
+  /// Ends the live session without using its result.
+  Future<void> _dropLiveSession() async {
+    liveText = null;
+    if (!_live) return;
+    _live = false;
+    try {
+      await _serialized(transcriber.cancelLive);
+    } catch (_) {
+      // The session is gone either way.
+    }
+  }
+
   Future<void> stopAndTranscribe() async {
     if (phase != RecordingPhase.recording) return;
+    // Leave the recording phase right away so a second tap can't stop
+    // twice; with a live session the microphone (and preview) keeps
+    // running for the tail.
+    final tail = _live ? stopTail : Duration.zero;
+    phase = RecordingPhase.transcribing;
+    recordingStartedAt = null;
+    notifyListeners();
+    if (tail > Duration.zero) await Future<void>.delayed(tail);
+
     await _ampSub?.cancel();
     _ampSub = null;
     amplitude = 0;
@@ -209,18 +284,22 @@ class AppController extends ChangeNotifier {
     try {
       duration = await recorder.stop();
     } catch (e) {
+      await _dropLiveSession();
       if (wavPath != null) await _deleteFileIfExists(wavPath);
       _fail(AppError(AppErrorKind.recorderStop, detail: '$e'));
       return;
     }
 
     if (wavPath == null) {
+      await _dropLiveSession();
       phase = _restingPhase;
       notifyListeners();
       return;
     }
 
-    if (duration < kMinClipDuration) {
+    // The tail doesn't count towards the accidental-tap check.
+    if (duration - tail < kMinClipDuration) {
+      await _dropLiveSession();
       await _deleteFileIfExists(wavPath);
       phase = _restingPhase;
       notifyListeners();
@@ -232,21 +311,33 @@ class AppController extends ChangeNotifier {
 
     final modelId = settings.selectedModelId ?? '';
     final now = DateTime.now();
+    final live = _live;
+    _live = false;
     TranscriptionResult? result;
     Object? failure;
     try {
       result = await _serialized(() async {
+        // If the model was switched mid-recording, this reload drops the
+        // live session and finishLive below fails over to the file.
         await _loadCurrentModel();
         if (!modelReady) {
           throw _ErrorOf(
             modelError ?? const AppError(AppErrorKind.noModel),
           );
         }
+        if (live) {
+          try {
+            return await transcriber.finishLive();
+          } catch (_) {
+            // Fall through to the recorded file.
+          }
+        }
         return transcriber.transcribeFile(wavPath);
       });
     } catch (e) {
       failure = e;
     }
+    liveText = null;
 
     // On failure the audio is still kept as an error clip: it stays covered
     // by the 3-day purge and can be retranscribed once the model works.
@@ -307,6 +398,7 @@ class AppController extends ChangeNotifier {
     } catch (_) {
       // Nothing more we can do; the file is removed below either way.
     }
+    await _dropLiveSession();
     final wavPath = _pendingWavPath;
     _pendingWavPath = null;
     if (wavPath != null) {

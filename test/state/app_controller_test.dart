@@ -66,6 +66,7 @@ void main() {
       modelManager: modelManager,
       vadModelPath: 'unused-in-tests.onnx',
       useWakelock: false,
+      stopTail: Duration.zero,
     );
     await controller.init();
   });
@@ -297,5 +298,167 @@ void main() {
     await controller.copyToClipboard(controller.activeRecording!);
 
     expect(clipboardText, 'Kopiertext');
+  });
+
+  group('streaming model', () {
+    const streamingId = 'nemotron-3.5-streaming-0.6b-1120ms-int8';
+
+    setUp(() async {
+      final model = modelById(streamingId);
+      final modelDir = Directory(modelManager.modelDir(model));
+      await modelDir.create(recursive: true);
+      for (final f in model.files) {
+        File('${modelDir.path}/${f.localName}').openSync(mode: FileMode.write)
+          ..truncateSync(f.sizeBytes)
+          ..closeSync();
+      }
+      settings.selectedModelId = streamingId;
+      await controller.ensureCurrentModelLoaded();
+    });
+
+    test('shows live text while recording and uses the live result', () async {
+      await controller.startNewRecording();
+      expect(transcriber.log, contains('liveStart'));
+      expect(recorder.onSamples, isNotNull);
+      expect(controller.liveText, '');
+
+      transcriber.liveOnText!('Hallo');
+      expect(controller.liveText, 'Hallo');
+
+      transcriber.liveFinalText = 'Hallo Welt.';
+      await controller.stopAndTranscribe();
+
+      expect(controller.liveText, isNull);
+      expect(controller.activeRecording!.text, 'Hallo Welt.');
+      expect(transcriber.transcribeCalls, 0);
+      expect(clipboardText, 'Hallo Welt.');
+    });
+
+    test('falls back to the file when the live session was lost', () async {
+      await controller.startNewRecording();
+      transcriber.liveLost = true;
+      transcriber.nextText = 'Aus der Datei';
+      await controller.stopAndTranscribe();
+
+      expect(transcriber.log, containsAllInOrder(['liveFinish', 'transcribe']));
+      expect(controller.activeRecording!.text, 'Aus der Datei');
+      expect(controller.phase, RecordingPhase.done);
+    });
+
+    test('cancelling drops the live session', () async {
+      await controller.startNewRecording();
+      await controller.cancelRecording();
+
+      expect(transcriber.log, contains('liveCancel'));
+      expect(controller.liveText, isNull);
+      expect(historyStore.recordings, isEmpty);
+    });
+
+    test('a too-short clip drops the live session', () async {
+      recorder.nextDuration = const Duration(milliseconds: 200);
+      await controller.startNewRecording();
+      await controller.stopAndTranscribe();
+
+      expect(transcriber.log, contains('liveCancel'));
+      expect(transcriber.log, isNot(contains('liveFinish')));
+      expect(controller.liveText, isNull);
+    });
+
+    test('continuing a recording previews on top of the existing text', () async {
+      transcriber.liveFinalText = 'Erster Teil.';
+      await controller.startNewRecording();
+      await controller.stopAndTranscribe();
+
+      await controller.startContinueRecording();
+      expect(controller.isAppendingLive, isTrue);
+      transcriber.liveFinalText = 'Zweiter Teil.';
+      await controller.stopAndTranscribe();
+
+      expect(controller.activeRecording!.text, 'Erster Teil.\n\nZweiter Teil.');
+    });
+
+    test('offline models record without a live session', () async {
+      settings.selectedModelId = 'whisper-tiny-int8';
+      await controller.ensureCurrentModelLoaded();
+      await controller.startNewRecording();
+
+      expect(recorder.onSamples, isNull);
+      expect(controller.liveText, isNull);
+      await controller.stopAndTranscribe();
+      expect(transcriber.log, isNot(contains('liveStart')));
+    });
+
+    test('the default language is only forced where the model supports it',
+        () async {
+      settings.defaultLanguage = 'ja';
+      await controller.ensureCurrentModelLoaded();
+      expect(transcriber.currentKey, '$streamingId|ja');
+
+      // Parakeet can't force a language, so it gets 'auto'.
+      final parakeet = modelById('parakeet-tdt-0.6b-v3-int8');
+      final dir = Directory(modelManager.modelDir(parakeet));
+      await dir.create(recursive: true);
+      for (final f in parakeet.files) {
+        File('${dir.path}/${f.localName}').openSync(mode: FileMode.write)
+          ..truncateSync(f.sizeBytes)
+          ..closeSync();
+      }
+      settings.selectedModelId = parakeet.id;
+      await controller.ensureCurrentModelLoaded();
+      expect(transcriber.currentKey, '${parakeet.id}|auto');
+    });
+
+    test('keeps recording for the stop tail, offline models do not', () async {
+      final tailed = AppController(
+        recorder: recorder,
+        transcriber: transcriber,
+        historyStore: historyStore,
+        settings: settings,
+        modelManager: modelManager,
+        vadModelPath: 'unused-in-tests.onnx',
+        useWakelock: false,
+        stopTail: const Duration(milliseconds: 100),
+      );
+      await tailed.init();
+
+      await tailed.startNewRecording();
+      final stopping = tailed.stopAndTranscribe();
+      await Future<void>.delayed(const Duration(milliseconds: 30));
+      expect(tailed.phase, RecordingPhase.transcribing);
+      expect(recorder.recording, isTrue);
+      expect(tailed.liveText, isNotNull);
+      await stopping;
+      expect(recorder.recording, isFalse);
+      expect(tailed.phase, RecordingPhase.done);
+
+      settings.selectedModelId = 'whisper-tiny-int8';
+      await tailed.ensureCurrentModelLoaded();
+      await tailed.startNewRecording();
+      final offlineStop = tailed.stopAndTranscribe();
+      await Future<void>.delayed(Duration.zero);
+      expect(recorder.recording, isFalse);
+      await offlineStop;
+      tailed.dispose();
+    });
+
+    test('the tail does not rescue an accidental tap', () async {
+      final tailed = AppController(
+        recorder: recorder,
+        transcriber: transcriber,
+        historyStore: historyStore,
+        settings: settings,
+        modelManager: modelManager,
+        vadModelPath: 'unused-in-tests.onnx',
+        useWakelock: false,
+        stopTail: const Duration(milliseconds: 400),
+      );
+      await tailed.init();
+      // Fake reports 200 ms tap + 400 ms tail.
+      recorder.nextDuration = const Duration(milliseconds: 600);
+      await tailed.startNewRecording();
+      await tailed.stopAndTranscribe();
+      expect(historyStore.recordings, isEmpty);
+      tailed.dispose();
+    });
   });
 }

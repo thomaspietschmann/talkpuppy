@@ -25,10 +25,11 @@ class _RetranscribeSheetState extends State<RetranscribeSheet> {
   bool _busy = false;
   DownloadProgress? _downloadProgress;
 
-  List<ModelSpec> _installedWhisperModels(BuildContext context) {
+  /// Installed models that can be forced to [language].
+  List<ModelSpec> _installedModelsFor(BuildContext context, String language) {
     final ids = ControllerScope.of(context).modelManager.downloadedIds;
     return kModelCatalog
-        .where((m) => m.engine == ModelEngine.whisper && ids.contains(m.id))
+        .where((m) => m.canForceLanguage(language) && ids.contains(m.id))
         .toList();
   }
 
@@ -82,10 +83,15 @@ class _RetranscribeSheetState extends State<RetranscribeSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final whisperModels = _installedWhisperModels(context);
     final forcedLanguage = _language != 'auto';
+    final forceableModels = forcedLanguage
+        ? _installedModelsFor(context, _language)
+        : const <ModelSpec>[];
+    final selected = _selectedModel;
     final resolvedModel = forcedLanguage
-        ? (_selectedModel ?? (whisperModels.isEmpty ? null : whisperModels.first))
+        ? (selected != null && forceableModels.contains(selected)
+              ? selected
+              : (forceableModels.isEmpty ? null : forceableModels.first))
         : _autoModel(context);
 
     return Padding(
@@ -133,7 +139,7 @@ class _RetranscribeSheetState extends State<RetranscribeSheet> {
               style: Theme.of(context).textTheme.labelLarge,
             ),
             const SizedBox(height: 8),
-            if (whisperModels.isEmpty) ...[
+            if (forceableModels.isEmpty) ...[
               Text(
                 context.l10n.whisperRequired,
                 style: Theme.of(context).textTheme.bodyMedium,
@@ -152,7 +158,7 @@ class _RetranscribeSheetState extends State<RetranscribeSheet> {
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  for (final m in whisperModels)
+                  for (final m in forceableModels)
                     ChoiceChip(
                       label: Text(m.displayName),
                       selected: (resolvedModel?.id) == m.id,

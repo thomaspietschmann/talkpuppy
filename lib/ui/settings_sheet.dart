@@ -4,6 +4,7 @@ import '../l10n/l10n_text.dart';
 import '../l10n/locales.dart';
 import '../models/catalog.dart';
 import '../state/controller_scope.dart';
+import 'licenses_screen.dart';
 import 'models_screen.dart';
 
 class SettingsSheet extends StatelessWidget {
@@ -175,10 +176,8 @@ class SettingsSheet extends StatelessWidget {
                 title: Text(context.l10n.licensesTitle),
                 subtitle: Text(context.l10n.licensesSubtitle),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => showLicensePage(
-                  context: context,
-                  applicationName: 'Talkpuppy',
-                  applicationLegalese: context.l10n.licensesLegalese,
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const LicensesScreen()),
                 ),
               ),
               ListTile(

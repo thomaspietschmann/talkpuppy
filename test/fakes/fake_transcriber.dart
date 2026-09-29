@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:talkpuppy/models/model_spec.dart';
 import 'package:talkpuppy/services/transcriber_service.dart';
@@ -46,6 +47,39 @@ class FakeTranscriber implements Transcriber {
       throw TranscriberException('model broken');
     }
     currentKey = '${model.id}|$forcedLanguage';
+  }
+
+  /// Live session state: the callback given to [startLive], the samples
+  /// fed so far, and whether [finishLive] should fail (session lost).
+  void Function(String text)? liveOnText;
+  int liveSamplesFed = 0;
+  bool liveLost = false;
+  String liveFinalText = 'Live Text';
+
+  @override
+  Future<void> startLive(void Function(String text) onText) async {
+    log.add('liveStart');
+    liveOnText = onText;
+    liveSamplesFed = 0;
+  }
+
+  @override
+  void feedLive(Float32List samples) {
+    liveSamplesFed += samples.length;
+  }
+
+  @override
+  Future<TranscriptionResult> finishLive() async {
+    log.add('liveFinish');
+    liveOnText = null;
+    if (liveLost) throw TranscriberException('live session was lost');
+    return TranscriptionResult(text: liveFinalText, language: '');
+  }
+
+  @override
+  Future<void> cancelLive() async {
+    log.add('liveCancel');
+    liveOnText = null;
   }
 
   @override

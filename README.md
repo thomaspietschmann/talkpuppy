@@ -9,8 +9,10 @@ transcript is already in your clipboard, ready to paste into any app.
   [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx). Audio never leaves the
   phone; the only network access is the one-time model download.
 - **Choice of open-weights models**: NVIDIA Parakeet TDT 0.6B v3 (fast, 25
-  European languages, automatic language detection) or OpenAI Whisper
-  tiny/base/small (99 languages, language can be forced).
+  European languages, automatic language detection), NVIDIA Nemotron 3.5 ASR
+  Streaming (live preview while you speak, 28 languages, language can be
+  forced) or OpenAI Whisper tiny/base/small (99 languages, language can be
+  forced).
 - **No friction**: one big record button, auto-copy after transcription,
   "continue recording" to append to the last text, re-transcribe with a
   different language or model.
@@ -37,12 +39,13 @@ There is no App Store build. Build and install from a Mac with Xcode and a
 ## Usage
 
 1. On first launch pick a model; the app recommends one based on your phone's
-   RAM. It is downloaded once (100–670 MB) and verified by checksum.
+   RAM. It is downloaded once (100–680 MB) and verified by checksum.
 2. Tap the microphone, speak, tap again. The text appears and is copied.
+   With Nemotron the text already shows up while you speak.
 3. "Weiter aufnehmen" appends another recording to the same text,
    "Neue Aufnahme" starts a fresh one.
 4. Wrong language detected? Tap the translate icon to re-transcribe with a
-   fixed language (requires a Whisper model).
+   fixed language (requires a Whisper or Nemotron model).
 
 ## Privacy
 
@@ -62,7 +65,8 @@ license texts are shown in the app under *Einstellungen → Lizenzen*.
 ### Speech models (downloaded at runtime, not part of this repository)
 
 The models are downloaded by the app from the
-[csukuangfj](https://huggingface.co/csukuangfj) Hugging Face repositories,
+[csukuangfj](https://huggingface.co/csukuangfj) and
+[csukuangfj2](https://huggingface.co/csukuangfj2) Hugging Face repositories,
 which provide int8-quantized ONNX conversions for sherpa-onnx. The
 conversions don't declare their own license; the licenses of the original
 models apply:
@@ -70,9 +74,11 @@ models apply:
 | Model | Original | License |
 |---|---|---|
 | Parakeet TDT 0.6B v3 | [nvidia/parakeet-tdt-0.6b-v3](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — © NVIDIA Corporation |
+| Nemotron 3.5 ASR Streaming 0.6B | [nvidia/nemotron-3.5-asr-streaming-0.6b](https://huggingface.co/nvidia/nemotron-3.5-asr-streaming-0.6b) | [OpenMDW-1.1](https://openmdw.ai/license/1-1) — © NVIDIA Corporation |
 | Whisper tiny / base / small | [openai/whisper](https://github.com/openai/whisper) | MIT (code and weights on GitHub; Apache-2.0 on the Hugging Face model cards) — © OpenAI |
 
-CC BY 4.0 permits use, including commercial use, with attribution. Talkpuppy
+CC BY 4.0 and OpenMDW-1.1 permit use, including commercial use, with
+attribution. Talkpuppy
 does not modify the models beyond the upstream int8 conversion.
 
 ### Bundled with the app

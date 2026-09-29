@@ -127,19 +127,29 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Cyflym iawn a chywir iawn, 25 o ieithoedd Ewropeaidd, yn adnabod yr iaith yn awtomatig. Argymhellir ar gyfer ffonau ag o leiaf 6 GB o RAM.';
+      'Cywir iawn a chyflym. Mae\'r testun yn ymddangos pan fyddi di\'n stopio recordio. 25 o ieithoedd Ewropeaidd, yn cael eu hadnabod yn awtomatig; does dim modd gosod yr iaith. Lawrlwythiad mawr, ar gyfer ffonau ag o leiaf 6 GB o RAM.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Cydbwysedd rhwng cyflymder a chywirdeb, 99 o ieithoedd, gellir gosod yr iaith. Ar gyfer ffonau ag o leiaf 4 GB o RAM.';
+      'Y nifer fwyaf o ieithoedd (99), yn cael eu hadnabod yn awtomatig neu wedi\'u gosod. Cywirdeb da, ond yn arafach na Parakeet, ac mewn tawelwch neu sŵn gall weithiau ddyfeisio geiriau. Ar gyfer ffonau ag o leiaf 4 GB o RAM.';
 
   @override
   String get modelDescWhisperBase =>
-      'Ysgafn ar gyfer ffonau hŷn, 99 o ieithoedd, gellir gosod yr iaith. Ar gyfer ffonau ag o leiaf 3 GB o RAM.';
+      'Lawrlwythiad bach ar gyfer ffonau hŷn. 99 o ieithoedd, yn cael eu hadnabod yn awtomatig neu wedi\'u gosod. Yn amlwg yn llai cywir na Whisper Small. Ar gyfer ffonau ag o leiaf 3 GB o RAM.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Lleiaf a chyflymaf i\'w lawrlwytho. 99 o ieithoedd, gellir gosod yr iaith. Yn rhedeg ar bron unrhyw ffôn.';
+      'Y lleiaf a\'r cyflymaf, yn rhedeg ar bron unrhyw ffôn. 99 o ieithoedd, yn cael eu hadnabod yn awtomatig neu wedi\'u gosod. Y lleiaf cywir, gorau ar gyfer nodiadau byr wedi\'u llefaru\'n glir.';
+
+  @override
+  String get modelDescNemotron =>
+      'Rhagolwg byw: mae\'r testun yn ymddangos wrth i ti siarad ac mae\'n barod cyn gynted ag y byddi di\'n stopio. 28 o ieithoedd, yn cael eu hadnabod yn awtomatig neu wedi\'u gosod. Fel arfer ychydig yn llai cywir na Parakeet. Lawrlwythiad mawr, ar gyfer ffonau ag o leiaf 6 GB o RAM.';
+
+  @override
+  String get livePreviewLabel => 'Rhagolwg byw';
+
+  @override
+  String get livePreviewListening => 'Yn gwrando…';
 
   @override
   String get languageLabel => 'Iaith';
@@ -152,7 +162,7 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get whisperRequired =>
-      'Mae angen model Whisper ar gyfer iaith benodol.';
+      'Mae angen model Whisper neu Nemotron ar gyfer iaith benodol.';
 
   @override
   String get downloadWhisperSmall => 'Lawrlwytho Whisper Small';
@@ -182,7 +192,7 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Dim ond modelau Whisper sy\'n defnyddio hyn; mae Parakeet bob amser yn adnabod yr iaith yn awtomatig.';
+      'Mae Whisper a Nemotron yn defnyddio hyn; mae Parakeet bob amser yn adnabod yr iaith yn awtomatig.';
 
   @override
   String get licensesTitle => 'Trwyddedau';
@@ -192,7 +202,23 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Adnabod lleferydd gyda sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) a Whisper (OpenAI, MIT).';
+      'Adnabod lleferydd gyda sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) a Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Mae Talkpuppy wedi\'i adeiladu ar feddalwedd cod agored a modelau lleferydd â thrwyddedau agored.';
+
+  @override
+  String get licensesSpeechModels => 'Modelau lleferydd';
+
+  @override
+  String get licensesSoftware => 'Meddalwedd';
+
+  @override
+  String get licensesPackages => 'Flutter a phecynnau cod agored eraill';
+
+  @override
+  String get licensesShowAll => 'Dangos holl destunau\'r trwyddedau';
 
   @override
   String get deleteAllTitle => 'Dileu pob recordiad';

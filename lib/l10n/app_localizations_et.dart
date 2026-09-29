@@ -128,19 +128,29 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get modelDescParakeet =>
-      'Väga kiire ja väga täpne, 25 Euroopa keelt, tuvastab keele automaatselt. Soovitatav telefonidele, millel on vähemalt 6 GB RAM-i.';
+      'Väga täpne ja kiire. Tekst ilmub, kui salvestamise lõpetad. 25 Euroopa keelt, tuvastatakse automaatselt; keelt ei saa fikseerida. Suur allalaadimine, telefonidele, millel on vähemalt 6 GB RAM-i.';
 
   @override
   String get modelDescWhisperSmall =>
-      'Tasakaal kiiruse ja täpsuse vahel, 99 keelt, keele saab fikseerida. Telefonidele, millel on vähemalt 4 GB RAM-i.';
+      'Kõige rohkem keeli (99), tuvastatakse automaatselt või fikseeritakse. Hea täpsus, kuid aeglasem kui Parakeet ning vaikuse või müra korral võib vahel sõnu välja mõelda. Telefonidele, millel on vähemalt 4 GB RAM-i.';
 
   @override
   String get modelDescWhisperBase =>
-      'Kerge mudel vanematele telefonidele, 99 keelt, keele saab fikseerida. Telefonidele, millel on vähemalt 3 GB RAM-i.';
+      'Väike allalaadimine vanematele telefonidele. 99 keelt, tuvastatakse automaatselt või fikseeritakse. Märgatavalt ebatäpsem kui Whisper Small. Telefonidele, millel on vähemalt 3 GB RAM-i.';
 
   @override
   String get modelDescWhisperTiny =>
-      'Minimaalne ja kõige kiiremini allalaaditav. 99 keelt, keele saab fikseerida. Töötab praktiliselt igas telefonis.';
+      'Kõige väiksem ja kiirem, töötab praktiliselt igas telefonis. 99 keelt, tuvastatakse automaatselt või fikseeritakse. Kõige ebatäpsem, sobib kõige paremini lühikeste, selgelt räägitud märkmete jaoks.';
+
+  @override
+  String get modelDescNemotron =>
+      'Reaalajas eelvaade: tekst ilmub juba rääkimise ajal ja on valmis kohe, kui lõpetad. 28 keelt, tuvastatakse automaatselt või fikseeritakse. Tavaliselt veidi ebatäpsem kui Parakeet. Suur allalaadimine, telefonidele, millel on vähemalt 6 GB RAM-i.';
+
+  @override
+  String get livePreviewLabel => 'Reaalajas eelvaade';
+
+  @override
+  String get livePreviewListening => 'Kuulan…';
 
   @override
   String get languageLabel => 'Keel';
@@ -153,7 +163,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get whisperRequired =>
-      'Fikseeritud keele jaoks on vaja Whisper mudelit.';
+      'Fikseeritud keele jaoks on vaja Whisper või Nemotron mudelit.';
 
   @override
   String get downloadWhisperSmall => 'Laadi alla Whisper Small';
@@ -182,7 +192,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get defaultLanguageHint =>
-      'Kehtib ainult Whisper mudelitele; Parakeet tuvastab keele alati automaatselt.';
+      'Kehtib Whisper ja Nemotron mudelitele; Parakeet tuvastab keele alati automaatselt.';
 
   @override
   String get licensesTitle => 'Litsentsid';
@@ -192,7 +202,23 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get licensesLegalese =>
-      'Kõnetuvastus: sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0) ja Whisper (OpenAI, MIT).';
+      'Kõnetuvastus: sherpa-onnx, Parakeet (NVIDIA, CC BY 4.0), Nemotron (NVIDIA, OpenMDW 1.1) ja Whisper (OpenAI, MIT).';
+
+  @override
+  String get licensesIntro =>
+      'Talkpuppy põhineb avatud lähtekoodiga tarkvaral ja avatud litsentsiga kõnemudelitel.';
+
+  @override
+  String get licensesSpeechModels => 'Kõnemudelid';
+
+  @override
+  String get licensesSoftware => 'Tarkvara';
+
+  @override
+  String get licensesPackages => 'Flutter ja muud avatud lähtekoodiga paketid';
+
+  @override
+  String get licensesShowAll => 'Näita kõiki litsentsitekste';
 
   @override
   String get deleteAllTitle => 'Kustuta kõik salvestused';
