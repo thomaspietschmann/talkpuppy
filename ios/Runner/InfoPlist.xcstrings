@@ -1,0 +1,246 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSMicrophoneUsageDescription" : {
+      "comment" : "Privacy - Microphone Usage Description",
+      "extractionState" : "manual",
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy патрэбны доступ да мікрафона, каб запісваць і расшыфроўваць тваё маўленне."
+          }
+        },
+        "bg" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy се нуждае от достъп до микрофона, за да записва и транскрибира речта ти."
+          }
+        },
+        "bs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy treba pristup mikrofonu kako bi snimao i transkribovao tvoj govor."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy necessita accés al micròfon per enregistrar i transcriure la teva veu."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy potřebuje přístup k mikrofonu, aby mohl nahrávat a přepisovat tvou řeč."
+          }
+        },
+        "cy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mae angen mynediad i'r meicroffon ar Talkpuppy er mwyn recordio a thrawsgrifio dy lais."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy skal bruge adgang til mikrofonen for at optage og transskribere din tale."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy benötigt Zugriff auf das Mikrofon, um deine Sprache aufzunehmen und zu transkribieren."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το Talkpuppy χρειάζεται πρόσβαση στο μικρόφωνο για να ηχογραφεί και να μεταγράφει την ομιλία σου."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy needs access to the microphone to record and transcribe your speech."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy necesita acceso al micrófono para grabar y transcribir tu voz."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy vajab juurdepääsu mikrofonile, et sinu kõnet salvestada ja transkribeerida."
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy-k mikrofonorako sarbidea behar du zure ahotsa grabatu eta transkribatzeko."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy tarvitsee pääsyn mikrofoniin, jotta se voi tallentaa ja litteroida puheesi."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy a besoin d'accéder au micro pour enregistrer et transcrire ta voix."
+          }
+        },
+        "ga" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teastaíonn rochtain ar an micreafón ó Talkpuppy chun do chuid cainte a thaifeadadh agus a thras-scríobh."
+          }
+        },
+        "gl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy necesita acceso ao micrófono para gravar e transcribir a túa voz."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy treba pristup mikrofonu kako bi snimao i transkribirao tvoj govor."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Talkpuppy hozzáférést kér a mikrofonhoz, hogy felvehesse és átírhassa a beszédedet."
+          }
+        },
+        "is" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy þarf aðgang að hljóðnemanum til að taka upp og umrita talið þitt."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy ha bisogno di accedere al microfono per registrare e trascrivere la tua voce."
+          }
+        },
+        "lb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy brauch Zougrëff op de Mikro, fir deng Sprooch opzehuelen an ze transkribéieren."
+          }
+        },
+        "lt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy reikia prieigos prie mikrofono, kad galėtų įrašyti ir transkribuoti tavo kalbą."
+          }
+        },
+        "lv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy nepieciešama piekļuve mikrofonam, lai ierakstītu un transkribētu tavu runu."
+          }
+        },
+        "mk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy има потреба од пристап до микрофонот за да го снима и транскрибира твојот говор."
+          }
+        },
+        "mt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy jeħtieġ aċċess għall-mikrofonu biex jirrekordja u jittraskrivi leħnek."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy trenger tilgang til mikrofonen for å ta opp og transkribere talen din."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy heeft toegang tot de microfoon nodig om je spraak op te nemen en te transcriberen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy potrzebuje dostępu do mikrofonu, aby nagrywać i transkrybować twoją mowę."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Talkpuppy precisa de acesso ao microfone para gravar e transcrever a tua voz."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy are nevoie de acces la microfon pentru a-ți înregistra și transcrie vocea."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy нужен доступ к микрофону, чтобы записывать и расшифровывать твою речь."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy potrebuje prístup k mikrofónu, aby mohol nahrávať a prepisovať tvoju reč."
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy potrebuje dostop do mikrofona, da lahko snema in prepisuje tvoj govor."
+          }
+        },
+        "sq" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy ka nevojë për qasje te mikrofoni për të regjistruar dhe transkriptuar të folurit tënd."
+          }
+        },
+        "sr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy треба приступ микрофону како би снимао и транскрибовао твој говор."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy behöver åtkomst till mikrofonen för att spela in och transkribera ditt tal."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy'nin konuşmanı kaydedip yazıya dökebilmesi için mikrofona erişmesi gerekiyor."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talkpuppy потрібен доступ до мікрофона, щоб записувати та транскрибувати твоє мовлення."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
