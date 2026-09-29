@@ -1,3 +1,11 @@
+/// A plain `*.wav` file name without any directory part.
+bool isValidWavFileName(String name) =>
+    name.endsWith('.wav') &&
+    name.length > 4 &&
+    !name.contains('/') &&
+    !name.contains('\\') &&
+    !name.startsWith('.');
+
 /// Outcome of transcribing one clip.
 enum ClipStatus { done, error }
 
@@ -17,9 +25,15 @@ class Clip {
   });
 
   factory Clip.fromJson(Map<String, dynamic> json) {
+    final wavFileName = json['wavFileName'] as String;
+    if (!isValidWavFileName(wavFileName)) {
+      // The index is only ever written by the app; anything else would
+      // make deletes and reads escape the history directory.
+      throw FormatException('invalid wav file name', wavFileName);
+    }
     return Clip(
       id: json['id'] as String,
-      wavFileName: json['wavFileName'] as String,
+      wavFileName: wavFileName,
       text: json['text'] as String? ?? '',
       language: json['language'] as String? ?? '',
       modelId: json['modelId'] as String? ?? '',

@@ -67,8 +67,13 @@ There is no App Store build. Build and install from a Mac with Xcode and a
 - Network requests go only to Hugging Face (`huggingface.co`) to download the
   model files you choose. Hugging Face sees your IP address for that
   download; see their privacy policy.
-- Recordings and transcripts are deleted after 3 days and are excluded from
-  device backups.
+- Recordings and transcripts are deleted after 3 days (checked at start and
+  whenever the app returns to the foreground) and are excluded from device
+  backups; downloaded models are never backed up either.
+- Transcripts copied to the clipboard are marked sensitive: Android 13+
+  hides them from the clipboard preview and clipboard sync, iOS keeps them
+  local (no Universal Clipboard to your other devices). Turn off
+  "Copy automatically" if you'd rather copy by hand.
 
 ## Third-party software and models
 

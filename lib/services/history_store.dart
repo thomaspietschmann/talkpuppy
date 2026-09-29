@@ -14,9 +14,14 @@ import 'backup_exclusion.dart';
 /// Takes a plain [Directory] rather than resolving one itself so tests can
 /// point it at a temp directory without touching platform channels.
 class HistoryStore extends ChangeNotifier {
-  HistoryStore(this._dir);
+  HistoryStore(this._dir, {Future<void> Function(String path)? excludeDirFromBackup})
+    : _excludeFromBackup = excludeDirFromBackup;
 
   final Directory _dir;
+
+  /// Keeps the directory out of iCloud backups (see [excludeFromBackup]);
+  /// null in tests.
+  final Future<void> Function(String path)? _excludeFromBackup;
   List<Recording> _recordings = [];
 
   List<Recording> get recordings => List.unmodifiable(_recordings);
@@ -26,12 +31,8 @@ class HistoryStore extends ChangeNotifier {
   static Future<HistoryStore> create() async {
     final supportDir = await getApplicationSupportDirectory();
     final dir = Directory(p.join(supportDir.path, 'history'));
-    if (!await dir.exists()) {
-      await dir.create(recursive: true);
-    }
-    // Recordings and transcripts are private; keep them out of iCloud.
-    await excludeFromBackup(dir.path);
-    final store = HistoryStore(dir);
+    final store = HistoryStore(dir, excludeDirFromBackup: excludeFromBackup);
+    await store._ensureDir();
     await store.load();
     return store;
   }
@@ -39,9 +40,7 @@ class HistoryStore extends ChangeNotifier {
   /// (Re-)reads `recordings.json` from disk. A missing or corrupt index is
   /// treated as an empty history rather than a crash.
   Future<void> load() async {
-    if (!await _dir.exists()) {
-      await _dir.create(recursive: true);
-    }
+    await _ensureDir();
     if (!await _indexFile.exists()) {
       _recordings = [];
       return;
@@ -60,13 +59,22 @@ class HistoryStore extends ChangeNotifier {
     }
   }
 
+  /// Creates the directory if needed and (re-)applies the backup
+  /// exclusion every time: a recreated directory (e.g. after deleting
+  /// everything) would otherwise be backed up until the next start.
+  /// Recordings and transcripts are private and must never reach iCloud.
+  Future<void> _ensureDir() async {
+    if (!await _dir.exists()) {
+      await _dir.create(recursive: true);
+    }
+    await _excludeFromBackup?.call(_dir.path);
+  }
+
   void _sortNewestFirst() =>
       _recordings.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
   Future<void> _persist() async {
-    if (!await _dir.exists()) {
-      await _dir.create(recursive: true);
-    }
+    await _ensureDir();
     final raw = jsonEncode(_recordings.map((r) => r.toJson()).toList());
     // Write-then-rename so a crash mid-write can't leave a truncated index
     // (which load() would treat as empty history).
@@ -76,15 +84,18 @@ class HistoryStore extends ChangeNotifier {
   }
 
   /// Absolute path a WAV file with [fileName] should live at.
-  String wavPathFor(String fileName) => p.join(_dir.path, fileName);
+  String wavPathFor(String fileName) {
+    if (!isValidWavFileName(fileName)) {
+      throw ArgumentError.value(fileName, 'fileName', 'not a plain .wav name');
+    }
+    return p.join(_dir.path, fileName);
+  }
 
   /// Makes sure the history directory exists. Recording writes its WAV
   /// file straight into it, before there's any [Recording] to persist, so
   /// this must run before the recorder is asked to start.
   Future<void> ensureDirExists() async {
-    if (!await _dir.exists()) {
-      await _dir.create(recursive: true);
-    }
+    await _ensureDir();
   }
 
   int _wavNameCounter = 0;

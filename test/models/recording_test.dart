@@ -27,6 +27,26 @@ void main() {
       expect(restored.status, clip.status);
     });
 
+    test('rejects file names that leave the history directory', () {
+      Map<String, dynamic> json(String name) => {
+        'id': 'c1',
+        'wavFileName': name,
+        'createdAt': DateTime.utc(2026).toIso8601String(),
+      };
+      for (final bad in [
+        '../secret.wav',
+        '/etc/passwd.wav',
+        r'..\\x.wav',
+        '.wav',
+        'notes.txt',
+        '',
+      ]) {
+        expect(() => Clip.fromJson(json(bad)), throwsFormatException,
+            reason: bad);
+      }
+      expect(Clip.fromJson(json('1790-1.wav')).wavFileName, '1790-1.wav');
+    });
+
     test('copyWith only overrides given fields', () {
       final clip = Clip(
         id: 'c1',

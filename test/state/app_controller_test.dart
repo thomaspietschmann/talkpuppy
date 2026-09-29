@@ -14,6 +14,14 @@ import 'package:talkpuppy/state/app_controller.dart';
 import '../fakes/fake_recorder_service.dart';
 import '../fakes/fake_transcriber.dart';
 
+/// Waits until [controller] has left the recording/transcribing phases
+/// (an interruption finishes the recording asynchronously).
+Future<void> _settled(AppController controller) async {
+  for (var i = 0; i < 500 && controller.isBusy; i++) {
+    await Future<void>.delayed(const Duration(milliseconds: 2));
+  }
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -460,5 +468,162 @@ void main() {
       expect(historyStore.recordings, isEmpty);
       tailed.dispose();
     });
+
+    test('an empty result leaves the clipboard alone', () async {
+      clipboardText = 'something the user copied';
+      transcriber.liveFinalText = '';
+      await controller.startNewRecording();
+      await controller.stopAndTranscribe();
+
+      expect(controller.phase, RecordingPhase.done);
+      expect(clipboardText, 'something the user copied');
+    });
+
+    test('switching models mid-recording clears the preview and uses the file',
+        () async {
+      await controller.startNewRecording();
+      transcriber.liveOnText!('Hallo');
+      expect(controller.liveText, 'Hallo');
+
+      settings.selectedModelId = 'whisper-tiny-int8';
+      await controller.ensureCurrentModelLoaded();
+      expect(controller.liveText, isNull);
+
+      transcriber.nextText = 'Aus der Datei';
+      await controller.stopAndTranscribe();
+      expect(transcriber.log, containsAllInOrder(['liveFinish', 'transcribe']));
+      expect(controller.activeRecording!.text, 'Aus der Datei');
+      expect(controller.activeRecording!.clips.single.modelId,
+          'whisper-tiny-int8');
+    });
+
+    test('the live result survives the model being deleted mid-recording',
+        () async {
+      await controller.startNewRecording();
+      await modelManager.delete(modelById(streamingId));
+      transcriber.liveFinalText = 'Schon erkannt.';
+      await controller.stopAndTranscribe();
+
+      expect(controller.phase, RecordingPhase.done);
+      expect(controller.activeRecording!.text, 'Schon erkannt.');
+      expect(transcriber.transcribeCalls, 0);
+    });
+
+    test('live text arriving after stop is ignored', () async {
+      await controller.startNewRecording();
+      final onText = transcriber.liveOnText!;
+      await controller.stopAndTranscribe();
+
+      onText('zu spät');
+      expect(controller.liveText, isNull);
+    });
+
+    test('backgrounding during the stop tail does not stop twice', () async {
+      final tailed = AppController(
+        recorder: recorder,
+        transcriber: transcriber,
+        historyStore: historyStore,
+        settings: settings,
+        modelManager: modelManager,
+        vadModelPath: 'unused-in-tests.onnx',
+        useWakelock: false,
+        stopTail: const Duration(milliseconds: 50),
+      );
+      await tailed.init();
+      await tailed.startNewRecording();
+      final stopping = tailed.stopAndTranscribe();
+      await tailed.handleAppBackgrounded();
+      await stopping;
+
+      expect(transcriber.log.where((e) => e == 'liveFinish'), hasLength(1));
+      expect(historyStore.recordings, hasLength(1));
+      tailed.dispose();
+    });
+  });
+
+  test('cancelRecording claims the phase before the recorder is cancelled',
+      () async {
+    await controller.startNewRecording();
+    final cancelling = controller.cancelRecording();
+    expect(controller.phase, isNot(RecordingPhase.recording));
+    await controller.stopAndTranscribe(); // must be a no-op now
+    await cancelling;
+
+    expect(historyStore.recordings, isEmpty);
+    expect(transcriber.transcribeCalls, 0);
+  });
+
+  test('purgeExpired drops an expired active recording', () async {
+    await controller.startNewRecording();
+    await controller.stopAndTranscribe();
+    expect(controller.activeRecording, isNotNull);
+
+    await controller.purgeExpired(Duration.zero);
+    expect(historyStore.recordings, isEmpty);
+    expect(controller.activeRecording, isNull);
+    expect(controller.phase, RecordingPhase.idle);
+  });
+
+  test('purgeExpired waits while a recording runs', () async {
+    await controller.startNewRecording();
+    await controller.purgeExpired(Duration.zero);
+    await controller.stopAndTranscribe();
+    expect(historyStore.recordings, hasLength(1));
+  });
+
+  test('an interruption (call, alarm) saves what was recorded so far',
+      () async {
+    await controller.startNewRecording();
+    transcriber.nextText = 'Bis hierhin';
+    recorder.interrupt();
+    await _settled(controller);
+
+    expect(recorder.recording, isFalse);
+    expect(controller.phase, RecordingPhase.done);
+    expect(controller.activeRecording!.text, 'Bis hierhin');
+    expect(clipboardText, 'Bis hierhin');
+  });
+
+  test('an interruption with a streaming model skips the stop tail',
+      () async {
+    final model = modelById('nemotron-3.5-streaming-0.6b-1120ms-int8');
+    final modelDir = Directory(modelManager.modelDir(model));
+    await modelDir.create(recursive: true);
+    for (final f in model.files) {
+      File('${modelDir.path}/${f.localName}').openSync(mode: FileMode.write)
+        ..truncateSync(f.sizeBytes)
+        ..closeSync();
+    }
+    settings.selectedModelId = model.id;
+    final tailed = AppController(
+      recorder: recorder,
+      transcriber: transcriber,
+      historyStore: historyStore,
+      settings: settings,
+      modelManager: modelManager,
+      vadModelPath: 'unused-in-tests.onnx',
+      useWakelock: false,
+      stopTail: const Duration(seconds: 5),
+    );
+    await tailed.init();
+    await tailed.startNewRecording();
+    transcriber.liveFinalText = 'Vor dem Anruf.';
+    final watch = Stopwatch()..start();
+    recorder.interrupt();
+    await _settled(tailed);
+
+    // No 5 s tail.
+    expect(watch.elapsed, lessThan(const Duration(seconds: 1)));
+    expect(tailed.phase, RecordingPhase.done);
+    expect(tailed.activeRecording!.text, 'Vor dem Anruf.');
+    tailed.dispose();
+  });
+
+  test('an interruption after stopping does nothing', () async {
+    await controller.startNewRecording();
+    await controller.stopAndTranscribe();
+    recorder.interrupt();
+    await pumpEventQueue();
+    expect(historyStore.recordings, hasLength(1));
   });
 }

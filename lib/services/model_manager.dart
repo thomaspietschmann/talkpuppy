@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../models/catalog.dart';
@@ -58,6 +59,9 @@ class ModelManager extends ChangeNotifier {
     if (!await dir.exists()) {
       await dir.create(recursive: true);
     }
+    // Models never go to iCloud: excluding the root up front also covers
+    // partial downloads (`.part`) and every model directory created later.
+    await excludeFromBackup(dir.path);
     final manager = ModelManager(dir);
     await manager._refreshDownloadedIds();
     return manager;
@@ -78,7 +82,9 @@ class ModelManager extends ChangeNotifier {
   String modelDir(ModelSpec model) => p.join(_modelsRootDir.path, model.id);
 
   /// True when every file exists with its exact expected size. (The hash
-  /// was verified when the file was moved into place.)
+  /// was verified when the file was moved into place; re-hashing hundreds
+  /// of MB on every start isn't worth it, since only someone who can
+  /// already write the app's private storage could swap a file.)
   Future<bool> isDownloaded(ModelSpec model) async {
     for (final f in model.files) {
       final file = File(p.join(modelDir(model), f.localName));
@@ -165,6 +171,14 @@ class ModelManager extends ChangeNotifier {
         throw ModelDownloadException(DownloadErrorKind.cancelled);
       }
       throw ModelDownloadException(DownloadErrorKind.network);
+    } on FileSystemException catch (e) {
+      if (e.osError?.errorCode == _enospc) {
+        throw ModelDownloadException(
+          DownloadErrorKind.noSpace,
+          modelName: model.displayName,
+        );
+      }
+      rethrow;
     } finally {
       dio.close();
       _activeCancelTokens.remove(model.id);
@@ -187,25 +201,29 @@ class ModelManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// ENOSPC ("No space left on device") on both Android and iOS.
+  static const _enospc = 28;
+
+  static const _deviceInfoChannel = MethodChannel('talkpuppy/device_info');
+
   Future<void> _ensureFreeSpace(String dirPath, ModelSpec model) async {
-    // Best-effort via `df` (available on Android; iOS apps can't spawn
-    // processes). If the lookup fails we just try the download.
-    if (!Platform.isAndroid) return;
+    // Best effort: if the lookup fails we just try the download, and a
+    // full disk surfaces as ENOSPC instead.
+    final int? available;
     try {
-      final result = await Process.run('df', ['-k', dirPath]);
-      final lines = (result.stdout as String).trim().split('\n');
-      final cols = lines.last.split(RegExp(r'\s+'));
-      final availableKb = int.parse(cols[3]);
-      if (availableKb * 1024 < model.totalSizeBytes + 50 * 1024 * 1024) {
-        throw ModelDownloadException(
-          DownloadErrorKind.noSpace,
-          modelName: model.displayName,
-        );
-      }
-    } on ModelDownloadException {
-      rethrow;
+      available = await _deviceInfoChannel.invokeMethod<int>(
+        'freeDiskBytes',
+        {'path': dirPath},
+      );
     } catch (_) {
-      // Couldn't determine free space; proceed.
+      return;
+    }
+    if (available != null &&
+        available < model.totalSizeBytes + 50 * 1024 * 1024) {
+      throw ModelDownloadException(
+        DownloadErrorKind.noSpace,
+        modelName: model.displayName,
+      );
     }
   }
 
@@ -252,6 +270,12 @@ class ModelManager extends ChangeNotifier {
       rethrow;
     }
 
+    // Integrity is covered by the hash, but don't let a redirect downgrade
+    // the transfer to plain HTTP either.
+    if (response.realUri.scheme != 'https') {
+      throw ModelDownloadException(DownloadErrorKind.notModelFile);
+    }
+
     final status = response.statusCode ?? 0;
     final contentType = response.headers.value('content-type') ?? '';
     if ((status != 200 && status != 206) || contentType.contains('text/html')) {
@@ -274,10 +298,14 @@ class ModelManager extends ChangeNotifier {
         received += chunk.length;
         onBytesReceived(received);
       }
-    } finally {
-      await sink.flush();
-      await sink.close();
+    } catch (_) {
+      // Keep the original error; a failing close (e.g. disk full) would
+      // otherwise replace it.
+      await sink.close().catchError((_) {});
+      rethrow;
     }
+    // Write errors such as ENOSPC surface here.
+    await sink.close();
 
     final actualSize = await partFile.length();
     final actualHash = actualSize == spec.sizeBytes

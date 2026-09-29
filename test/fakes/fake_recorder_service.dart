@@ -18,6 +18,13 @@ class FakeRecorderService implements RecorderService {
   void Function(Float32List samples)? onSamples;
 
   final _amplitudeController = StreamController<double>.broadcast();
+  final _interruptionController = StreamController<void>.broadcast();
+
+  /// Simulates an incoming call / alarm pausing the microphone.
+  void interrupt() => _interruptionController.add(null);
+
+  @override
+  Stream<void> get interruptions => _interruptionController.stream;
 
   @override
   Stream<double> get amplitudeStream => _amplitudeController.stream;
@@ -54,5 +61,6 @@ class FakeRecorderService implements RecorderService {
   @override
   Future<void> dispose() async {
     await _amplitudeController.close();
+    await _interruptionController.close();
   }
 }

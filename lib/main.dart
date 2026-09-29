@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'app.dart';
 import 'l10n/app_localizations.dart';
 import 'l10n/locales.dart';
 import 'licenses.dart';
+import 'services/backup_exclusion.dart';
 import 'services/history_store.dart';
 import 'services/model_manager.dart';
 import 'services/recorder_service.dart';
@@ -40,6 +42,7 @@ class _BootstrapAppState extends State<_BootstrapApp> {
   Widget? _child;
   Object? _error;
   AppLifecycleListener? _lifecycleListener;
+  Timer? _purgeTimer;
 
   @override
   void initState() {
@@ -50,11 +53,16 @@ class _BootstrapAppState extends State<_BootstrapApp> {
   @override
   void dispose() {
     _lifecycleListener?.dispose();
+    _purgeTimer?.cancel();
     super.dispose();
   }
 
   Future<void> _bootstrap() async {
     try {
+      // Nothing in app support storage (recordings, transcripts, models)
+      // may ever reach iCloud. Each store also excludes its own directory;
+      // this covers everything else and any file created later.
+      await excludeFromBackup((await getApplicationSupportDirectory()).path);
       final settings = await SettingsService.create();
       final historyStore = await HistoryStore.create();
       await historyStore.purgeOlderThan(kHistoryRetention);
@@ -76,6 +84,12 @@ class _BootstrapAppState extends State<_BootstrapApp> {
       await controller.init();
       _lifecycleListener = AppLifecycleListener(
         onHide: controller.handleAppBackgrounded,
+        onShow: () => controller.purgeExpired(kHistoryRetention),
+      );
+      // While the app stays in the foreground for long, too.
+      _purgeTimer = Timer.periodic(
+        const Duration(hours: 1),
+        (_) => controller.purgeExpired(kHistoryRetention),
       );
 
       if (!mounted) return;
@@ -139,5 +153,7 @@ Future<String> _extractBundledVadModel() async {
     );
     await tmp.rename(file.path);
   }
+  // Bundled with the app anyway; no reason to back it up.
+  await excludeFromBackup(file.path);
   return file.path;
 }

@@ -96,7 +96,11 @@ class _ModelsScreenState extends State<ModelsScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.modelsTitle)),
       body: ListenableBuilder(
-        listenable: Listenable.merge([scope.modelManager, scope.settings]),
+        listenable: Listenable.merge([
+          scope.modelManager,
+          scope.settings,
+          scope.controller,
+        ]),
         builder: (context, _) {
           return RadioGroup<String>(
             groupValue: scope.settings.selectedModelId,
@@ -116,7 +120,10 @@ class _ModelsScreenState extends State<ModelsScreen> {
                     progress: _busyId == model.id ? _progress : null,
                     onDownload: () => _download(model),
                     onCancel: () => scope.modelManager.cancelDownload(model),
-                    onDelete: () => _delete(model),
+                    // The loaded model must stay while a recording runs.
+                    onDelete: scope.controller.isBusy
+                        ? null
+                        : () => _delete(model),
                   ),
               ],
             ),
@@ -144,7 +151,8 @@ class _ModelRow extends StatelessWidget {
   final DownloadProgress? progress;
   final VoidCallback onDownload;
   final VoidCallback onCancel;
-  final VoidCallback onDelete;
+  /// Null disables deleting (while a recording or transcription runs).
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {

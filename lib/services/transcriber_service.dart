@@ -292,11 +292,16 @@ class _WorkerState {
 class _StreamingSession {
   _StreamingSession(this.recognizer, this.language)
     : stream = recognizer.createStream() {
-    _applyLanguage();
-    stream.acceptWaveform(
-      samples: Float32List(_kStreamingLeadPaddingSamples),
-      sampleRate: 16000,
-    );
+    try {
+      _applyLanguage();
+      stream.acceptWaveform(
+        samples: Float32List(_kStreamingLeadPaddingSamples),
+        sampleRate: 16000,
+      );
+    } catch (_) {
+      stream.free();
+      rethrow;
+    }
   }
 
   final sherpa_onnx.OnlineRecognizer recognizer;
@@ -308,8 +313,9 @@ class _StreamingSession {
     stream.setOption(key: 'language', value: language);
   }
 
-  void accept(Float32List samples) {
-    stream.acceptWaveform(samples: samples, sampleRate: 16000);
+  /// [sampleRate] other than 16 kHz is resampled by sherpa-onnx.
+  void accept(Float32List samples, {int sampleRate = 16000}) {
+    stream.acceptWaveform(samples: samples, sampleRate: sampleRate);
     _decodeAvailable();
   }
 
@@ -482,7 +488,9 @@ void _isolateMain(SendPort initSendPort) {
           replyPort.send({
             'ok': true,
             'text': text,
-            'language': _reportedLanguage(state.language),
+            // The session's own language: the default may have changed
+            // since it started.
+            'language': _reportedLanguage(live.session.language),
           });
         case 'liveCancel':
           state.live?.free();
@@ -586,7 +594,10 @@ TranscriptionResult _transcribeStreaming(
         0,
         wave.samples.length,
       );
-      session.accept(Float32List.sublistView(wave.samples, i, end));
+      session.accept(
+        Float32List.sublistView(wave.samples, i, end),
+        sampleRate: wave.sampleRate,
+      );
     }
     return TranscriptionResult(
       text: session.finish(),
@@ -633,10 +644,14 @@ TranscriptionResult _transcribeWithVad(
   void decodeSegment(Float32List samples) {
     if (samples.isEmpty) return;
     final stream = recognizer.createStream();
-    stream.acceptWaveform(samples: samples, sampleRate: wave.sampleRate);
-    recognizer.decode(stream);
-    final result = recognizer.getResult(stream);
-    stream.free();
+    final sherpa_onnx.OfflineRecognizerResult result;
+    try {
+      stream.acceptWaveform(samples: samples, sampleRate: wave.sampleRate);
+      recognizer.decode(stream);
+      result = recognizer.getResult(stream);
+    } finally {
+      stream.free();
+    }
 
     final text = result.text.trim();
     if (text.isNotEmpty) {

@@ -12,6 +12,7 @@ import '../models/recording.dart';
 import '../services/history_store.dart';
 import '../services/model_manager.dart';
 import '../services/recorder_service.dart';
+import '../services/sensitive_clipboard.dart';
 import '../services/settings_service.dart';
 import '../services/transcriber_service.dart';
 import 'app_error.dart';
@@ -82,10 +83,13 @@ class AppController extends ChangeNotifier {
   bool _appendMode = false;
   bool _starting = false;
 
-  /// Whether the transcriber runs a live session for the current recording.
+  /// Whether the transcriber runs a live session for the current recording,
+  /// and for which model.
   bool _live = false;
+  String? _liveModelId;
   String? _pendingWavPath;
   StreamSubscription<double>? _ampSub;
+  StreamSubscription<void>? _interruptSub;
   int _idCounter = 0;
 
   /// Tail of the transcriber work queue. The isolate handles one command at
@@ -161,6 +165,11 @@ class AppController extends ChangeNotifier {
       );
       modelReady = true;
       modelError = null;
+      if (_live && model.id != _liveModelId) {
+        // Switching models mid-recording dropped the live session; don't
+        // leave its last text frozen on screen.
+        liveText = null;
+      }
     } catch (e) {
       modelReady = false;
       modelError = AppError(
@@ -216,6 +225,13 @@ class AppController extends ChangeNotifier {
     if (useWakelock) unawaited(WakelockPlus.enable());
     notifyListeners();
 
+    // A call or alarm pauses the microphone; finish right away so what was
+    // said so far is transcribed and saved rather than silently lost.
+    await _interruptSub?.cancel();
+    _interruptSub = recorder.interruptions.listen(
+      (_) => stopAndTranscribe(interrupted: true),
+    );
+
     await _ampSub?.cancel();
     _ampSub = recorder.amplitudeStream.listen((dbfs) {
       // dBFS is roughly -45 (silence) to 0 (loud); normalize to 0..1.
@@ -236,6 +252,7 @@ class AppController extends ChangeNotifier {
         if (!modelReady) return false;
         await transcriber.startLive(_onLiveText);
         liveText = '';
+        _liveModelId = modelId;
         return true;
       });
     } catch (_) {
@@ -261,21 +278,25 @@ class AppController extends ChangeNotifier {
     }
   }
 
-  Future<void> stopAndTranscribe() async {
+  /// Ends the recording and transcribes it. [interrupted] means the
+  /// microphone is already gone (call, alarm, app in background), so the
+  /// stop tail is skipped.
+  Future<void> stopAndTranscribe({bool interrupted = false}) async {
     if (phase != RecordingPhase.recording) return;
     // Leave the recording phase right away so a second tap can't stop
     // twice; with a live session the microphone (and preview) keeps
     // running for the tail.
-    final tail = _live ? stopTail : Duration.zero;
+    final tail = _live && !interrupted ? stopTail : Duration.zero;
     phase = RecordingPhase.transcribing;
     recordingStartedAt = null;
     notifyListeners();
+    await _interruptSub?.cancel();
+    _interruptSub = null;
     if (tail > Duration.zero) await Future<void>.delayed(tail);
 
     await _ampSub?.cancel();
     _ampSub = null;
     amplitude = 0;
-    recordingStartedAt = null;
     if (useWakelock) unawaited(WakelockPlus.disable());
     final wavPath = _pendingWavPath;
     _pendingWavPath = null;
@@ -317,20 +338,22 @@ class AppController extends ChangeNotifier {
     Object? failure;
     try {
       result = await _serialized(() async {
-        // If the model was switched mid-recording, this reload drops the
-        // live session and finishLive below fails over to the file.
-        await _loadCurrentModel();
-        if (!modelReady) {
-          throw _ErrorOf(
-            modelError ?? const AppError(AppErrorKind.noModel),
-          );
-        }
+        // The live result first: it only needs the recognizer that is still
+        // loaded, even if the model files were deleted meanwhile. If the
+        // model was switched mid-recording, that reload already dropped the
+        // session and this fails over to the file.
         if (live) {
           try {
             return await transcriber.finishLive();
           } catch (_) {
             // Fall through to the recorded file.
           }
+        }
+        await _loadCurrentModel();
+        if (!modelReady) {
+          throw _ErrorOf(
+            modelError ?? const AppError(AppErrorKind.noModel),
+          );
         }
         return transcriber.transcribeFile(wavPath);
       });
@@ -376,8 +399,10 @@ class AppController extends ChangeNotifier {
       return;
     }
 
-    if (settings.autoCopy) {
-      await Clipboard.setData(ClipboardData(text: activeRecording!.text));
+    // Nothing recognized (e.g. only background noise): don't wipe whatever
+    // the user had on the clipboard.
+    if (settings.autoCopy && activeRecording!.text.isNotEmpty) {
+      await SensitiveClipboard.copy(activeRecording!.text);
     }
     if (settings.haptics) {
       await HapticFeedback.mediumImpact();
@@ -388,6 +413,11 @@ class AppController extends ChangeNotifier {
 
   Future<void> cancelRecording() async {
     if (phase != RecordingPhase.recording) return;
+    // Claim the phase synchronously, like stopAndTranscribe, so a stop (or
+    // backgrounding) can't run while the recorder is being cancelled.
+    phase = RecordingPhase.transcribing;
+    await _interruptSub?.cancel();
+    _interruptSub = null;
     await _ampSub?.cancel();
     _ampSub = null;
     amplitude = 0;
@@ -413,7 +443,7 @@ class AppController extends ChangeNotifier {
   /// than leaving a recording that silently captures nothing.
   Future<void> handleAppBackgrounded() async {
     if (phase == RecordingPhase.recording) {
-      await stopAndTranscribe();
+      await stopAndTranscribe(interrupted: true);
     }
   }
 
@@ -459,8 +489,10 @@ class AppController extends ChangeNotifier {
       recording.updatedAt = DateTime.now();
       await historyStore.persistChange();
 
-      if (activeRecording?.id == recording.id && settings.autoCopy) {
-        await Clipboard.setData(ClipboardData(text: recording.text));
+      if (activeRecording?.id == recording.id &&
+          settings.autoCopy &&
+          recording.text.isNotEmpty) {
+        await SensitiveClipboard.copy(recording.text);
       }
       phase = _restingPhase;
       notifyListeners();
@@ -473,6 +505,22 @@ class AppController extends ChangeNotifier {
     unawaited(ensureCurrentModelLoaded());
   }
 
+  /// Deletes recordings older than [maxAge]. Runs at startup and whenever
+  /// the app comes back to the foreground, since a resident process may
+  /// otherwise keep old audio for days. Skipped while a recording or
+  /// transcription runs.
+  Future<void> purgeExpired(Duration maxAge) async {
+    if (isBusy) return;
+    await historyStore.purgeOlderThan(maxAge);
+    final active = activeRecording;
+    if (active != null &&
+        !historyStore.recordings.any((r) => r.id == active.id)) {
+      activeRecording = null;
+      if (phase == RecordingPhase.done) phase = RecordingPhase.idle;
+      notifyListeners();
+    }
+  }
+
   /// Dismisses an error state and returns to idle/done so the user can try
   /// again.
   void dismissError() {
@@ -482,7 +530,7 @@ class AppController extends ChangeNotifier {
   }
 
   Future<void> copyToClipboard(Recording recording) async {
-    await Clipboard.setData(ClipboardData(text: recording.text));
+    await SensitiveClipboard.copy(recording.text);
     if (settings.haptics) {
       await HapticFeedback.selectionClick();
     }
@@ -530,6 +578,7 @@ class AppController extends ChangeNotifier {
   @override
   void dispose() {
     _ampSub?.cancel();
+    _interruptSub?.cancel();
     super.dispose();
   }
 }

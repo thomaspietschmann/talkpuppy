@@ -151,4 +151,24 @@ void main() {
     expect(a, isNot(equals(b)));
     expect(a, endsWith('.wav'));
   });
+
+  test('re-applies the backup exclusion whenever the directory is created',
+      () async {
+    final excluded = <String>[];
+    final dir = Directory('${tempDir.path}/history');
+    final store = HistoryStore(
+      dir,
+      excludeDirFromBackup: (path) async => excluded.add(path),
+    );
+    await store.load();
+    expect(dir.existsSync(), isTrue);
+    expect(excluded, contains(dir.path));
+
+    // Recreated behind the store's back (e.g. data cleared): the next write
+    // must exclude it again before any recording lands in it.
+    dir.deleteSync(recursive: true);
+    excluded.clear();
+    await store.ensureDirExists();
+    expect(excluded, [dir.path]);
+  });
 }

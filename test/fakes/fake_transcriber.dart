@@ -46,8 +46,16 @@ class FakeTranscriber implements Transcriber {
       currentKey = null;
       throw TranscriberException('model broken');
     }
+    // Like the real isolate: loading another model drops a live session.
+    if (liveOnText != null && model.id != liveModelId) {
+      liveOnText = null;
+      liveLost = true;
+    }
     currentKey = '${model.id}|$forcedLanguage';
+    currentModelId = model.id;
   }
+
+  String? currentModelId;
 
   /// Live session state: the callback given to [startLive], the samples
   /// fed so far, and whether [finishLive] should fail (session lost).
@@ -56,10 +64,14 @@ class FakeTranscriber implements Transcriber {
   bool liveLost = false;
   String liveFinalText = 'Live Text';
 
+  String? liveModelId;
+
   @override
   Future<void> startLive(void Function(String text) onText) async {
     log.add('liveStart');
     liveOnText = onText;
+    liveModelId = currentModelId;
+    liveLost = false;
     liveSamplesFed = 0;
   }
 
