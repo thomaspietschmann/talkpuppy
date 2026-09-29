@@ -1,6 +1,6 @@
 # Talkpuppy
 
-<img src="assets/branding/talkpuppy_logo.png" alt="Talkpuppy logo" width="160" align="right">
+<img src="assets/branding/talkpuppy_readme.png" alt="Talkpuppy app icon" width="140" align="right">
 
 Offline speech-to-clipboard for Android and iOS. Tap, speak, tap again — the
 transcript is already in your clipboard, ready to paste into any app.
@@ -8,17 +8,29 @@ transcript is already in your clipboard, ready to paste into any app.
 - **Fully on-device**: speech recognition runs locally with
   [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx). Audio never leaves the
   phone; the only network access is the one-time model download.
-- **Choice of open-weights models**: NVIDIA Parakeet TDT 0.6B v3 (fast, 25
-  European languages, automatic language detection), NVIDIA Nemotron 3.5 ASR
-  Streaming (live preview while you speak, 28 languages, language can be
-  forced) or OpenAI Whisper tiny/base/small (99 languages, language can be
-  forced).
+- **Choice of open-weights models**, from live preview to "runs on any
+  phone" — see [Models](#models).
 - **No friction**: one big record button, auto-copy after transcription,
   "continue recording" to append to the last text, re-transcribe with a
   different language or model.
 - **Short-lived history**: recordings and transcripts are deleted
   automatically after 3 days (or manually), and excluded from iCloud/Android
   backups.
+- **39 UI languages**: follows the system language, can be changed in the
+  settings.
+
+## Models
+
+Pick one on first launch and switch any time; several can be installed side
+by side.
+
+| Model | Download | Languages | Strengths | Weaknesses |
+|---|---|---|---|---|
+| Parakeet TDT 0.6B v3 (NVIDIA) | ~640 MB | 25 European, detected automatically | Very accurate and fast | Text only after you stop; language can't be fixed; needs ≥ 6 GB RAM |
+| Nemotron 3.5 ASR Streaming (NVIDIA) | ~650 MB | 28, detected automatically or fixed | Live preview while you speak, text ready right after stop | Usually a little less accurate than Parakeet; needs ≥ 6 GB RAM |
+| Whisper Small (OpenAI) | ~360 MB | 99, detected automatically or fixed | Most languages, good accuracy | Slower; can occasionally make up words on silence or noise; ≥ 4 GB RAM |
+| Whisper Base (OpenAI) | ~150 MB | 99 | Small download for older phones | Noticeably less accurate than Small; ≥ 3 GB RAM |
+| Whisper Tiny (OpenAI) | ~100 MB | 99 | Smallest and fastest, runs on practically any phone | Least accurate; best for short, clearly spoken notes |
 
 ## Install
 
@@ -39,11 +51,12 @@ There is no App Store build. Build and install from a Mac with Xcode and a
 ## Usage
 
 1. On first launch pick a model; the app recommends one based on your phone's
-   RAM. It is downloaded once (100–680 MB) and verified by checksum.
+   RAM. It is downloaded once (100–650 MB) and verified by checksum.
 2. Tap the microphone, speak, tap again. The text appears and is copied.
-   With Nemotron the text already shows up while you speak.
-3. "Weiter aufnehmen" appends another recording to the same text,
-   "Neue Aufnahme" starts a fresh one.
+   With Nemotron the text already shows up while you speak; after stop the
+   microphone runs for another 0.7 s so the last word isn't cut off.
+3. "Keep recording" appends another recording to the same text,
+   "New recording" starts a fresh one.
 4. Wrong language detected? Tap the translate icon to re-transcribe with a
    fixed language (requires a Whisper or Nemotron model).
 
@@ -60,7 +73,8 @@ There is no App Store build. Build and install from a Mac with Xcode and a
 ## Third-party software and models
 
 Talkpuppy builds on open-source software and openly licensed models. Their
-license texts are shown in the app under *Einstellungen → Lizenzen*.
+licenses are summarized in the app under *Settings → Licenses*, with the
+full license texts one tap further.
 
 ### Speech models (downloaded at runtime, not part of this repository)
 
@@ -78,14 +92,14 @@ models apply:
 | Whisper tiny / base / small | [openai/whisper](https://github.com/openai/whisper) | MIT (code and weights on GitHub; Apache-2.0 on the Hugging Face model cards) — © OpenAI |
 
 CC BY 4.0 and OpenMDW-1.1 permit use, including commercial use, with
-attribution. Talkpuppy
-does not modify the models beyond the upstream int8 conversion.
+attribution. Talkpuppy does not modify the models beyond the upstream int8
+conversion.
 
 ### Bundled with the app
 
 | Component | Use | License |
 |---|---|---|
-| [Silero VAD](https://github.com/snakers4/silero-vad) (`assets/models/silero_vad.onnx`) | Splits long recordings at pauses | MIT — © Silero Team |
+| [Silero VAD](https://github.com/snakers4/silero-vad) (`assets/models/silero_vad.onnx`) | Splits long recordings at pauses (offline models) | MIT — © Silero Team |
 | [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx) | Speech recognition runtime | Apache-2.0 — © Xiaomi Corporation and contributors |
 | [ONNX Runtime](https://github.com/microsoft/onnxruntime) (via sherpa-onnx) | Neural network inference | MIT — © Microsoft Corporation |
 | [Flutter](https://flutter.dev) | App framework | BSD-3-Clause — © The Flutter Authors |
@@ -119,7 +133,7 @@ CI/CD runs on GitHub (`.github/workflows/`):
   to a GitHub Release
 
 ```bash
-git tag v0.0.3 && git push origin v0.0.3
+git tag vX.Y.Z && git push origin vX.Y.Z
 ```
 
 The version name comes from the tag; the versionCode is derived from it
