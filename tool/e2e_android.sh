@@ -30,7 +30,7 @@ flow() {
 service_on() { $ADB shell settings put secure enabled_accessibility_services "$SERVICE"; }
 service_off() { $ADB shell settings put secure enabled_accessibility_services '""'; }
 home() { $ADB shell input keyevent KEYCODE_HOME; sleep 1.5; }
-open_app() { $ADB shell monkey -p $PKG -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1; sleep 3; }
+open_app() { $ADB shell am start -n $PKG/.MainActivity >/dev/null 2>&1; sleep 3; }
 
 # The floating button's window: "x y w h" (empty if there is none).
 button_rect() {
